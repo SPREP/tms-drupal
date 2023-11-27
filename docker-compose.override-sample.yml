@@ -1,0 +1,56 @@
+version: "3.7"
+
+services:
+  php:
+    # image: wodby/drupal:$DRUPAL_TAG
+    environment:
+      DB_HOST: $DB_HOST
+      DB_PORT: $DB_PORT
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME
+      DB_DRIVER: $DB_DRIVER
+      DRUSH_OPTIONS_URI: "http://${PROJECT_BASE_URL}:8000"
+      PHP_FPM_CLEAR_ENV: "no"
+    volumes:
+      - ./:/var/www/html
+      # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      - ./docker-init/files/:/mnt/files
+
+  crond:
+    # image: wodby/drupal:$DRUPAL_TAG
+    environment:
+      CRONTAB: "0 * * * * drush -r /var/www/html/drupal/web cron"
+      PHP_FPM_CLEAR_ENV: "no"
+    volumes:
+      - ./:/var/www/html
+      # - ./settings.docker.php:/var/www/html/drupal/web/sites/default/settings.local.php
+      - ./docker-init/files/:/mnt/files
+
+  nginx:
+    ports:
+      - '8000:80'
+    environment:
+      NGINX_SERVER_ROOT: /var/www/html/drupal/web
+    volumes:
+      - ./:/var/www/html
+
+#  mailhog:
+#    image: mailhog/mailhog
+#    container_name: "${PROJECT_NAME}_mailhog"
+#    labels:
+#    - "traefik.http.services.${PROJECT_NAME}_mailhog.loadbalancer.server.port=8025"
+#    - "traefik.http.routers.${PROJECT_NAME}_mailhog.rule=Host(`mailhog.${PROJECT_BASE_URL}`)"
+
+#   traefik:
+#     image: traefik:v2.0
+#     container_name: "${PROJECT_NAME}_traefik"
+#     command: --api.insecure=true --providers.docker
+#     ports:
+#     - '8000:80'
+# #    - '8080:8080' # Dashboard
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+
+# volumes:
+#   codebase:
