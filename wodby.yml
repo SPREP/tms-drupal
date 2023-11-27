@@ -1,0 +1,13 @@
+pipeline:
+  - name: Remove composer dev packages
+    type: command
+    command: composer install --no-dev
+    directory: $APP_ROOT/drupal
+  - name: Clear cache
+    type: command
+    command: drush cr
+    directory: $HTTP_ROOT
+  - name: Apply database updates
+    type: command
+    command: drush updb -y
+    directory: $HTTP_ROOT
