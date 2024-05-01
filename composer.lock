@@ -1016,16 +1016,16 @@
         },
         {
             "name": "drupal/core-vendor-hardening",
-            "version": "10.0.10",
+            "version": "10.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-vendor-hardening.git",
-                "reference": "45e4f9ad3353531139bcdde280122b051df0dbe8"
+                "reference": "a524b4dd2480910a7b0dad20f2995daf204e8e56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-vendor-hardening/zipball/45e4f9ad3353531139bcdde280122b051df0dbe8",
-                "reference": "45e4f9ad3353531139bcdde280122b051df0dbe8",
+                "url": "https://api.github.com/repos/drupal/core-vendor-hardening/zipball/a524b4dd2480910a7b0dad20f2995daf204e8e56",
+                "reference": "a524b4dd2480910a7b0dad20f2995daf204e8e56",
                 "shasum": ""
             },
             "require": {
@@ -1041,6 +1041,7 @@
                     "Drupal\\Composer\\Plugin\\VendorHardening\\": "."
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -1048,7 +1049,11 @@
             "homepage": "https://www.drupal.org/project/drupal",
             "keywords": [
                 "drupal"
-            ]
+            ],
+            "support": {
+                "source": "https://github.com/drupal/core-vendor-hardening/tree/10.2.5"
+            },
+            "time": "2023-07-24T07:55:25+00:00"
         },
         {
             "name": "drupal/entity_reference_revisions",
@@ -7303,5 +7308,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
