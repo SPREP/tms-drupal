@@ -1,0 +1,21 @@
+uuid: ae6b8eee-f7e7-41a7-aa76-575326ef86d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.met_feel_earthquake.field_location
+  module:
+    - met_feel_earthquake
+    - options
+id: met_feel_earthquake.met_feel_earthquake.field_location
+field_name: field_location
+entity_type: met_feel_earthquake
+bundle: met_feel_earthquake
+label: Location
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,39 +1,10 @@
-<?php declare(strict_types = 1);
-
-use Drupal\Core\Database\Database;
+<?php
 
 /**
- * Implements hook_schema().
+ * @file
  */
-function met_tide_data_schema(){
-    $schema['tide_data'] = array(
-        'description' => 'The table for storing the tide data',
-        'fields' => array(
-            'id' => array(
-                'description' => 'Primary identifier for data',
-                'type' => 'serial',
-                'not null' => TRUE,
-                'unsigned' => TRUE,
-            ),
-            'data' => array(
-                'description' => 'JSON data',
-                'type' => 'text_long',
-                'not null' => TRUE,
-                'default' => '',
-            ),
-           'created' => array(
-                'description' => 'Created time',
-                'type' => 'datetime',
-                'length' => 255,
-                'not null' => TRUE,
-                'default' => '',
-            ),
-        ),
-        'primary key' => array('id'),
-    );
-    return $schema;
-}
 
+declare(strict_types=1);
 
 /**
  * @file
@@ -53,5 +24,3 @@ function met_tide_data_install(): void {
 function met_tide_data_uninstall(): void {
   \Drupal::messenger()->addStatus(t('Module MET Tide Data has been uninstalled.'));
 }
-
-

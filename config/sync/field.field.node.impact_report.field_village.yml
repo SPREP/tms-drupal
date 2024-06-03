@@ -1,0 +1,29 @@
+uuid: ea382096-1f97-461e-9d82-fcf0df74baca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_village
+    - node.type.impact_report
+    - taxonomy.vocabulary.cities
+id: node.impact_report.field_village
+field_name: field_village
+entity_type: node
+bundle: impact_report
+label: Village
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      cities: cities
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -44,6 +44,14 @@
         "paragi/php-websocket-client": "^1.0",
         "textalk/websocket": "1.0.*"
     },
+    "require-dev": {
+        "drupal/core-dev": "^10.0",
+        "drupal/devel": "^5.1",
+        "drush/drush": "^12.1",
+        "mglaman/drupal-check": "^1.2",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "weitzman/drupal-test-traits": "^2.2"
+    },
     "conflict": {
         "drupal/drupal": "*"
     },
@@ -58,9 +66,45 @@
             "phpstan/extension-installer": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "mglaman/composer-drupal-lenient": true,
-            "cweagans/composer-patches": true
+            "cweagans/composer-patches": true,
+            "php-http/discovery": true
         },
         "sort-packages": true
+    },
+    "scripts": {
+        "test_setup": [
+            "mkdir -p /tmp/b2b",
+            "rm -rf sites/simpletest/browser_output/* || true"
+        ],
+        "test": [
+            "@test_setup",
+            "Composer\\Config::disableProcessTimeout",
+            "phpunit -c /var/www/html/phpunit.xml"
+        ],
+        "test_single": [
+            "@test_setup",
+            "phpunit -c /var/www/html/phpunit.xml modules/custom/met_tests/tests/src/Functional/BundleAccessTest.php"
+        ],
+        "build": [
+            "Composer\\Config::disableProcessTimeout",
+            "sed -i 's|standard|minimal|g' ./config/sync/core.extension.yml",
+            "drush site:install minimal --existing-config --db-url=mysql://root:password@mariadb:3306/drupal -y"
+        ],
+        "php_compatibility": [
+            "phpcs -p --standard=PHPCompatibility --extensions=php,inc,module,install --runtime-set testVersion 8.3 modules/custom",
+            "phpcs -p --standard=PHPCompatibility --extensions=php,inc,theme,install --runtime-set testVersion 8.3 themes/custom"
+        ],
+        "coding_standards": [
+            "phpcs --standard=Drupal --extensions=php,module,inc,install modules/custom",
+            "phpcs --standard=Drupal themes/custom --ignore=*/node_modules/*,*.css,*.js,includes/*"
+        ],
+        "coding_standards_fix": [
+            "phpcbf --report=diff --extensions=php,module,inc,install --standard=Drupal modules/custom",
+            "phpcbf --report=diff --standard=Drupal themes/custom --ignore=*/node_modules/*,*.css,*.js,includes/*"
+        ],
+        "drupal_check": [
+            "drupal-check */custom"
+        ]
     },
     "extra": {
         "drupal-scaffold": {
@@ -118,6 +162,10 @@
                 "      composer remove drupal/core-project-message"
             ]
         },
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
         "patches": {
             "drupal/remote_image": {
                 "3439031 - Update core_version_requirement to enable installation by composer": "https://www.drupal.org/files/issues/2024-04-15/drupal10-3439031-7.patch"
@@ -128,9 +176,5 @@
                 "drupal/remote_image"
             ]
         }
-    },
-    "require-dev": {
-        "drupal/devel": "^5.1",
-        "drush/drush": "^12.1"
     }
 }

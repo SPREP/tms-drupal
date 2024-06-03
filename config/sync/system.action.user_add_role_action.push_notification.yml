@@ -1,0 +1,14 @@
+uuid: 4ae2236f-ece0-4134-9755-f9570d17f106
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.push_notification
+  module:
+    - user
+id: user_add_role_action.push_notification
+label: 'Add the Push notification role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: push_notification

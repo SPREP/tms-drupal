@@ -1,0 +1,29 @@
+uuid: 545d4487-4f3c-465b-a7ad-f07d42f21f0a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_event
+    - node.type.event
+    - node.type.feel_earthquake
+id: node.feel_earthquake.field_event
+field_name: field_event
+entity_type: node
+bundle: feel_earthquake
+label: Event
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      event: event
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

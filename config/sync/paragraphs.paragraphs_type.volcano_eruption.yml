@@ -1,0 +1,10 @@
+uuid: 3306cabb-085f-4a07-9cbf-9c7bf204bcf3
+langcode: en
+status: true
+dependencies: {  }
+id: volcano_eruption
+label: 'Volcano Eruption'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

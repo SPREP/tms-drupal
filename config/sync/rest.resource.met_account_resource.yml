@@ -1,0 +1,27 @@
+uuid: 90fa9566-ec10-4ba1-8a83-9bcd27e9c36a
+langcode: en
+status: false
+dependencies:
+  module:
+    - basic_auth
+    - met_api
+    - serialization
+id: met_account_resource
+plugin_id: met_account_resource
+granularity: method
+configuration:
+  GET:
+    supported_formats:
+      - json
+    supported_auth:
+      - basic_auth
+  POST:
+    supported_formats:
+      - json
+    supported_auth:
+      - basic_auth
+  PATCH:
+    supported_formats:
+      - json
+    supported_auth:
+      - basic_auth

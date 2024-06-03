@@ -1,0 +1,21 @@
+uuid: 09905a16-c962-4475-b877-4f5d53281374
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_reference_revisions
+    - met_warning
+    - paragraphs
+id: met_warning.field_language
+field_name: field_language
+entity_type: met_warning
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
+locked: false
+cardinality: 2
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

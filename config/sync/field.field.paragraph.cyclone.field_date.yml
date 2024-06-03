@@ -1,0 +1,21 @@
+uuid: 3c369358-58df-4392-9d18-a6324c043549
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_date
+    - paragraphs.paragraphs_type.cyclone
+  module:
+    - datetime
+id: paragraph.cyclone.field_date
+field_name: field_date
+entity_type: paragraph
+bundle: cyclone
+label: Date
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

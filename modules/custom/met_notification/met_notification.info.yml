@@ -3,3 +3,5 @@ type: module
 description: 'Create notification entity for the mobile app'
 package: MET
 core_version_requirement: ^10
+dependencies:
+  - options

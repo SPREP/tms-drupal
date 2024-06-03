@@ -6,6 +6,10 @@ services:
       # API Keys
       FB_SERVER_KEY: ''
       FB_SENDER_ID: ''
+      NIWA_URL: ''
+      NIWA_ENDPOINT: ''
+      OCEAN_URL: ''
+      OCEAN_TOKEN: ''
 
   mariadb:
     volumes:

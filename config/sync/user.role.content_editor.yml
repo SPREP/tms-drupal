@@ -1,0 +1,64 @@
+uuid: 1806dca7-1b33-43aa-8897-08380930ce95
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.plain_only
+    - node.type.article
+    - node.type.event
+    - node.type.event_report
+    - node.type.feel_earthquake
+    - node.type.impact_report
+    - node.type.page
+    - node.type.request_assistance
+    - taxonomy.vocabulary.tags
+  module:
+    - comment
+    - contextual
+    - file
+    - filter
+    - help
+    - node
+    - path
+    - system
+    - taxonomy
+    - toolbar
+    - tour
+_core:
+  default_config_hash: Wur9kcEOwY1Jal81NssKnz3RhVJxAvBwyWQBGcA_1Go
+id: content_editor
+label: 'Content editor'
+weight: 2
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access files overview'
+  - 'access help pages'
+  - 'access toolbar'
+  - 'access tour'
+  - 'administer url aliases'
+  - 'create article content'
+  - 'create event content'
+  - 'create event_report content'
+  - 'create feel_earthquake content'
+  - 'create impact_report content'
+  - 'create page content'
+  - 'create request_assistance content'
+  - 'create terms in tags'
+  - 'create url aliases'
+  - 'delete article revisions'
+  - 'delete own article content'
+  - 'delete own files'
+  - 'delete own page content'
+  - 'delete page revisions'
+  - 'edit own article content'
+  - 'edit own comments'
+  - 'edit own page content'
+  - 'edit terms in tags'
+  - 'revert all revisions'
+  - 'use text format plain_only'
+  - 'view all revisions'
+  - 'view own unpublished content'
+  - 'view the administration theme'

@@ -1,0 +1,23 @@
+uuid: 913ce8a9-bc0e-442f-9642-f17761c782aa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.tsunami.field_date
+    - paragraphs.paragraphs_type.tsunami
+  module:
+    - datetime
+id: paragraph.tsunami.default
+targetEntityType: paragraph
+bundle: tsunami
+mode: default
+content:
+  field_date:
+    type: datetime_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

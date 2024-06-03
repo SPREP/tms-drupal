@@ -1,0 +1,34 @@
+uuid: 595e1105-25d4-4cc3-b31e-1ecd6eba0666
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.event_report
+    - node.type.feel_earthquake
+    - rest.resource.met_event_report_api_resource
+  module:
+    - file
+    - met_feel_earthquake
+    - node
+    - path
+    - rest
+id: mobile_app
+label: 'Mobile App'
+weight: 4
+is_admin: null
+permissions:
+  - 'MET API permission for event report'
+  - 'access content overview'
+  - 'access files overview'
+  - 'administer feel earthquakes'
+  - 'administer url aliases'
+  - 'create event_report content'
+  - 'create url aliases'
+  - 'delete any event_report content'
+  - 'delete any feel_earthquake content'
+  - 'delete own event_report content'
+  - 'delete own feel_earthquake content'
+  - 'delete own files'
+  - 'edit own event_report content'
+  - 'view all revisions'
+  - 'view own unpublished content'

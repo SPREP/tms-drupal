@@ -1,0 +1,48 @@
+uuid: f8b99d1a-51ff-4063-bb7c-a99c4bd5cc18
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.earthquake.field_date
+    - field.field.paragraph.earthquake.field_depth
+    - field.field.paragraph.earthquake.field_location
+    - field.field.paragraph.earthquake.field_magnitude
+    - paragraphs.paragraphs_type.earthquake
+  module:
+    - datetime
+    - geolocation
+id: paragraph.earthquake.default
+targetEntityType: paragraph
+bundle: earthquake
+mode: default
+content:
+  field_date:
+    type: datetime_default
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_depth:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_location:
+    type: geolocation_latlng
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_magnitude:
+    type: number
+    weight: 0
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

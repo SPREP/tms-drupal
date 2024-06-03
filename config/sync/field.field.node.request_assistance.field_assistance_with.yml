@@ -1,0 +1,21 @@
+uuid: 43469ba5-6dce-4323-8e36-aca256fee4e2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_assistance_with
+    - node.type.request_assistance
+  module:
+    - options
+id: node.request_assistance.field_assistance_with
+field_name: field_assistance_with
+entity_type: node
+bundle: request_assistance
+label: 'Select what you need an assistance with from the list below'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

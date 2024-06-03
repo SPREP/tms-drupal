@@ -1,0 +1,21 @@
+uuid: c72154ee-d9bc-474c-ba43-db2f64b656ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_geo_location
+    - node.type.evacuation
+  module:
+    - geolocation
+id: node.evacuation.field_geo_location
+field_name: field_geo_location
+entity_type: node
+bundle: evacuation
+label: 'Safe Zone GEO Location'
+description: 'Safe Zone GEO Location for Evacuation Assembly point.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

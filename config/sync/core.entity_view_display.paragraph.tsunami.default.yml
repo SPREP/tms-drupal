@@ -1,0 +1,24 @@
+uuid: 205817ab-9d67-438b-8839-b4363abfeeeb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.tsunami.field_date
+    - paragraphs.paragraphs_type.tsunami
+  module:
+    - datetime
+id: paragraph.tsunami.default
+targetEntityType: paragraph
+bundle: tsunami
+mode: default
+content:
+  field_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

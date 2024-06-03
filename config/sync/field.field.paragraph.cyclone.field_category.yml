@@ -1,0 +1,23 @@
+uuid: d7059cea-a852-42be-9f16-7d61a7d2adc7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_category
+    - paragraphs.paragraphs_type.cyclone
+id: paragraph.cyclone.field_category
+field_name: field_category
+entity_type: paragraph
+bundle: cyclone
+label: Category
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

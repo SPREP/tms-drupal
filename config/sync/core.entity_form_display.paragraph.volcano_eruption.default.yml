@@ -1,0 +1,31 @@
+uuid: c79b2231-be75-42a9-994b-6a58961ff6b1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.volcano_eruption.field_date
+    - field.field.paragraph.volcano_eruption.field_location
+    - paragraphs.paragraphs_type.volcano_eruption
+  module:
+    - datetime
+    - geolocation
+id: paragraph.volcano_eruption.default
+targetEntityType: paragraph
+bundle: volcano_eruption
+mode: default
+content:
+  field_date:
+    type: datetime_default
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_location:
+    type: geolocation_latlng
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

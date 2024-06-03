@@ -1,0 +1,21 @@
+uuid: 5f8c57cb-5c42-45cf-89fc-0fab3e439c86
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_anyone_missing
+    - node.type.impact_report
+  module:
+    - options
+id: node.impact_report.field_anyone_missing
+field_name: field_anyone_missing
+entity_type: node
+bundle: impact_report
+label: 'Anyone missing'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

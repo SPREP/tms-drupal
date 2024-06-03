@@ -1,0 +1,23 @@
+uuid: 6c4277b2-27c7-4a7b-9c7b-1e6cd610dd57
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_magnitude
+    - paragraphs.paragraphs_type.earthquake
+id: paragraph.earthquake.field_magnitude
+field_name: field_magnitude
+entity_type: paragraph
+bundle: earthquake
+label: Magnitude
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: float

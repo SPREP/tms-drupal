@@ -1,0 +1,27 @@
+uuid: 8ed57155-bf38-4d11-818b-1f19e860716e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_csv_file
+    - node.type.weather_forecast_csv
+  module:
+    - file
+id: node.weather_forecast_csv.field_csv_file
+field_name: field_csv_file
+entity_type: node
+bundle: weather_forecast_csv
+label: 'CSV File'
+description: 'Please make sure the values you entered to the CSV are correct, incorrect value may cause an error in the mobile App.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: ''
+  file_extensions: csv
+  max_filesize: '5 MB'
+  description_field: false
+field_type: file

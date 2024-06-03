@@ -1,0 +1,21 @@
+uuid: 8c624259-aa60-497e-b7d8-d06d31ff7606
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.met_feel_earthquake.field_rate_earthquake
+  module:
+    - met_feel_earthquake
+    - options
+id: met_feel_earthquake.met_feel_earthquake.field_rate_earthquake
+field_name: field_rate_earthquake
+entity_type: met_feel_earthquake
+bundle: met_feel_earthquake
+label: 'Rate Earthquake'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

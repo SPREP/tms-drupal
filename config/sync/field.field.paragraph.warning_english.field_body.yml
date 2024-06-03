@@ -1,0 +1,19 @@
+uuid: 85e59a9a-14c3-46a0-bc89-187466c45a40
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_body
+    - paragraphs.paragraphs_type.warning_english
+id: paragraph.warning_english.field_body
+field_name: field_body
+entity_type: paragraph
+bundle: warning_english
+label: Body
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

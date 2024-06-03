@@ -1,0 +1,21 @@
+uuid: 175151ae-8dab-41ee-ac20-473f9abc64dc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_needed_now
+    - node.type.request_assistance
+  module:
+    - options
+id: node.request_assistance.field_needed_now
+field_name: field_needed_now
+entity_type: node
+bundle: request_assistance
+label: 'Select what you really needed now'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

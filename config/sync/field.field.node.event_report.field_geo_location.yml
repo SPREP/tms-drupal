@@ -1,0 +1,21 @@
+uuid: 23f74456-4d90-463b-a768-b57e335282f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_geo_location
+    - node.type.event_report
+  module:
+    - geolocation
+id: node.event_report.field_geo_location
+field_name: field_geo_location
+entity_type: node
+bundle: event_report
+label: 'GEO Location'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

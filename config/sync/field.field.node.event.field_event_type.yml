@@ -1,0 +1,52 @@
+uuid: e469b0ce-5c36-4c60-8fb6-92f668a0fdbf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_event_type
+    - node.type.event
+    - paragraphs.paragraphs_type.cyclone
+    - paragraphs.paragraphs_type.earthquake
+    - paragraphs.paragraphs_type.tsunami
+    - paragraphs.paragraphs_type.volcano_eruption
+  module:
+    - entity_reference_revisions
+id: node.event.field_event_type
+field_name: field_event_type
+entity_type: node
+bundle: event
+label: 'Event Type'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      earthquake: earthquake
+      cyclone: cyclone
+      tsunami: tsunami
+      volcano_eruption: volcano_eruption
+    negate: 0
+    target_bundles_drag_drop:
+      cyclone:
+        weight: 7
+        enabled: true
+      earthquake:
+        weight: 2
+        enabled: true
+      tsunami:
+        weight: 9
+        enabled: true
+      volcano_eruption:
+        weight: 10
+        enabled: true
+      warning_english:
+        weight: 11
+        enabled: false
+      warning_tongan:
+        weight: 12
+        enabled: false
+field_type: entity_reference_revisions

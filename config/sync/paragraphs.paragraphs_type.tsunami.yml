@@ -1,0 +1,10 @@
+uuid: 1b1dbcaf-0ce5-4396-8b0f-c888a7e86b76
+langcode: en
+status: true
+dependencies: {  }
+id: tsunami
+label: Tsunami
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

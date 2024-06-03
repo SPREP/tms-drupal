@@ -1,0 +1,36 @@
+uuid: de3e21c4-2c2a-4976-a05c-b1da8d655fc3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.event_report.body
+    - field.field.node.event_report.field_api_user
+    - field.field.node.event_report.field_geo_location
+    - field.field.node.event_report.field_images
+    - node.type.event_report
+  module:
+    - text
+    - user
+id: node.event_report.teaser
+targetEntityType: node
+bundle: event_report
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_api_user: true
+  field_geo_location: true
+  field_images: true

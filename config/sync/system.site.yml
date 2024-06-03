@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: VDJxTZtQR21qB4lvOq8zszJZLvLKrSPQpdn2E3T71Ww
+langcode: en
+uuid: 5bb79423-cfb5-4dd1-98fc-1efb2a54c645
+name: 'Tonga Meteorological Services'
+mail: support@met.gov.to
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node/164
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: ''

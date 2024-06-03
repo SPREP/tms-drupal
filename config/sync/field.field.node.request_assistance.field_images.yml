@@ -1,0 +1,24 @@
+uuid: e37eaf7d-54e8-4028-9a1e-b8b9fd4e9a79
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_images
+    - node.type.request_assistance
+  module:
+    - remote_image
+id: node.request_assistance.field_images
+field_name: field_images
+entity_type: node
+bundle: request_assistance
+label: Images
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  alt_attribute: 1
+  title_attribute: 1
+field_type: remote_image

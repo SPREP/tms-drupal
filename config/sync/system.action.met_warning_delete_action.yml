@@ -1,0 +1,13 @@
+uuid: 03f48df6-c09b-40fc-a8d9-3bd11669d8fb
+langcode: en
+status: true
+dependencies:
+  module:
+    - met_warning
+_core:
+  default_config_hash: NJpksfvOsr7Rfd-2ZiLI7n98mcojei3qXULXKr1oXqE
+id: met_warning_delete_action
+label: 'Delete met warnings'
+type: met_warning
+plugin: 'entity:delete_action:met_warning'
+configuration: {  }

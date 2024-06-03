@@ -1,0 +1,63 @@
+uuid: f03352c9-e783-4514-bb9b-3f9799f99399
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_impact_category
+field_name: field_impact_category
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: home
+      label: Home
+    -
+      value: school
+      label: School
+    -
+      value: airport
+      label: Airport
+    -
+      value: hospital
+      label: Hospital
+    -
+      value: wharf
+      label: Wharf
+    -
+      value: church
+      label: Church
+    -
+      value: business
+      label: Business
+    -
+      value: village
+      label: Village
+    -
+      value: harbour
+      label: Harbour
+    -
+      value: beach
+      label: Beach
+    -
+      value: road
+      label: Road
+    -
+      value: island
+      label: Island
+    -
+      value: plantation
+      label: Plantation
+    -
+      value: other
+      label: Other
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

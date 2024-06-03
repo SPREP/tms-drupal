@@ -1,0 +1,7 @@
+services:
+  php:
+    environment:
+      PHP_FPM_CLEAR_ENV: "no"
+      # API Keys
+      FB_SERVER_KEY: "${FB_SERVER_KEY}"
+      FB_SENDER_ID: $FB_SENDER_ID

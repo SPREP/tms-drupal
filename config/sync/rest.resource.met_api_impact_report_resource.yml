@@ -1,0 +1,22 @@
+uuid: c13150c4-4c3b-4742-8584-2d20ae6058aa
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - met_api
+    - serialization
+    - user
+id: met_api_impact_report_resource
+plugin_id: met_api_impact_report_resource
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

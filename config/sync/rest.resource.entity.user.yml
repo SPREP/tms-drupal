@@ -1,0 +1,22 @@
+uuid: 5c6148d1-195e-4b43-97d7-372620ca0aeb
+langcode: en
+status: false
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - serialization
+    - user
+id: entity.user
+plugin_id: 'entity:user'
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+    - PATCH
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
