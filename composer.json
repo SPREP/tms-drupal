@@ -43,7 +43,7 @@
         "drupal/views_autocomplete_filters": "^2.0",
         "mglaman/composer-drupal-lenient": "^1.0",
         "paragi/php-websocket-client": "^1.0",
-        "textalk/websocket": "1.0.*"
+        "textalk/websocket": "1.6.3"
     },
     "conflict": {
         "drupal/drupal": "*"
