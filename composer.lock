@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffd611d436ad419c242e19b1803edef0",
+    "content-hash": "f92eebfef04d63a5ba4be7c4c5dff9a0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1099,7 +1099,7 @@
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "10.2.6",
+            "version": "10.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -1143,7 +1143,7 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.2.6"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.2.7"
             },
             "time": "2024-04-09T07:27:23+00:00"
         },
@@ -13857,5 +13857,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
