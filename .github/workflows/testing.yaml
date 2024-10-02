@@ -27,8 +27,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
+      # Setup Lando
+      - name: Setup Lando
+        uses: lando/setup-lando@v3
+        
       # Boot Lando and set up Drupal
-      - run: lando setup
       - run: lando start
       - run: lando composer install
       - run: lando composer require --dev drupal/core-dev
