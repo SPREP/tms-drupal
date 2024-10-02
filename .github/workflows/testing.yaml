@@ -29,7 +29,7 @@ jobs:
       
       - uses: KengoTODA/actions-setup-docker-compose@v1
         with:
-          version: '4.16.2' # the full version of `docker-compose` command   
+          version: '2.14.2' # the full version of `docker-compose` command   
       # Boot Lando and set up Drupal
       - run: lando setup
       - run: lando start
