@@ -4,7 +4,7 @@ on:
   - pull_request
 
 env:
-  LANDO_VERSION: v3.18.0
+  LANDO_VERSION: v3.21.0
 
 jobs:
   build-test:
