@@ -4,7 +4,7 @@ on:
   - pull_request
 
 env:
-  LANDO_VERSION: v3.22.0-beta.5
+  LANDO_VERSION: v3.21.0
 
 jobs:
   build-test:
@@ -26,10 +26,6 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
-
-      # Setup Lando
-      - name: Setup Lando
-        uses: lando/setup-lando@v3
         
       # Boot Lando and set up Drupal
       - run: lando start
