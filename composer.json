@@ -44,7 +44,7 @@
         "drupal/views_data_export": "^1.4",
         "mglaman/composer-drupal-lenient": "^1.0",
         "paragi/php-websocket-client": "^1.0",
-        "textalk/websocket": "1.0.*"
+        "textalk/websocket": "1.6.3"
     },
     "conflict": {
         "drupal/drupal": "*"
