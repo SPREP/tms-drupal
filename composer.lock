@@ -3370,16 +3370,16 @@
         },
         {
             "name": "mglaman/composer-drupal-lenient",
-            "version": "1.0.4",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mglaman/composer-drupal-lenient.git",
-                "reference": "6f9e03f238403b53c04f26a24dd8777f62135213"
+                "reference": "78aa8780daa200d1e0bb427e2e0628c4e807c6de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mglaman/composer-drupal-lenient/zipball/6f9e03f238403b53c04f26a24dd8777f62135213",
-                "reference": "6f9e03f238403b53c04f26a24dd8777f62135213",
+                "url": "https://api.github.com/repos/mglaman/composer-drupal-lenient/zipball/78aa8780daa200d1e0bb427e2e0628c4e807c6de",
+                "reference": "78aa8780daa200d1e0bb427e2e0628c4e807c6de",
                 "shasum": ""
             },
             "require": {
@@ -3416,7 +3416,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mglaman/composer-drupal-lenient/issues",
-                "source": "https://github.com/mglaman/composer-drupal-lenient/tree/1.0.4"
+                "source": "https://github.com/mglaman/composer-drupal-lenient/tree/1.0.6"
             },
             "funding": [
                 {
@@ -3424,7 +3424,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-12-07T17:56:20+00:00"
+            "time": "2024-11-02T00:48:53+00:00"
         },
         {
             "name": "paragi/php-websocket-client",
@@ -14070,10 +14070,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
