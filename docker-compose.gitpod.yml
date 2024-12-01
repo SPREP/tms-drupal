@@ -1,0 +1,16 @@
+services:
+  php:
+    user: root
+    command: "php-fpm -R"
+    environment:
+      PHP_FPM_USER: root
+      PHP_FPM_GROUP: root
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: "${PROJECT_NAME}_mailhog"
+    ports:
+      - 8025:8025
+    labels:
+    - "traefik.http.services.${PROJECT_NAME}_mailhog.loadbalancer.server.port=8025"
+    - "traefik.http.routers.${PROJECT_NAME}_mailhog.rule=Host(`mailhog.${PROJECT_BASE_URL}`)"
