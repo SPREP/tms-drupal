@@ -53,5 +53,16 @@ docker-compose.override.yml
 .ddev/
 */contrib/
 
-# Ignore IDE settings
+# ignore contrib modules
+modules/contrib/
+
+# ignore ide settings
 .vscode/
+.idea/
+.env
+
+# ignore sensitive configuration data
+config/site/met_spc.settings.yml
+
+# ignore some machine files
+*.DS_Store

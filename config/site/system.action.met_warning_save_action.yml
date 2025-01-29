@@ -1,0 +1,13 @@
+uuid: 313e6d8f-1c6e-497e-9053-65a8330cd361
+langcode: en
+status: true
+dependencies:
+  module:
+    - met_warning
+_core:
+  default_config_hash: QUJ3A7mm4LsRhNvNX2WteIkNmqHPlQ60Xx9pLKwlQF0
+id: met_warning_save_action
+label: 'Save met warnings'
+type: met_warning
+plugin: 'entity:save_action:met_warning'
+configuration: {  }

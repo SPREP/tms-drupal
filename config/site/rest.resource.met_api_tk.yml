@@ -1,0 +1,23 @@
+uuid: 52acbcca-57e3-4e04-a686-7778f7366626
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - met_api
+    - serialization
+    - user
+id: met_api_tk
+plugin_id: met_api_tk
+granularity: resource
+configuration:
+  methods:
+    - GET
+    - POST
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

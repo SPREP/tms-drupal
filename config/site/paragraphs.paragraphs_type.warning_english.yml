@@ -1,0 +1,10 @@
+uuid: 65ccb9a7-be27-436e-ae5a-c57f22d96862
+langcode: en
+status: true
+dependencies: {  }
+id: warning_english
+label: 'Warning English'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

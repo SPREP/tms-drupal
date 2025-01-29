@@ -1,0 +1,14 @@
+uuid: 1dcdef4a-519a-49bb-baf5-eb03f2672acf
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.push_notification
+  module:
+    - user
+id: user_remove_role_action.push_notification
+label: 'Remove the Push notification role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: push_notification

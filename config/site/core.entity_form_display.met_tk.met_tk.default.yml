@@ -1,0 +1,87 @@
+uuid: 3ddcb2ff-81dc-4d73-9b86-6942b1d6a510
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.met_tk.met_tk.field_geo_location
+    - field.field.met_tk.met_tk.field_indicator
+    - field.field.met_tk.met_tk.field_photo
+    - field.field.met_tk.met_tk.field_time
+  module:
+    - geolocation
+    - met_tk
+    - remote_image
+    - text
+id: met_tk.met_tk.default
+targetEntityType: met_tk
+bundle: met_tk
+mode: default
+content:
+  description:
+    type: text_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_geo_location:
+    type: geolocation_latlng
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_indicator:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_photo:
+    type: remote_image
+    weight: 4
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+      placeholder_alt: ''
+    third_party_settings: {  }
+  field_time:
+    type: string_textfield
+    weight: 5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  label:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 6
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 7
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true

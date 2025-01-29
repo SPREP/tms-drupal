@@ -1,0 +1,36 @@
+uuid: 0ee48611-4271-44d7-bfc0-1deb0dae88cc
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_rate_earthquake
+field_name: field_rate_earthquake
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: weak
+      label: Weak
+    -
+      value: light
+      label: Light
+    -
+      value: moderate
+      label: Moderate
+    -
+      value: strong
+      label: Strong
+    -
+      value: severe
+      label: Severe
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

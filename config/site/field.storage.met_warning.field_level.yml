@@ -1,0 +1,30 @@
+uuid: c5d9890e-c092-47b0-a4dc-10bbba9b4207
+langcode: en
+status: true
+dependencies:
+  module:
+    - met_warning
+    - options
+id: met_warning.field_level
+field_name: field_level
+entity_type: met_warning
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '1'
+      label: Low
+    -
+      value: '2'
+      label: Medium
+    -
+      value: '3'
+      label: High
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "0e650a43-5e58-4be9-bbfb-92220f396a65",
+		"name": "API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12968598"
+	},
+	"item": [
+		{
+			"name": "Weather Request Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response body contains 10days field\", function(){",
+							"    pm.response.to.have.jsonBody('10days');",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/weather?_format=json",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "_format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MET Warning Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check values title and body\", function() {",
+							"    pm.expect(pm.response.json().body).to.not.eql(null);",
+							"    pm.expect(pm.response.json().title).to.not.eql(\"\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/warning/en?_format=json",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"warning",
+						"en"
+					],
+					"query": [
+						{
+							"key": "_format",
+							"value": "json"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

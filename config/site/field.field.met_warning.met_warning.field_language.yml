@@ -1,0 +1,48 @@
+uuid: ebced945-677b-470c-86b0-c5eac53dad41
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.met_warning.field_language
+    - paragraphs.paragraphs_type.warning_english
+    - paragraphs.paragraphs_type.warning_tongan
+  module:
+    - entity_reference_revisions
+    - met_warning
+id: met_warning.met_warning.field_language
+field_name: field_language
+entity_type: met_warning
+bundle: met_warning
+label: Language
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      warning_english: warning_english
+      warning_tongan: warning_tongan
+    negate: 0
+    target_bundles_drag_drop:
+      cyclone:
+        weight: 7
+        enabled: false
+      earthquake:
+        weight: 8
+        enabled: false
+      tsunami:
+        weight: 9
+        enabled: false
+      volcano_eruption:
+        weight: 10
+        enabled: false
+      warning_english:
+        weight: 11
+        enabled: true
+      warning_tongan:
+        weight: 12
+        enabled: true
+field_type: entity_reference_revisions

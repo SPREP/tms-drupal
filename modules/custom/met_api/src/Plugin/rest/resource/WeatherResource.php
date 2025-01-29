@@ -76,6 +76,7 @@ class WeatherResource extends ResourceBase {
   public function get() {
 
     //This is the weather forecast that upload by TMS in CSV file format.
+
     $csv_file_name = 'weather.csv';
     $absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
     $file = fopen($absolute_path, "r");
@@ -176,7 +177,6 @@ class WeatherResource extends ResourceBase {
       }
     }
     fclose($file);
-
 
     //Read tide information
     $csv_file_name = 'tide.csv';

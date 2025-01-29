@@ -1,0 +1,48 @@
+uuid: 3bad21dc-c711-4f9e-9c5b-c8868a475641
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.cyclone.field_category
+    - field.field.paragraph.cyclone.field_date
+    - field.field.paragraph.cyclone.field_location
+    - field.field.paragraph.cyclone.field_name
+    - paragraphs.paragraphs_type.cyclone
+  module:
+    - datetime
+    - geolocation
+id: paragraph.cyclone.default
+targetEntityType: paragraph
+bundle: cyclone
+mode: default
+content:
+  field_category:
+    type: number
+    weight: 0
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_date:
+    type: datetime_default
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_location:
+    type: geolocation_latlng
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_name:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

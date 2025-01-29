@@ -12,8 +12,8 @@ final class MetSpcController extends ControllerBase {
 
   //Nuku'alofa and Neiafu data endpoint
   private $data_endpoint_base_url;
-  public $vv = 'INT_TP025';
-  public $tbu = 'INT_TP053';
+  public $tbu = 'INT_TP025';
+  public $vv = 'INT_TP053';
   private $token;
 
 

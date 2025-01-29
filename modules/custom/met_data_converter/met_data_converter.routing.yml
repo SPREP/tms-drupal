@@ -8,3 +8,11 @@ met_data_converter.example:
   options:
     no_cache: 'TRUE'
 
+
+met_data_converter.met_data_weather:
+  path: '/met-data-weather/run'
+  defaults:
+    _title: 'Met Data Weather'
+    _controller: '\Drupal\met_data_converter\Controller\MetDataWeatherController'
+  requirements:
+    _permission: 'access content'

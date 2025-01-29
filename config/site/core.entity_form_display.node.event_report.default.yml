@@ -1,0 +1,107 @@
+uuid: 4c447f9d-048c-4f8e-98bd-651107a58b95
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.event_report.body
+    - field.field.node.event_report.field_api_user
+    - field.field.node.event_report.field_geo_location
+    - field.field.node.event_report.field_images
+    - node.type.event_report
+  module:
+    - geolocation
+    - path
+    - remote_image
+    - text
+id: node.event_report.default
+targetEntityType: node
+bundle: event_report
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 121
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_api_user:
+    type: entity_reference_autocomplete
+    weight: 123
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_geo_location:
+    type: geolocation_latlng
+    weight: 124
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_images:
+    type: remote_image
+    weight: 122
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+      placeholder_alt: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

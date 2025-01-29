@@ -1,0 +1,21 @@
+uuid: 163af230-e8a7-4635-baa9-7c4b5c084aa4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_geo_location
+    - node.type.feel_earthquake
+  module:
+    - geolocation
+id: node.feel_earthquake.field_geo_location
+field_name: field_geo_location
+entity_type: node
+bundle: feel_earthquake
+label: 'GEO Location'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geolocation

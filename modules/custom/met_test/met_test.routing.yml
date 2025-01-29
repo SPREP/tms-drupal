@@ -1,0 +1,7 @@
+met_test.example:
+  path: '/met-test/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\met_test\Controller\MetTestController'
+  requirements:
+    _permission: 'access content'

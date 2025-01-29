@@ -1,0 +1,30 @@
+uuid: 32c6831c-3490-4509-99bf-a43bfe1a0a75
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.met_tk.field_indicator
+    - taxonomy.vocabulary.tk_indicators
+  module:
+    - met_tk
+id: met_tk.met_tk.field_indicator
+field_name: field_indicator
+entity_type: met_tk
+bundle: met_tk
+label: Indicator
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tk_indicators: tk_indicators
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

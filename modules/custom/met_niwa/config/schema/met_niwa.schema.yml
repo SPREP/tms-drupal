@@ -9,3 +9,15 @@ met_niwa.settings:
     endpoint:
       type: string
       label: 'Endpoint'
+    tbu:
+      type: string
+      label: 'Tongatapu'
+    hpp:
+      type: string
+      label: 'Haapai'
+    vv:
+      type: string
+      label: 'Vavau'
+    eua:
+      type: string
+      label: 'Eua'

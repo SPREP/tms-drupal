@@ -1,0 +1,21 @@
+uuid: 8a672c5c-634a-4642-b4a9-fbaa9e3b6229
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_have_house_shelter
+    - node.type.request_assistance
+  module:
+    - options
+id: node.request_assistance.field_have_house_shelter
+field_name: field_have_house_shelter
+entity_type: node
+bundle: request_assistance
+label: 'Do you have house/shelter'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

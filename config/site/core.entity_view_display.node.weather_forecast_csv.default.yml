@@ -1,0 +1,38 @@
+uuid: f62352fb-f3be-40f0-b1b6-6a17d2d5a430
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.weather_forecast_csv.body
+    - field.field.node.weather_forecast_csv.field_csv_file
+    - node.type.weather_forecast_csv
+  module:
+    - file
+    - text
+    - user
+id: node.weather_forecast_csv.default
+targetEntityType: node
+bundle: weather_forecast_csv
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_csv_file:
+    type: file_default
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

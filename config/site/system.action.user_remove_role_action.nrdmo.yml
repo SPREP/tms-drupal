@@ -1,0 +1,14 @@
+uuid: 7c49da63-9b78-4344-b8ac-4b3e5108c70c
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.nrdmo
+  module:
+    - user
+id: user_remove_role_action.nrdmo
+label: 'Remove the NRDMO role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: nrdmo

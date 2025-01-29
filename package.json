@@ -1,0 +1,14 @@
+{
+  "name": "tms-drupal",
+  "version": "1.0.0",
+  "description": "TMS API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "newman": "^6.1.3"
+  }
+}

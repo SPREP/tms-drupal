@@ -1,0 +1,19 @@
+uuid: 3ee53e53-c5f7-444b-ae28-71066e57df04
+langcode: en
+status: true
+dependencies:
+  module:
+    - remote_image
+    - user
+id: user.field_user_picture
+field_name: field_user_picture
+entity_type: user
+type: remote_image
+settings: {  }
+module: remote_image
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

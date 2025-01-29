@@ -51,6 +51,7 @@ services:
     - ./:/var/www/html:cached
     - ./settings.docker.php:/var/www/conf/settings.docker.php
     - ./docker-init/files/:/mnt/files
+    - ~/.composer/:/home/wodby/.composer/ #composer cache
 ## Alternative for macOS users: Mutagen https://wodby.com/docs/stacks/drupal/local#docker-for-mac
 #    - drupal:/var/www/html
 ## For XHProf and Xdebug profiler traces
@@ -117,9 +118,12 @@ services:
       APACHE_LOG_LEVEL: debug
       APACHE_BACKEND_HOST: php
       APACHE_VHOST_PRESET: php
-      APACHE_DOCUMENT_ROOT: /var/www/html
+      APACHE_DOCUMENT_ROOT: ${DRUPAL_ROOT}
     volumes:
     - ./:/var/www/html:cached
+  # # Alternative for macOS users: Mutagen https://wodby.com/docs/stacks/drupal/local#docker-for-mac
+  #   - drupal:/var/www/html
+
     labels:
     - "traefik.http.routers.${PROJECT_NAME}_apache.rule=Host(`${PROJECT_BASE_URL}`)"
 
@@ -280,6 +284,12 @@ services:
     - "--log-path=/tmp/chromedriver.log"
     - "--verbose"
     - "--whitelisted-ips="
+
+  gitleaks:
+    image: zricethezav/gitleaks:latest
+    volumes:
+      - ./:/repo
+    command: detect -s /repo --baseline-path=/repo/.gitleaks/baseline.json --report-path=/repo/.gitleaks/findings.json -c /repo/.gitleaks/gitleaks.toml
 
   traefik:
     image: traefik:v2.0

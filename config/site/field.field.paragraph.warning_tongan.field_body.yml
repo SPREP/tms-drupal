@@ -1,0 +1,19 @@
+uuid: 69fc5078-2a47-420a-8d39-0d77e9b2e63f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_body
+    - paragraphs.paragraphs_type.warning_tongan
+id: paragraph.warning_tongan.field_body
+field_name: field_body
+entity_type: paragraph
+bundle: warning_tongan
+label: Body
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

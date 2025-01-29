@@ -1,0 +1,82 @@
+10days
+tbu, 2, Monday, 38, 25
+tbu, 1, Tuesday, 22, 19
+tbu, 3, Wednesday, 29, 18
+tbu, 5, Thursday, 28, 21
+tbu, 1, Friday, 21, 20
+tbu, 1, Monday, 31, 18
+tbu, 7, Tuesday, 20, 19
+tbu, 2, Wednesday, 27, 25
+tbu, 2, Thursday, 30, 22
+tbu, 1, Friday, 21, 12
+
+vv, 2, Monday, 25, 10
+vv, 1, Tuesday, 21, 12
+vv, 3, Wednesday, 27, 15
+vv, 1, Thursday, 25, 11
+vv, 2, Friday, 26, 10
+vv, 2, Monday, 25, 10
+vv, 1, Tuesday, 21, 12
+vv, 3, Wednesday, 27, 15
+vv, 1, Thursday, 25, 11
+vv, 2, Friday, 26, 10
+
+hpp, 2, Monday, 25, 10
+hpp, 1, Tuesday, 21, 12
+hpp, 3, Wednesday, 27, 15
+hpp, 1, Thursday, 25, 11
+hpp, 2, Friday, 26, 10
+hpp, 2, Monday, 25, 10
+hpp, 1, Tuesday, 21, 12
+hpp, 3, Wednesday, 27, 15
+hpp, 1, Thursday, 25, 11
+hpp, 2, Friday, 26, 10
+
+nfo, 2, Monday, 25, 10
+nfo, 1, Tuesday, 21, 12
+nfo, 3, Wednesday, 27, 15
+nfo, 1, Thursday, 25, 11
+nfo, 2, Friday, 26, 10
+nfo, 2, Monday, 25, 10
+nfo, 1, Tuesday, 21, 12
+nfo, 3, Wednesday, 27, 15
+nfo, 1, Thursday, 25, 11
+nfo, 2, Friday, 26, 10
+
+ntt, 2, Monday, 25, 10
+ntt, 1, Tuesday, 21, 12
+ntt, 3, Wednesday, 27, 15
+ntt, 1, Thursday, 25, 11
+ntt, 2, Friday, 26, 10
+ntt, 2, Monday, 25, 10
+ntt, 1, Tuesday, 21, 12
+ntt, 3, Wednesday, 27, 15
+ntt, 1, Thursday, 25, 11
+ntt, 2, Friday, 26, 10
+
+eua, 2, Monday, 25, 10
+eua, 1, Tuesday, 21, 12
+eua, 3, Wednesday, 27, 15
+eua, 1, Thursday, 25, 11
+eua, 2, Friday, 26, 10
+eua, 2, Monday, 25, 10
+eua, 1, Tuesday, 21, 12
+eua, 3, Wednesday, 27, 15
+eua, 1, Thursday, 25, 11
+eua, 2, Friday, 26, 10
+
+3hrs
+tbu,2, Partly Cloudy, 26, SE, 5-15, 10000
+vv, 2, Partly Cloudy, 22, SE, 5-15, 10000
+hpp,2, Partly Cloudy, 25, SE, 5-15, 10000
+nfo,2, Partly Cloudy, 29, SE, 5-15, 10000
+ntt,1, Partly Cloudy, 30, SE, 5-15, 10000
+eua,3, Partly Cloudy, 21, SE, 5-15, 10000
+
+24hrs
+tbu, 2, Partly Cloudy, 25, 17, SE, 10-15, Strong Wind Warning for coastal waters and small craft advisory
+vv, 2, Partly Cloudy, 25, 17, SE, 10-15, Strong Wind Warning for coastal waters and small craft advisory
+hpp, 2, Partly Cloudy, 25, 17, SE, 10-15, Strong Wind Warning for coastal waters and small craft advisory
+nfo, 2, Partly Cloudy, 25, 17, SE, 10-15, Strong Wind Warning for coastal waters and small craft advisory
+ntt, 2, Partly Cloudy, 25, 17, SE, 10-15, Strong Wind Warning for coastal waters and small craft advisory
+eua, 2, Partly Cloudy, 25, 17, SE, 10-15, Strong Wind Warning for coastal waters and small craft advisory

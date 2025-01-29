@@ -1,0 +1,24 @@
+uuid: d8a65307-c82a-4a77-a546-7fc6f2062928
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.met_tk.field_photo
+  module:
+    - met_tk
+    - remote_image
+id: met_tk.met_tk.field_photo
+field_name: field_photo
+entity_type: met_tk
+bundle: met_tk
+label: Photo
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  alt_attribute: 0
+  title_attribute: 0
+field_type: remote_image

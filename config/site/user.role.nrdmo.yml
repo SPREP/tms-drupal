@@ -1,0 +1,12 @@
+uuid: 142f2d12-c8fe-4a5c-87a4-65faa9d43040
+langcode: en
+status: true
+dependencies:
+  module:
+    - file
+id: nrdmo
+label: NRDMO
+weight: 7
+is_admin: null
+permissions:
+  - 'delete own files'

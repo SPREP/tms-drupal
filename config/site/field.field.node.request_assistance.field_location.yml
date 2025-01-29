@@ -1,0 +1,21 @@
+uuid: b55f780c-630b-450f-93c6-422ff54a230f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_location
+    - node.type.request_assistance
+  module:
+    - options
+id: node.request_assistance.field_location
+field_name: field_location
+entity_type: node
+bundle: request_assistance
+label: Location
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

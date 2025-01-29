@@ -1,0 +1,8 @@
+uuid: f7b88ac8-cc8f-4e8a-a400-62aef05c185f
+langcode: en
+status: true
+dependencies: {  }
+name: 'TK Indicators'
+vid: tk_indicators
+description: 'Traditional Knowledge Indicators'
+weight: 0

@@ -1,0 +1,21 @@
+uuid: 21c72c9a-dfe8-44d3-b533-c197360d2c80
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_impacted_items
+    - node.type.impact_report
+  module:
+    - options
+id: node.impact_report.field_impacted_items
+field_name: field_impacted_items
+entity_type: node
+bundle: impact_report
+label: 'Impacted items'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

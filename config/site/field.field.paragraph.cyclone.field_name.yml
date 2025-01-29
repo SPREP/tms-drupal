@@ -1,0 +1,19 @@
+uuid: 924fc23b-8bdc-4667-bbd0-17ea4bd5cc17
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_name
+    - paragraphs.paragraphs_type.cyclone
+id: paragraph.cyclone.field_name
+field_name: field_name
+entity_type: paragraph
+bundle: cyclone
+label: Name
+description: 'Name of the cyclone'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -31,6 +31,7 @@
         "drupal/jquery_ui": "^1.6",
         "drupal/jquery_ui_autocomplete": "^2.0",
         "drupal/mailsystem": "^4.4",
+        "drupal/node_view_permissions": "^1.6",
         "drupal/paragraphs": "^1.15",
         "drupal/real_aes": "^2.5",
         "drupal/recaptcha": "^3.2",
@@ -40,6 +41,8 @@
         "drupal/sendgrid_mailer": "^1.1",
         "drupal/textfield_counter": "^2.3",
         "drupal/views_autocomplete_filters": "^2.0",
+        "drupal/views_data_export": "^1.4",
+        "google/cloud-firestore": "^0.1.0",
         "mglaman/composer-drupal-lenient": "^1.0",
         "paragi/php-websocket-client": "^1.0",
         "textalk/websocket": "1.0.*"
@@ -85,7 +88,7 @@
             "@test_setup",
             "phpunit -c /var/www/html/phpunit.xml modules/custom/met_tests/tests/src/Functional/BundleAccessTest.php"
         ],
-        "build": [
+        "build-old": [
             "Composer\\Config::disableProcessTimeout",
             "sed -i 's|standard|minimal|g' ./config/sync/core.extension.yml",
             "drush site:install minimal --existing-config --db-url=mysql://root:password@mariadb:3306/drupal -y"
@@ -104,6 +107,15 @@
         ],
         "drupal_check": [
             "drupal-check */custom"
+        ],
+        "test": "phpunit",
+        "test-niwa-module": "vendor/bin/phpunit -c core modules/custom/met_niwa",
+        "build": [
+            "drush si -y",
+            "drush cset system.site uuid \"5bb79423-cfb5-4dd1-98fc-1efb2a54c645\" -y",
+            "drush entity:delete shortcut_set",
+            "drush en paragraphs met_warning met_tk -y",
+            "drush cim --source=config/site -y"
         ]
     },
     "extra": {
@@ -169,6 +181,9 @@
         "patches": {
             "drupal/remote_image": {
                 "3439031 - Update core_version_requirement to enable installation by composer": "https://www.drupal.org/files/issues/2024-04-15/drupal10-3439031-7.patch"
+            },
+            "drupal/firebase": {
+                "3163053 - Fix to use http v1" : "https://www.drupal.org/files/issues/2024-07-08/Migrate_from_legacy_HTTP_to_HTTP_v1-3163053-v32.patch"
             }
         },
         "drupal-lenient": {

@@ -4,12 +4,13 @@ services:
     environment:
       PHP_FPM_CLEAR_ENV: "no"
       # API Keys
-      FB_SERVER_KEY: ''
-      FB_SENDER_ID: ''
-      NIWA_URL: ''
-      NIWA_ENDPOINT: ''
-      OCEAN_URL: ''
-      OCEAN_TOKEN: ''
+      FB_SERVER_KEY: 'CHANGE_ME'
+      FB_SENDER_ID: 'CHANGE_ME'
+      NIWA_URL: 'CHANGE_ME'
+      NIWA_ENDPOINT: 'CHANGE_ME'
+      OCEAN_URL: 'CHANGE_ME'
+      OCEAN_TOKEN: 'CHANGE_ME'
+      SENDGRID_KEY: 'CHANGE_ME'
 
   mariadb:
     volumes:

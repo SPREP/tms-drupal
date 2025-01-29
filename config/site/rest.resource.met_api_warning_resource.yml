@@ -1,0 +1,21 @@
+uuid: c1b83133-42ba-4e01-9013-3631ee1b40a4
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - met_api
+    - serialization
+    - user
+id: met_api_warning_resource
+plugin_id: met_api_warning_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+    - xml
+  authentication:
+    - basic_auth
+    - cookie

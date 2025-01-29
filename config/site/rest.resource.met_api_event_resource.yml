@@ -1,0 +1,22 @@
+uuid: 1172ba7f-4af2-42dc-9bb2-db434e0854cc
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - met_api
+    - serialization
+    - user
+id: met_api_event_resource
+plugin_id: met_api_event_resource
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - json
+  authentication:
+    - basic_auth
+    - cookie

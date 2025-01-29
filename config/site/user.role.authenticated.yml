@@ -1,0 +1,43 @@
+uuid: 11a50e7b-ff3d-4bdd-83f7-4e720a69f72a
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.plain_only
+    - node.type.event_report
+    - node.type.feel_earthquake
+    - node.type.impact_report
+    - node.type.request_assistance
+  module:
+    - comment
+    - contact
+    - file
+    - filter
+    - met_tk
+    - node
+    - search
+    - shortcut
+    - system
+_core:
+  default_config_hash: I44QAB4es39lNzMQWiJLq2dfjX7VRSOzT_5KzAcUq_M
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'create event_report content'
+  - 'create feel_earthquake content'
+  - 'create impact_report content'
+  - 'create met tk'
+  - 'create request_assistance content'
+  - 'delete own files'
+  - 'post comments'
+  - 'search content'
+  - 'skip comment approval'
+  - 'use text format basic_html'
+  - 'use text format plain_only'

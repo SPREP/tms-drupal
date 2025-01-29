@@ -2,7 +2,7 @@ name: met-api
 recipe: drupal10
 config:
   webroot: .
-  php: 8.2
+  php: 8.1
 services:
   db:
     type: 'mysql:5.7'

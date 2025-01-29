@@ -1,0 +1,19 @@
+uuid: 24e59256-f688-4cc1-b73f-b62019675260
+langcode: en
+status: true
+dependencies:
+  module:
+    - met_tk
+    - remote_image
+id: met_tk.field_photo
+field_name: field_photo
+entity_type: met_tk
+type: remote_image
+settings: {  }
+module: remote_image
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

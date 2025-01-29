@@ -1,0 +1,21 @@
+uuid: b7684091-b569-4d27-8658-c6c216510536
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rate_earthquake
+    - node.type.feel_earthquake
+  module:
+    - options
+id: node.feel_earthquake.field_rate_earthquake
+field_name: field_rate_earthquake
+entity_type: node
+bundle: feel_earthquake
+label: 'Rate Earthquake'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

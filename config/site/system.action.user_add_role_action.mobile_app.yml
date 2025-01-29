@@ -1,0 +1,14 @@
+uuid: 966ea781-fd1a-46ef-8ce0-62950f1c5e7a
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.mobile_app
+  module:
+    - user
+id: user_add_role_action.mobile_app
+label: 'Add the Mobile App role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: mobile_app

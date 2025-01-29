@@ -1,0 +1,6 @@
+url: 'https://restservice-neon1.niwa.co.nz:443/NeonRESTService.svc/'
+endpoint: 'GetSession?u=TMS-Mobile-App&p=TMSMobile1!'
+tbu: '7885'
+hpp: '7624'
+vv: '7633'
+eua: '7619'

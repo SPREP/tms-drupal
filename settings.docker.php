@@ -4,8 +4,6 @@
  * @file
  */
 
-$settings['config_sync_directory'] = 'config/sync';
-
 $databases['default']['default'] = [
   'driver' => getenv('DB_DRIVER'),
   'database' => getenv('DB_NAME'),

@@ -1,0 +1,75 @@
+uuid: 7361bd3c-43c7-40ab-a027-b318417bbbbb
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_impacted_items
+field_name: field_impacted_items
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: watertank
+      label: 'Water tank'
+    -
+      value: boat
+      label: Boat
+    -
+      value: electricity
+      label: Electricity
+    -
+      value: rooftop
+      label: 'Roof top'
+    -
+      value: toilet
+      label: Toilet
+    -
+      value: telephone
+      label: Telephone
+    -
+      value: machinery
+      label: Machinery
+    -
+      value: plane
+      label: Plane
+    -
+      value: phone
+      label: Phone
+    -
+      value: nohouse
+      label: 'No House'
+    -
+      value: windows
+      label: Windows
+    -
+      value: gas
+      label: Gas
+    -
+      value: walls
+      label: Walls
+    -
+      value: animals
+      label: Animals
+    -
+      value: fueloil
+      label: Fuel/Oil
+    -
+      value: vehicles
+      label: Vehicles
+    -
+      value: water
+      label: Water
+    -
+      value: internet
+      label: Internet
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

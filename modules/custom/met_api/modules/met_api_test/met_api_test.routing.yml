@@ -1,0 +1,7 @@
+met_api_test.example:
+  path: '/met-api-test/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\met_api_test\Controller\MetApiTestController'
+  requirements:
+    _permission: 'access content'

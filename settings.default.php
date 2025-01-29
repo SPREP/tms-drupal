@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 if (file_exists(__DIR__ . '/default.settings.php')) {
   include __DIR__ . '/default.settings.php';
 }
@@ -23,7 +27,7 @@ if (file_exists(__DIR__ . '/default.settings.php')) {
  */
 $settings['hash_salt'] = '-b6vFH2dS0kiDd9OXQbH81WnGbRWaI9vE_3k0T3uBK6jqcceweb58KwdxiZ_Grd7FGsY6AO1LQ';
 
-// config split settings
+// Config split settings.
 $_env_is_live = TRUE;
 $config['config_split.config_split.dev']['status'] = !$_env_is_live;
 $config['config_split.config_split.live']['status'] = $_env_is_live;
@@ -51,3 +55,8 @@ if (file_exists(__DIR__ . '/settings.local.php')) {
 if (file_exists('/var/www/conf/settings.docker.php')) {
   include '/var/www/conf/settings.docker.php';
 }
+
+$settings['config_sync_directory'] = 'config/site';
+
+// Sendgrid settings.
+$config['key.key.sendgrid_key']['key_provider_settings']['key_value'] = getenv('SENDGRID_KEY');

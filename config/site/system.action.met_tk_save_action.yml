@@ -1,0 +1,13 @@
+uuid: 792e1f42-5fb4-4ade-90dc-62c6c01b3248
+langcode: en
+status: true
+dependencies:
+  module:
+    - met_tk
+_core:
+  default_config_hash: fGv483lBGqXNTgwzvmCsOReN8TnZb2BBVkw85BgeCJs
+id: met_tk_save_action
+label: 'Save met tks'
+type: met_tk
+plugin: 'entity:save_action:met_tk'
+configuration: {  }

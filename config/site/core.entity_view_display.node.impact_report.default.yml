@@ -1,0 +1,143 @@
+uuid: 867a947c-af74-42ef-8548-9de50576e9c2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.impact_report.body
+    - field.field.node.impact_report.field_anyone_missing
+    - field.field.node.impact_report.field_anyone_passed_away
+    - field.field.node.impact_report.field_event
+    - field.field.node.impact_report.field_full_name
+    - field.field.node.impact_report.field_geo_location
+    - field.field.node.impact_report.field_images
+    - field.field.node.impact_report.field_impact_category
+    - field.field.node.impact_report.field_impacted_items
+    - field.field.node.impact_report.field_location
+    - field.field.node.impact_report.field_phone_number
+    - field.field.node.impact_report.field_village
+    - filter.format.plain_text
+    - node.type.impact_report
+  module:
+    - geolocation
+    - options
+    - remote_image
+    - text
+    - user
+id: node.impact_report.default
+targetEntityType: node
+bundle: impact_report
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_anyone_missing:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_anyone_passed_away:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_event:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_full_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_geo_location:
+    type: geolocation_map
+    label: above
+    settings:
+      set_marker: true
+      show_label: false
+      common_map: true
+      show_delta_label: false
+      use_overridden_map_settings: false
+      title: ''
+      info_text:
+        value: ''
+        format: plain_text
+      centre:
+        fit_bounds:
+          enable: true
+          weight: -101
+          settings:
+            reset_zoom: true
+          map_center_id: fit_bounds
+      map_provider_id: leaflet
+      map_provider_settings: {  }
+      data_provider_settings: {  }
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_images:
+    type: remote_image
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_impact_category:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_impacted_items:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_location:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_phone_number:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_village:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

@@ -1,0 +1,24 @@
+uuid: d5b5a524-5e8b-4ffc-ba4e-1b5a3c632ba0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.push_notification
+  module:
+    - text
+id: node.push_notification.body
+field_name: body
+entity_type: node
+bundle: push_notification
+label: Body
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

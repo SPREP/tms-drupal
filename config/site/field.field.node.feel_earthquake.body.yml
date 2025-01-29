@@ -1,0 +1,24 @@
+uuid: 09f157b6-84c6-4f57-ad87-b950c8ebf8ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.feel_earthquake
+  module:
+    - text
+id: node.feel_earthquake.body
+field_name: body
+entity_type: node
+bundle: feel_earthquake
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

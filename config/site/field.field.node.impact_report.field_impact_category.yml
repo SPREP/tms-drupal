@@ -1,0 +1,21 @@
+uuid: c8eda8e9-0db0-490f-a4d5-4e3af6907ea0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_impact_category
+    - node.type.impact_report
+  module:
+    - options
+id: node.impact_report.field_impact_category
+field_name: field_impact_category
+entity_type: node
+bundle: impact_report
+label: 'Impact Category'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

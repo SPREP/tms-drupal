@@ -1,0 +1,17 @@
+uuid: 75407451-01b6-44be-a9d2-a21e7ec69d30
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Event Report'
+type: event_report
+description: 'Events is reported by community through the mobile app.'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: true

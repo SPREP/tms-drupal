@@ -1,0 +1,10 @@
+uuid: 636a4c37-5688-432f-8029-f03c36533128
+langcode: en
+status: true
+dependencies: {  }
+id: earthquake
+label: Earthquake
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }
