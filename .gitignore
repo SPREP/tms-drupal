@@ -62,3 +62,6 @@ modules/contrib/
 
 # ignore sensitive configuration data
 config/site/met_spc.settings.yml
+
+# ignore some machine files
+*.DS_Store
