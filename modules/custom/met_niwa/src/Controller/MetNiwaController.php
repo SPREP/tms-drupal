@@ -1,17 +1,15 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Drupal\met_niwa\Controller;
 
-
-use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Controller\ControllerBase;
 use \Datetime;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Returns responses for Met data converter routes.
  */
-final class MetNiwaController extends ControllerBase {
+final class MetNiwaController extends ControllerBase
+{
 
   private $api_base_url;
   private $token_enpoint;
@@ -19,12 +17,24 @@ final class MetNiwaController extends ControllerBase {
 
   private static $token = '';
 
+  private $config;
 
-  private function callApi($url, $header = ['Content-Type: application/json']) {
+  public function __construct()
+  {
+
+    $config = \Drupal::configFactory()->getEditable('met_niwa.settings');
+    $this->config = $config;
+    $this->api_base_url = $config->get('url');
+    $this->token_enpoint = $config->get('endpoint');
+  }
+
+
+  private function callApi($url, $header = ['Content-Type: application/json'])
+  {
     if (empty(self::$token)) {
 
       //check for Cookie
-      if(isset($_COOKIE['niwa_api_token'])) {
+      if (isset($_COOKIE['niwa_api_token'])) {
         self::$token = $_COOKIE['niwa_api_token'];
       } else {
         self::$token = '1';
@@ -62,90 +72,62 @@ final class MetNiwaController extends ControllerBase {
   }
 
 
-
   /**
    * Builds the response.
    */
-  public function __invoke(): array {
-
-    $config = \Drupal::configFactory()->getEditable('met_niwa.settings');
-    $this->api_base_url = $config->get('url');
-    $this->token_enpoint = $config->get('endpoint');
+  public function __invoke(): array
+  {
 
     // Map the required item to its IDs
+    $channels = [
+      'temp' => "Air Temp(AVG)",
+      'humidity' => "RH(AVG)",
+      'barometer' => "MSL BP(AVG)",
+      'wind_direction' => "Gust WD(RAW)",
+      'wind_speed' => "Wind Speed Knots",
+      'solar_radiation' => "Solar Radiation(AVG)"
+    ];
+
     $weather_data = [
       'tbu' => [
-        'node_id' => 7628,
-        'channels' => [
-          'temp' => 162469,
-          'humidity' => 162470,
-          'barometer' => 162481,
-          'wind_direction' => 162484,
-          'wind_speed' => 162729,
-          'solar_radiation' => 162471
-        ]
+        ['label' => "Fua'amotu", 'node_id' => 7628, 'channels' => $channels],
+        ['label' => 'Toloa', 'node_id' => 7627, 'channels' => $channels],
+        ['label' => "Nuku'alofa", 'node_id' => 7885, 'channels' => $channels],
+        ['label' => "Mo'unga 'Olive", 'node_id' => 7549, 'channels' => $channels],
+        ['label' => 'Kolovai', 'node_id' => 9589, 'channels' => $channels],
+        ['label' => 'Lapaha', 'node_id' => 7683, 'channels' => $channels],
+        ['label' => "'Atele", 'node_id' => 13802, 'channels' => $channels],
+        ['label' => 'Fatai', 'node_id' => 7632, 'channels' => $channels],
       ],
       'eua' => [
-        'node_id' => 7620,
-        'channels' => [
-          'temp' => 161406,
-          'humidity' => 161407,
-          'barometer' => 161418,
-          'wind_direction' => 161421,
-          'wind_speed' => 206956,
-          'solar_radiation' => 161408
-        ]
+        ['label' => 'Kaufana', 'node_id' => 7620, 'channels' => $channels],
+        ['label' => 'Hango', 'node_id' => 7619, 'channels' => $channels],
       ],
       'hpp' => [
-        'node_id' => 7624,
-        'channels' => [
-          'temp' => 162447,
-          'humidity' => 162448,
-          'barometer' => 162459,
-          'wind_direction' => 162462,
-          'wind_speed' => 162727,
-          'solar_radiation' => 162449
-        ]
+        ['label' => 'Nomuka', 'node_id' => 7622, 'channels' => $channels],
+        ['label' => 'Pilolevu Airport', 'node_id' => 7624, 'channels' => $channels],
+        ['label' => "Ha'ano", 'node_id' => 7621, 'channels' => $channels],
+        ['label' => "Lifuka", 'node_id' => 7623, 'channels' => $channels],
+        ['label' => "Tofua", 'node_id' => 9577, 'channels' => $channels],
       ],
       'vv' => [
-        'node_id' => 7633,
-        'channels' => [
-          'temp' => 162873,
-          'humidity' => 162874,
-          'barometer' => 162885,
-          'wind_direction' => 162886,
-          'wind_speed' => 163400,
-          'solar_radiation' => 162875
-        ]
+        ['label' => "Lupepau'u Airport", 'node_id' => 7633, 'channels' => $channels],
+        ['label' => "Fangatongo", 'node_id' => 7631, 'channels' => $channels],
+        ['label' => "Koloa", 'node_id' => 7659, 'channels' => $channels],
+        ['label' => "Longomapu", 'node_id' => 7630, 'channels' => $channels],
       ],
       'nfo' => [
-        'node_id' => 7547,
-        'channels' => [
-          'temp' => 158708,
-          'humidity' => 158709,
-          'barometer' => 158719,
-          'wind_direction' => 158721,
-          'wind_speed' => 161187,
-          'solar_radiation' => 158710
-        ]
+        ['label' => "Niuafo'ou", 'node_id' => 7547, 'channels' => $channels],
       ],
       'ntt' => [
-        'node_id' => 7548,
-        'channels' => [
-          'temp' => 158686,
-          'humidity' => 158687,
-          'barometer' => 158697,
-          'wind_direction' => 158699,
-          'wind_speed' => 161185,
-          'solar_radiation' => 158688
-        ]
+        ['label' => "Niuatoputapu", 'node_id' => 7548, 'channels' => $channels],
       ],
     ];
 
     $sea_info = [
       'tbu' => [
-          'node_id' => 12528,
-          'channels' => ['temp' => 273417, 'level' => 273416]
+        'node_id' => 12528,
+        'channels' => ['temp' => 273417, 'level' => 273416]
       ],
       'eua' => [
         'node_id' => 12528,
@@ -165,65 +147,79 @@ final class MetNiwaController extends ControllerBase {
       ],
     ];
 
+
     $data = [];
-    foreach($weather_data as $location => $info) {
+    $selected_stations_id = [
+      $this->config->get('tbu'),
+      $this->config->get('vv'),
+      $this->config->get('hpp'),
+      7548, //ntt
+      7547, //nfo
+      $this->config->get('eua')
+    ];
+    foreach ($weather_data as $location => $stations) {
+      foreach ($stations as $info) {
+        if (!in_array($info['node_id'], $selected_stations_id))continue;
 
-      $url = $this->api_base_url.$this->data_enpoint.$info['node_id'];
-      $result = $this->callApi($url);
+        $url = $this->api_base_url . $this->data_enpoint . $info['node_id'];
+        $result = $this->callApi($url);
 
-      $temperature = '';
-      $humidity = '';
-      $barometer = '';
-      $wind_direction = '';
-      $wind_direction_degree = 0;
-      $wind_speed = '';
-      $time = '';
-      $solar_radiation = '';
-      foreach($result->GetChannelListResult as $channel) {
-        $time = $channel->LastTime;
-        switch($channel->ID) {
-          case $info['channels']['temp']:
-            $temperature = $channel->LastValue;
-            break;
-          case $info['channels']['humidity']:
-            $humidity = $channel->LastValue;
-            break;
-          case $info['channels']['barometer']:
-            $barometer = $channel->LastValue;
-            break;
-          case $info['channels']['wind_direction']:
-            $wind_direction = $this->degreeToCompass($channel->LastValue);
-            $wind_direction_degree = $channel->LastValue;
-            break;
-          case $info['channels']['wind_speed']:
-            $wind_speed = $channel->LastValue;
-            break;
-          case $info['channels']['solar_radiation']:
-            $solar_radiation = $channel->LastValue;
-            break;
+        $temperature = '';
+        $humidity = '';
+        $barometer = '';
+        $wind_direction = '';
+        $wind_direction_degree = 0;
+        $wind_speed = '';
+        $time = '';
+        $solar_radiation = '';
+        foreach ($result->GetChannelListResult as $channel) {
+          $time = $channel->LastTime;
+          switch ($channel->Name) {
+            case $info['channels']['temp']:
+              $temperature = $channel->LastValue;
+              break;
+            case $info['channels']['humidity']:
+              $humidity = $channel->LastValue;
+              break;
+            case $info['channels']['barometer']:
+              $barometer = $channel->LastValue;
+              break;
+            case $info['channels']['wind_direction']:
+              $wind_direction = $this->degreeToCompass($channel->LastValue);
+              $wind_direction_degree = $channel->LastValue;
+              break;
+            case $info['channels']['wind_speed']:
+              $wind_speed = $channel->LastValue;
+              break;
+            case $info['channels']['solar_radiation']:
+              $solar_radiation = $channel->LastValue;
+              break;
+          }
         }
+
+        $time = new DateTime($time);
+
+        //Convert knots to k/h
+        $wind_speed = $wind_speed > 0 ? round($wind_speed * 1.852) : $wind_speed;
+
+        $data[$location] = [
+          'location' => $location,
+          'icon' => "0",
+          'temperature' => $temperature != '' ? round((float)$temperature) : 0,
+          'humidity' => round((float)$humidity),
+          'barometer' => $barometer,
+          'wind_direction' => $wind_direction,
+          'wind_speed' => $wind_speed,
+          'visibility' => "",
+          'observed_date' => $time->format("D, j M Y G:i:s") . ' +1300',
+          'wind_direction_degree' => $wind_direction_degree,
+          'solar_radiation' => $solar_radiation,
+          'station' => $info['label'],
+        ];
+
+        sleep(2);
+
       }
-
-      $time = new DateTime($time);
-
-      //Convert knots to k/h
-      $wind_speed = $wind_speed > 0 ? round($wind_speed * 1.852) : $wind_speed;
-
-      $data[$location] = [
-        'location' => $location,
-        'icon' => "0",
-        'temperature' => $temperature != '' ? round((float)$temperature) : 0,
-        'humidity' => round((float)$humidity),
-        'barometer' => $barometer,
-        'wind_direction' => $wind_direction,
-        'wind_speed' => $wind_speed,
-        'visibility' => "",
-        'observed_date' => $time->format("D, j M Y G:i:s") . ' +1300',
-        'wind_direction_degree' => $wind_direction_degree,
-        'solar_radiation' => $solar_radiation,
-      ];
-
-      sleep(2);
 
     }
 
@@ -241,7 +237,7 @@ final class MetNiwaController extends ControllerBase {
 
     //sea data
     $sea_data = [];
-    foreach($sea_info as $location => $info) {
+    foreach ($sea_info as $location => $info) {
 
       $url = $this->api_base_url . $this->data_enpoint . $info['node_id'];
       $result = $this->callApi($url);
@@ -286,15 +282,17 @@ final class MetNiwaController extends ControllerBase {
     return $build;
   }
 
-  function degreeToCompass($degree) {
-      $value = floor(($degree / 22.5) + 0.5);
-      $compass = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
-      return $compass[($value % 16)];
+  function degreeToCompass($degree)
+  {
+    $value = floor(($degree / 22.5) + 0.5);
+    $compass = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+    return $compass[($value % 16)];
   }
 
-  function getWeatherIcon($data) {
-    if(!empty($data['present_weather'])) {
-      switch($data['present_weather']) {
+  function getWeatherIcon($data)
+  {
+    if (!empty($data['present_weather'])) {
+      switch ($data['present_weather']) {
         case 'RA':
           return 7;
         case 'DZ':
@@ -309,8 +307,8 @@ final class MetNiwaController extends ControllerBase {
     } else {
 
       if (!isset($data['clouds'])) return 0;
-      $total =  is_array($data['clouds']) ?  count($data['clouds']) - 1 : 0;
-      switch($data['clouds'][$total]['amount']) {
+      $total = is_array($data['clouds']) ? count($data['clouds']) - 1 : 0;
+      switch ($data['clouds'][$total]['amount']) {
         case 'FEW':
           return 1;
         case 'SCT':

@@ -118,27 +118,18 @@ class AccountResource extends ResourceBase {
     return new ModifiedResourceResponse($account, 200);
   }
 
-  /**
-   * Get the user by Id
-   */
-  public function getUserById($uid) {
-    $storage = \Drupal::service('entity_type.manager')->getStorage('user');
-    $item = $storage->getQuery()
-      ->condition('status', 1)
-      ->condition('uid', '1', '!=')
-      ->condition('uid', $uid)
-      ->accessCheck(FALSE)
-      ->execute();
-
-    $user =  $storage->loadMultiple($item);
-
-    return $user;
-  }
-
   public function get($uid = NULL) {
     if (!is_null($uid)) {
-    
-      $user = etUserById($uid);
+      $rids = ['authenticated'];
+      $storage = \Drupal::service('entity_type.manager')->getStorage('user');
+      $item = $storage->getQuery()
+        ->condition('status', 1)
+        ->condition('uid', '1', '!=')
+        ->condition('uid', $uid)
+        ->accessCheck(FALSE)
+        ->execute();
+
+      $user =  $storage->loadMultiple($item);
 
       if (empty($user)) {
         throw new NotFoundHttpException("User with ID '$uid' was not found");

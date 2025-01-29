@@ -42,6 +42,7 @@
         "drupal/textfield_counter": "^2.3",
         "drupal/views_autocomplete_filters": "^2.0",
         "drupal/views_data_export": "^1.4",
+        "google/cloud-firestore": "^0.1.0",
         "mglaman/composer-drupal-lenient": "^1.0",
         "paragi/php-websocket-client": "^1.0",
         "textalk/websocket": "1.0.*"
@@ -128,6 +129,9 @@
         "patches": {
             "drupal/remote_image": {
                 "3439031 - Update core_version_requirement to enable installation by composer": "https://www.drupal.org/files/issues/2024-04-15/drupal10-3439031-7.patch"
+            },
+            "drupal/firebase": {
+                "3163053 - Fix to use http v1" : "https://www.drupal.org/files/issues/2024-07-08/Migrate_from_legacy_HTTP_to_HTTP_v1-3163053-v32.patch"
             }
         },
         "drupal-lenient": {
