@@ -1,0 +1,9 @@
+pipeline:
+  - name: Remove composer dev packages
+    type: command
+    command: composer install
+    directory: $APP_ROOT
+  - name: Clear cache
+    type: command
+    command: drush cr
+    directory: $HTTP_ROOT
