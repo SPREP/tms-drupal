@@ -1,19 +1,21 @@
 <?php
 
-$settings['config_sync_directory'] = 'config/sync';
+/**
+ * @file
+ */
 
-$databases['default']['default'] = array(
+$databases['default']['default'] = [
   'driver' => getenv('DB_DRIVER'),
   'database' => getenv('DB_NAME'),
   'username' => getenv('DB_USER'),
   'password' => getenv('DB_PASSWORD'),
-  'host' => getenv('DB_HOST')
-);
+  'host' => getenv('DB_HOST'),
+];
 
-## DRUPAL 8
-$settings['trusted_host_patterns'] = array(
-  '\.localhost$', '\.local$', '\.loc$', 'localhost', 'nginx'
-);
+// DRUPAL 8.
+$settings['trusted_host_patterns'] = [
+  '\.localhost$', '\.local$', '\.loc$', 'localhost', 'nginx',
+];
 
 // For Redis
 // $settings['redis.connection']['host'] = 'redis';
@@ -25,7 +27,7 @@ $settings['trusted_host_patterns'] = array(
 // $settings['cache']['bins']['bootstrap'] = 'cache.backend.chainedfast';
 // $settings['cache']['bins']['discovery'] = 'cache.backend.chainedfast';
 // $settings['cache']['bins']['config'] = 'cache.backend.chainedfast';
-// $settings['container_yamls'][] = "modules/contrib/redis/example.services.yml";
+// $settings['container_yamls'][] = "modules/contrib/redis/example.services.yml";.
 
 /**
  * Show all error messages, with backtrace information.
@@ -103,24 +105,22 @@ $settings['skip_permissions_hardening'] = TRUE;
 //   'vmi',
 //   'stage_file_proxy'
 // ];
-
 $config['system.site']['name'] = "DEV ENVIRONMENT";
 
-// config split settings
+// Config split settings.
 $_env_is_live = FALSE;
 $config['config_split.config_split.dev']['status'] = !$_env_is_live;
 $config['config_split.config_split.live']['status'] = $_env_is_live;
 
 /**
- * Connect to Azure SSO
+ * Connect to Azure SSO.
  */
-//$config['openid_connect.settings.windows_aad']['settings']['client_id'] = '90eeb306-9e30-4fab-a1c1-327f013b7249';
-//$config['openid_connect.settings.windows_aad']['settings']['client_secret'] = getenv('SSO_CLIENT_SECRET'); // In Prod, set this via wodby.
-//$config['openid_connect.settings.windows_aad']['settings']['authorization_endpoint_wa'] = 'https://login.microsoftonline.com/1b892310-cd08-4f86-8b97-4805b93e7397/oauth2/authorize';
-//$config['openid_connect.settings.windows_aad']['settings']['token_endpoint_wa'] = 'https://login.microsoftonline.com/1b892310-cd08-4f86-8b97-4805b93e7397/oauth2/token';
-
+// $config['openid_connect.settings.windows_aad']['settings']['client_id'] = '90eeb306-9e30-4fab-a1c1-327f013b7249';
+// $config['openid_connect.settings.windows_aad']['settings']['client_secret'] = getenv('SSO_CLIENT_SECRET'); // In Prod, set this via wodby.
+// $config['openid_connect.settings.windows_aad']['settings']['authorization_endpoint_wa'] = 'https://login.microsoftonline.com/1b892310-cd08-4f86-8b97-4805b93e7397/oauth2/authorize';
+// $config['openid_connect.settings.windows_aad']['settings']['token_endpoint_wa'] = 'https://login.microsoftonline.com/1b892310-cd08-4f86-8b97-4805b93e7397/oauth2/token';
 // Disables the openid connect login process so that tests run with normal login process.
-// $config['openid_connect.settings']['user_login_display'] = 'hidden';
-
+// $config['openid_connect.settings']['user_login_display'] = 'hidden';.
 // Google anlytics
-// $config['google_analytics.settings']['account'] = isset($_SERVER['GA']) ? $_SERVER['GA'] : 'UA-xxxxxxx-xx';
+// $config['google_analytics.settings']['account'] = isset($_SERVER['GA']) ? $_SERVER['GA'] : 'UA-xxxxxxx-xx';.
+

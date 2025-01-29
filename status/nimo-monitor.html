@@ -137,8 +137,8 @@
   });
 
   document.addEventListener("DOMContentLoaded", function(){
-    //socket = new ReconnectingWebSocket("wss://app.met.gov.to:443", "nimo");
-    socket = new ReconnectingWebSocket("ws://127.0.0.1:8080");
+    socket = new ReconnectingWebSocket("wss://app.met.gov.to:443");
+   // socket = new ReconnectingWebSocket("ws://127.0.0.1:8080");
 
       var triggerTabList = [].slice.call(document.querySelectorAll('#myTab a'))
       triggerTabList.forEach(function (triggerEl) {
@@ -349,7 +349,7 @@
     //When there's a new message arrive
     socket.onmessage = msg => {
       let data = JSON.parse(msg.data);
-
+      console.log("data:", data);
       switch (data.action) {
         case "message":
           if (data.Etype == "met_event_report" || data.Etype == "impact_report" || data.Etype == "request_assistance") {

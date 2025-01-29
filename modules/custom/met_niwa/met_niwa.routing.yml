@@ -1,17 +1,18 @@
 met_niwa.main:
-  path: "/met-niwa/run"
+  path: '/met-niwa/run'
   defaults:
-    _title: "NIWA API"
+    _title: 'NIWA API'
     _controller: '\Drupal\met_niwa\Controller\MetNiwaController'
   requirements:
-    _access: "TRUE"
+    _permission: 'access content'
   options:
-    no_cache: "TRUE"
+    no_cache: 'TRUE'
+
 
 met_niwa.settings:
-  path: "/admin/config/system/met-niwa"
+  path: '/admin/config/system/met-niwa'
   defaults:
-    _title: "MET NIWA Configuration"
+    _title: 'MET NIWA Configuration'
     _form: 'Drupal\met_niwa\Form\SettingsForm'
   requirements:
-    _permission: "administer site configuration"
+    _permission: 'administer site configuration'

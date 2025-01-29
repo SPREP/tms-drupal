@@ -1,0 +1,14 @@
+#Protect single file
+<Files tms-monitor.html>
+AuthName "Dialog prompt"
+AuthType Basic
+AuthUserFile /var/www/private/tms/.htpasswd
+Require valid-user
+</Files>
+
+<Files nimo-monitor.html>
+AuthName "Dialog prompt"
+AuthType Basic
+AuthUserFile /var/www/private/nimo/.htpasswd
+Require valid-user
+</Files>

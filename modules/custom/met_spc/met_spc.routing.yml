@@ -1,17 +1,18 @@
 met_spc.main:
-  path: "/met-spc/run"
+  path: '/met-spc/run'
   defaults:
-    _title: "SPC API"
+    _title: 'SPC API'
     _controller: '\Drupal\met_spc\Controller\MetSpcController'
   requirements:
-    _access: "TRUE"
+    _permission: 'access content'
   options:
-    no_cache: "TRUE"
+    no_cache: 'TRUE'
+
 
 met_spc.settings:
-  path: "/admin/config/system/met-spc"
+  path: '/admin/config/system/met-spc'
   defaults:
-    _title: "MET SPC API Configuration"
+    _title: 'MET SPC API Configuration'
     _form: 'Drupal\met_spc\Form\SettingsForm'
   requirements:
-    _permission: "administer site configuration"
+    _permission: 'administer site configuration'

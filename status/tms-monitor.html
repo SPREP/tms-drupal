@@ -92,8 +92,8 @@
 
 
   document.addEventListener("DOMContentLoaded", function(){
-    //socket = new ReconnectingWebSocket("wss://app.met.gov.to:443", "tms");
-    socket = new ReconnectingWebSocket("ws://127.0.0.1:8080");
+    socket = new ReconnectingWebSocket("wss://app.met.gov.to:443");
+    //socket = new ReconnectingWebSocket("ws://127.0.0.1:8080");
     //Sec-WebSocket-Protocol using server key
 
     let isChart = null;

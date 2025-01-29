@@ -16,7 +16,7 @@ function met_service_node_insert(NodeInterface $node)
   switch ($node->bundle()) {
     case 'event':
       // send push notification new event
-      _sendEventNotification();
+     // _sendEventNotification();
       break;
   }
 }
@@ -48,6 +48,8 @@ function _sendEventNotification()
  */
 function met_service_met_warning_insert(\Drupal\met_warning\METWarningInterface $warning)
 {
+	//temporary teurn off firebase
+	return;
 
   //do something with warning entity (send firebase message)
   $messageService = \Drupal::service('firebase.message');
@@ -66,5 +68,39 @@ function met_service_met_warning_insert(\Drupal\met_warning\METWarningInterface 
   $messageService->setTopics(['tonga']);
   $messageService->setOptions(['priority' => 'high']);
   $messageService->send();
+
+}
+
+
+
+//10 days
+/**
+ * Implements hook_ENTITY_TYPE_presave() for webform_submission.
+ */
+function met_service_webform_submission_presave(\Drupal\webform\WebformSubmissionInterface $webform_submission) {
+  if ($webform_submission->getWebform()->id() != '10_days_forecast') {
+    return;
+  }
+  // Webform data.
+  $data = $webform_submission->getData();
+
+
+  $msg = print_r($data, true);
+  \Drupal::logger('finau')->debug('Finau test ' . $msg);
+
+  // Webform date field value is a string in Y-m-d H:i:s format.
+  // $value = $data['datetime'];
+
+  //find out the location
+
+
+  $csv_file_name = '10days.csv';
+  $absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
+  $fp = fopen($absolute_path, 'w');
+
+  $data = ['finau'];
+  fputcsv($fp, $data);
+
+  fclose($fp);
 
 }
