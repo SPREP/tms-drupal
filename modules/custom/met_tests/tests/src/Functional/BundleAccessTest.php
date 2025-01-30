@@ -21,7 +21,7 @@ class BundleAccessTest extends MetTestBase {
 
       // Anonymous cannot access content.
       ['anonymous', 'article', ''],
-      ['anonymous', 'page', ''],
+      ['anonymous', 'page', 'R'],
       ['anonymous', 'evacuation', ''],
       ['anonymous', 'event', ''],
       ['anonymous', 'event_report', ''],
@@ -29,17 +29,17 @@ class BundleAccessTest extends MetTestBase {
       ['anonymous', 'push_notification', ''],
       ['anonymous', 'request_assistance', ''],
 
-      // Authenticated users can read.
-      ['authenticated', 'article', 'R'],
-      ['authenticated', 'page', 'R'],
-      ['authenticated', 'evacuation', 'R'],
-      ['authenticated', 'event', 'R'],
-      ['authenticated', 'push_notification', 'R'],
+      // // Authenticated users can read.
+      // ['authenticated', 'article', ''],
+      // ['authenticated', 'page', ''],
+      // ['authenticated', 'evacuation', ''],
+      // ['authenticated', 'event', ''],
+      // ['authenticated', 'push_notification', ''],
 
-      // Authenticated users can create and read.
-      ['authenticated', 'event_report', 'CR'],
-      ['authenticated', 'impact_report', 'CR'],
-      ['authenticated', 'request_assistance', 'CR'],
+      // // Authenticated users can create and read.
+      // ['authenticated', 'event_report', ''],
+      // ['authenticated', 'impact_report', ''],
+      // ['authenticated', 'request_assistance', ''],
 
       // @todo add roles for tms, ndrmo, geology.
       // Admin user

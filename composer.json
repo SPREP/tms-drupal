@@ -116,8 +116,10 @@
             "drush entity:delete shortcut_set",
             "drush en paragraphs met_warning met_tk -y",
             "drush cim --source=config/site -y",
-            "drush scr modules/custom/met_tests/scripts/install_test_users.php",
             "drush php-eval 'node_access_rebuild();'"
+        ],
+        "create-test-users": [
+            "drush scr modules/custom/met_tests/scripts/install_test_users.php"
         ]
     },
     "extra": {
