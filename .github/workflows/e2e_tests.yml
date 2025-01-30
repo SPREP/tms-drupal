@@ -48,7 +48,7 @@ jobs:
 
     - name: Execute tests
       run: |
-        docker compose exec -T --user wodby php /bin/sh -c "cd /var/www/html/ && composer test"
+        docker compose exec -T --user wodby php /bin/sh -c "cd /var/www/html/ && composer test_single"
 
     - name: Cleanup
       run: |
