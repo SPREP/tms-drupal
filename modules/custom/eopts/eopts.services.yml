@@ -1,6 +1,0 @@
-services:
-  eopts.commands:
-    class: \Drupal\eopts\Commands\DebundlerDrushCommand
-    arguments: []
-    tags:
-      - { name: drush.command }
