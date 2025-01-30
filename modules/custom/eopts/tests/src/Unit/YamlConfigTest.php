@@ -18,7 +18,7 @@ class YamlConfigTest extends UnitTestCase {
   public function testConfig() {
     $this->markTestSkipped('Skipping test until configs are added to repo.');
 
-    $config_dir = $this->root . '/config/sync';
+    $config_dir = $this->root . '/config/site';
 
     $data = Yaml::parse(file_get_contents($config_dir . '/core.extension.yml'));
     $core_extension_modules = $data['module'];

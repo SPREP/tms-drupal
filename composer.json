@@ -90,7 +90,7 @@
         ],
         "build-old": [
             "Composer\\Config::disableProcessTimeout",
-            "sed -i 's|standard|minimal|g' ./config/sync/core.extension.yml",
+            "sed -i 's|standard|minimal|g' ./config/site/core.extension.yml",
             "drush site:install minimal --existing-config -y"
         ],
         "php_compatibility": [

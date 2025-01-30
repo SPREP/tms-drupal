@@ -1,8 +1,0 @@
-uuid: 81905883-1666-43bc-aedb-a61ac0e92fdc
-langcode: en
-status: true
-dependencies: {  }
-name: Cities
-vid: cities
-description: 'Tonga Cities'
-weight: 0
