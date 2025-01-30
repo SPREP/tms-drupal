@@ -79,7 +79,7 @@
             "mkdir -p /tmp/b2b",
             "rm -rf sites/simpletest/browser_output/* || true"
         ],
-        "test": [
+        "test-new": [
             "@test_setup",
             "Composer\\Config::disableProcessTimeout",
             "phpunit -c /var/www/html/phpunit.xml"
@@ -91,7 +91,7 @@
         "build-old": [
             "Composer\\Config::disableProcessTimeout",
             "sed -i 's|standard|minimal|g' ./config/sync/core.extension.yml",
-            "drush site:install minimal --existing-config --db-url=mysql://root:password@mariadb:3306/drupal -y"
+            "drush site:install minimal --existing-config -y"
         ],
         "php_compatibility": [
             "phpcs -p --standard=PHPCompatibility --extensions=php,inc,module,install --runtime-set testVersion 8.3 modules/custom",
@@ -115,7 +115,9 @@
             "drush cset system.site uuid \"5bb79423-cfb5-4dd1-98fc-1efb2a54c645\" -y",
             "drush entity:delete shortcut_set",
             "drush en paragraphs met_warning met_tk -y",
-            "drush cim --source=config/site -y"
+            "drush cim --source=config/site -y",
+            "drush scr modules/custom/met_tests/scripts/install_test_users.php",
+            "drush php-eval 'node_access_rebuild();'"
         ]
     },
     "extra": {
