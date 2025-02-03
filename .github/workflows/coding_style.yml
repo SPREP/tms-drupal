@@ -1,4 +1,4 @@
-name: Composer Tests
+name: Coding Style Tests
 
 on:
   push:
