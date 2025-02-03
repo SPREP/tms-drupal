@@ -14,7 +14,7 @@ $databases['default']['default'] = [
 
 // DRUPAL 8.
 $settings['trusted_host_patterns'] = [
-  '\.localhost$', '\.local$', '\.loc$', 'localhost', 'nginx','\.gitpod.io$',
+  '\.localhost$', '\.local$', '\.loc$', 'localhost', 'nginx', 'apache', '\.gitpod.io$',
 ];
 
 // For Redis
@@ -123,4 +123,3 @@ $config['config_split.config_split.live']['status'] = $_env_is_live;
 // $config['openid_connect.settings']['user_login_display'] = 'hidden';.
 // Google anlytics
 // $config['google_analytics.settings']['account'] = isset($_SERVER['GA']) ? $_SERVER['GA'] : 'UA-xxxxxxx-xx';.
-

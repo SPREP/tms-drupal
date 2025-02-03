@@ -1,0 +1,5 @@
+name: 'MET Tests'
+type: module
+description: 'MET Tests.'
+package: MET
+core_version_requirement: ^10

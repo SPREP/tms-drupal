@@ -3,3 +3,5 @@ type: module
 description: 'Content Entity for the feel an earthquake'
 package: MET
 core_version_requirement: ^10
+dependencies:
+  - options
