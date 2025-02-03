@@ -28,22 +28,22 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      # Fix the latest lando issue
-      - uses: KengoTODA/actions-setup-docker-compose@v1
-        with:
-          version: '2.14.2' # the full version of `docker-compose` command
-
-      # Setup Lando
-      - run: lando setup
-
-      # Boot Lando and set up Drupal
-      - run: lando start
-      - run: lando composer install
-      # - run: lando composer require --dev drupal/core-dev
-      - run: lando ssh --command "cp modules/custom/met_api/modules/met_api_test/assets/phpunit.xml core/phpunit.xml"
-      - run: lando ssh --command "cp core/.env.example .env"
-
       # @todo - Fix tests #142
+      # # Fix the latest lando issue
+      # - uses: KengoTODA/actions-setup-docker-compose@v1
+      #   with:
+      #     version: '2.14.2' # the full version of `docker-compose` command
+
+      # # Setup Lando
+      # - run: lando setup
+
+      # # Boot Lando and set up Drupal
+      # - run: lando start
+      # - run: lando composer install
+      # # - run: lando composer require --dev drupal/core-dev
+      # - run: lando ssh --command "cp modules/custom/met_api/modules/met_api_test/assets/phpunit.xml core/phpunit.xml"
+      # - run: lando ssh --command "cp core/.env.example .env"
+
       # # Install Drupal
       # - run: lando drush si -y --db-url=mysql://drupal10:drupal10@database:3306/drupal10
       # - run: lando drush cset system.site uuid "5bb79423-cfb5-4dd1-98fc-1efb2a54c645" -y
