@@ -4,6 +4,8 @@ image: devwithlando/gitpod:1
 tasks:
   - name: Setup Drupal Dev Env
     init: |
+      source .bash_aliases
+      
       # Boot Lando and set up Drupal
       lando start
       lando composer install
