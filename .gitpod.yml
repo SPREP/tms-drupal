@@ -1,0 +1,51 @@
+tasks:
+  - init: |
+      # fix permissions
+      sudo chown -R gitpod:gitpod .
+      # set aliases
+      source .bash_aliases
+      cp .env .env.gitpod
+      sed -i "s|PROJECT_BASE_URL=tms.docker.localhost|PROJECT_BASE_URL=${GITPOD_WORKSPACE_URL}|g" .env.gitpod
+      sed -i "s|PROJECT_BASE_URL=https://|PROJECT_BASE_URL=8000-|g" .env.gitpod
+      make gitpod
+      make composer install
+      echo "Loading..."
+      make composer build
+  
+    command: |
+      # Add more startup tasks
+      make gitpod
+      echo "Ready!"
+      echo "Your site URL: $(gp url 8000)"
+      make drush 'uli --uri=$(gp url 8000)'
+
+# VScode xdebug extension
+vscode:
+  extensions:
+    # PHP & Drupal Development
+    - felixfbecker.php-debug
+    - wongjn.php-sniffer
+    - neilbrayfield.php-docblocker
+    - bmewburn.vscode-intelephense-client
+    - devsense.composer-php-vscode
+    - mblode.twig-language-2
+    - valeryanm.vscode-phpsab
+    - xdebug.php-debug
+    - devsense.phptools-vscode
+    # Git & Collaboration
+    - eamodio.gitlens
+    - mhutchie.git-graph
+    # Editor Enhancement
+    - esbenp.prettier-vscode
+    - editorconfig.editorconfig
+    - streetsidesoftware.code-spell-checker
+    # Database
+    - cweijan.vscode-mysql-client2
+    # YAML & Configuration
+    - redhat.vscode-yaml
+    # AI extensions.
+    # - codeium.codeium
+
+ports:
+  - port: 8000  # if using port 8000
+    onOpen: open-browser
