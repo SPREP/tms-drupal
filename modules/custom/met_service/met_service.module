@@ -1,35 +1,41 @@
 <?php
 
+/**
+ * @file
+ */
+
+use Drupal\met_warning\METWarningInterface;
 use Drupal\node\NodeInterface;
+use Drupal\webform\WebformSubmissionInterface;
 
 /**
  * @file
  * Primary module hooks for met_service module.
  */
 
-
 /**
  * Implements hook_ENTITY_TYPE_insert() for node.
  */
-function met_service_node_insert(NodeInterface $node)
-{
+function met_service_node_insert(NodeInterface $node) {
   switch ($node->bundle()) {
     case 'event':
-      // send push notification new event
-     // _sendEventNotification();
+      // Send push notification new event
+      // _sendEventNotification();
       break;
   }
 }
 
-function _sendEventNotification()
-{
-  //do something with warning entity (send firebase message)
+/**
+ *
+ */
+function _sendEventNotification() {
+  // Do something with warning entity (send firebase message)
   $messageService = \Drupal::service('firebase.message');
   $messageService->setNotification([
     'title' => 'New Event',
     'body' => "There's a new event has been created",
     'badge' => 1,
-    //  'icon' => 'https://64f1-2001-8003-47a8-6700-180-b34d-6c2f-9799.ngrok-free.app/sites/default/files/warning.jpg',
+    // 'icon' => 'https://64f1-2001-8003-47a8-6700-180-b34d-6c2f-9799.ngrok-free.app/sites/default/files/warning.jpg',
     'sound' => 'default',
     // 'click_action' => 'optional-action',
   ]);
@@ -42,22 +48,20 @@ function _sendEventNotification()
   $messageService->send();
 }
 
-
 /**
  * Implements hook_ENTITY_TYPE_insert() for node.
  */
-function met_service_met_warning_insert(\Drupal\met_warning\METWarningInterface $warning)
-{
-	//temporary teurn off firebase
-	return;
+function met_service_met_warning_insert(METWarningInterface $warning) {
+  // Temporary teurn off firebase.
+  return;
 
-  //do something with warning entity (send firebase message)
+  // Do something with warning entity (send firebase message)
   $messageService = \Drupal::service('firebase.message');
   $messageService->setNotification([
     'title' => 'New Warning',
     'body' => "There's a new warning has been issued",
     'badge' => 1,
-    //  'icon' => 'https://64f1-2001-8003-47a8-6700-180-b34d-6c2f-9799.ngrok-free.app/sites/default/files/warning.jpg',
+    // 'icon' => 'https://64f1-2001-8003-47a8-6700-180-b34d-6c2f-9799.ngrok-free.app/sites/default/files/warning.jpg',
     'sound' => 'default',
     // 'click_action' => 'optional-action',
   ]);
@@ -71,29 +75,24 @@ function met_service_met_warning_insert(\Drupal\met_warning\METWarningInterface 
 
 }
 
+// 10 days
 
-
-//10 days
 /**
  * Implements hook_ENTITY_TYPE_presave() for webform_submission.
  */
-function met_service_webform_submission_presave(\Drupal\webform\WebformSubmissionInterface $webform_submission) {
+function met_service_webform_submission_presave(WebformSubmissionInterface $webform_submission) {
   if ($webform_submission->getWebform()->id() != '10_days_forecast') {
     return;
   }
   // Webform data.
   $data = $webform_submission->getData();
 
-
-  $msg = print_r($data, true);
+  $msg = print_r($data, TRUE);
   \Drupal::logger('finau')->debug('Finau test ' . $msg);
 
   // Webform date field value is a string in Y-m-d H:i:s format.
-  // $value = $data['datetime'];
-
-  //find out the location
-
-
+  // $value = $data['datetime'];.
+  // find out the location.
   $csv_file_name = '10days.csv';
   $absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
   $fp = fopen($absolute_path, 'w');

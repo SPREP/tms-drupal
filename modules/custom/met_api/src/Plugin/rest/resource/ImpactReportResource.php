@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_api_impact_report_resource",
@@ -70,23 +70,28 @@ class ImpactReportResource extends ResourceBase {
     );
   }
 
+  /**
+   *
+   */
   public function jsonFormat($value) {
     return ['uri' => $value];
   }
 
-
-  public function  post($data) {
+  /**
+   *
+   */
+  public function post($data) {
 
     $response_code = 201;
     $response_msg = 'Impact report API endpoint';
 
     /*
     if (!$this->currentUser->hasPermission('administer site content')) {
-      $response_msg = 'Access Denied.';
-      $response_code = 403;
-      return $this->response($response_msg, $response_code);
+    $response_msg = 'Access Denied.';
+    $response_code = 403;
+    return $this->response($response_msg, $response_code);
     }
-    */
+     */
 
     $nodes = [];
     foreach ($data as $key => $value) {
@@ -135,16 +140,15 @@ class ImpactReportResource extends ResourceBase {
     }
     $response_msg = $this->t("New Nodes creates with nids : @message", ['@message' => implode(",", $nodes)]);
 
-
-    //Pass data to websocket server to deliver
-    //---------------------------------------------
+    // Pass data to websocket server to deliver
+    // ---------------------------------------------.
     $current_time = \Drupal::time()->getCurrentTime();
 
-    //get village name from term id
+    // Get village name from term id.
     $term = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->load($data[0]['village']);
     $village = $term->getName();
 
-    //get event name from event id
+    // Get event name from event id.
     $event = \Drupal::service('entity_type.manager')->getStorage('node')->load($data[0]['event_id']);
     $event_name = $event->getTitle();
 
@@ -165,7 +169,8 @@ class ImpactReportResource extends ResourceBase {
       'date' => date('d/m/Y', $current_time),
       'time' => date('h:i a', $current_time),
       'type' => 'Impact Report',
-      'id' => $nodes[0].'ir', //<-- unique id
+    // <-- unique id
+      'id' => $nodes[0] . 'ir',
     ];
 
     $payload = [
@@ -179,11 +184,11 @@ class ImpactReportResource extends ResourceBase {
     $tms_socket_service = \Drupal::service('met_service.tms_socket');
     $tms_socket_service->send($payload);
 
-    //Close the websocket connection
+    // Close the websocket connection.
     $payload = [
       'action' => 'left',
       'username' => 'drupal',
-      'message' => 'left'
+      'message' => 'left',
     ];
 
     $tms_socket_service->send($payload);
@@ -192,12 +197,19 @@ class ImpactReportResource extends ResourceBase {
 
   }
 
+  /**
+   *
+   */
   public function response($msg, $code) {
     $response = ['message' => $msg];
     return new ResourceResponse($response, $code);
   }
 
-  public function permissions(){
+  /**
+   *
+   */
+  public function permissions() {
     return [];
   }
+
 }

@@ -2,23 +2,20 @@
 
 namespace Drupal\met_api\Plugin\rest\resource;
 
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\Url;
 use Drupal\file\Entity\File;
-use Drupal\met_feel_earthquake\Entity\METFeelEarthquake;
 use Drupal\met_tk\Entity\METTK;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Drupal\taxonomy\Entity\Term;
-use http\Client\Curl\User;
+use Drupal\user\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides the API resource for the Traditional Knowledge in mobile App
+ * Provides the API resource for the Traditional Knowledge in mobile App.
  *
  * @RestResource(
  *   id = "met_api_tk",
@@ -76,28 +73,34 @@ class TkResource extends ResourceBase {
     );
   }
 
-  public function get($flag = 'tk')
-  {
-      switch ($flag) {
-        case 'tk':
-          return $this->getTk();
-        case 'ind':
-          return $this->getIndicators();
-      }
+  /**
+   *
+   */
+  public function get($flag = 'tk') {
+    switch ($flag) {
+      case 'tk':
+        return $this->getTk();
+
+      case 'ind':
+        return $this->getIndicators();
+    }
   }
 
+  /**
+   *
+   */
   public function post($data) {
 
-    //create TK Content
+    // Create TK Content.
     $response_code = 201;
 
     /*
     if (!$this->currentUser->hasPermission('administer site content')) {
-      $response_msg = 'Access Denied.';
-      $response_code = 403;
-      return $this->response($response_msg, $response_code);
+    $response_msg = 'Access Denied.';
+    $response_code = 403;
+    return $this->response($response_msg, $response_code);
     }
-    */
+     */
 
     $items = [];
     foreach ($data as $key => $value) {
@@ -141,25 +144,31 @@ class TkResource extends ResourceBase {
     return $this->response($response_msg, $response_code);
   }
 
+  /**
+   *
+   */
   public function response($msg, $code) {
     $response = ['message' => $msg];
     return new ResourceResponse($response, $code);
   }
 
+  /**
+   *
+   */
   public function getIndicators() {
 
     $vid = 'tk_indicators';
-    $terms =\Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+    $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
 
     $data = [];
     $weight = 0;
-    foreach($terms as $term) {
+    foreach ($terms as $term) {
       $term = Term::load($term->tid);
 
-      //get indicator photo
+      // Get indicator photo.
       $fid = $term->get('field_photo')->target_id;
       $file = File::load($fid);
-      $photo_url = $file->createFileUrl(false);
+      $photo_url = $file->createFileUrl(FALSE);
 
       $desc = $term->get('description')->getValue()[0]['value'];
 
@@ -167,20 +176,23 @@ class TkResource extends ResourceBase {
         'name' => $term->getName(),
         'desc' => strip_tags($desc),
         'photo' => $photo_url,
-        'id' => (int)$term->id(),
+        'id' => (int) $term->id(),
         'weight' => ++$weight,
       ];
     }
 
     $build = [
       '#cache' => [
-        'tags' => ['taxonomy_term_list:tk_indicators']
-        ]
+        'tags' => ['taxonomy_term_list:tk_indicators'],
+      ],
     ];
 
     return (new ResourceResponse($data, 200))->addCacheableDependency(CacheableMetadata::createFromRenderArray($build));
   }
 
+  /**
+   *
+   */
   public function getTk() {
 
     $storage = \Drupal::service('entity_type.manager')->getStorage('met_tk');
@@ -191,26 +203,26 @@ class TkResource extends ResourceBase {
       ->range(0, 500)
       ->execute();
 
-    $items =  $storage->loadMultiple($items);
+    $items = $storage->loadMultiple($items);
     $new_items = [];
-    foreach($items as $item) {
+    foreach ($items as $item) {
 
       $data = [];
 
-      //process location
+      // Process location.
       $lat = 0;
       $lon = 0;
       if ($item->field_geo_location->value != "") {
-        list($lat, $lon) = explode(", ", $item->field_geo_location->value);
+        [$lat, $lon] = explode(", ", $item->field_geo_location->value);
       }
-      //get indicator from taxonomy
+      // Get indicator from taxonomy.
       $termid = $item->get('field_indicator')->target_id;
       $term = Term::load($termid);
 
-      //get indicator photo
+      // Get indicator photo.
       $fid = $term->get('field_photo')->target_id;
       $file = File::load($fid);
-      $photo_url = $file->createFileUrl(false);
+      $photo_url = $file->createFileUrl(FALSE);
 
       $desc = $term->get('description')->getValue()[0]['value'];
 
@@ -218,25 +230,27 @@ class TkResource extends ResourceBase {
         'name' => $term->getName(),
         'desc' => strip_tags($desc),
         'photo' => $photo_url,
-        'id' => (int)$term->id(),
+        'id' => (int) $term->id(),
       ];
 
-      //get tk photo
+      // Get tk photo.
       $image = $item->get('field_photo')->getValue()[0]['uri'];
-      $photo = $image != null ? $image : '';
+      $photo = $image != NULL ? $image : '';
 
-      //get author
+      // Get author.
       $author = $item->getOwner()->getDisplayName();
       $uid = $item->getOwner()->Id();
-     // get author image
-      $user = \Drupal\user\Entity\User::load($uid);
+      // Get author image.
+      $user = User::load($uid);
       $author_photo = $user->get('field_user_picture')->getValue()[0]['uri'];
 
-      $data['id'] = (int)$item->id();
-      $data['lat'] = (double)$lat;
-      $data['lon'] = (double)$lon;
-      $data['time'] = $item->get('field_time')->value; //<-- use time in the image
-      $data['date'] = $item->get('field_time')->value; // <-- use date in the image
+      $data['id'] = (int) $item->id();
+      $data['lat'] = (double) $lat;
+      $data['lon'] = (double) $lon;
+      // <-- use time in the image
+      $data['time'] = $item->get('field_time')->value;
+      // <-- use date in the image
+      $data['date'] = $item->get('field_time')->value;
       $data['timestamp'] = $item->created->value;
       $data['photo'] = $photo;
       $data['title'] = $item->get('label')->value;
@@ -250,6 +264,9 @@ class TkResource extends ResourceBase {
     return (new ResourceResponse($new_items, 200))->addCacheableDependency($build);
   }
 
+  /**
+   *
+   */
   public function permissions() {
     return [];
   }

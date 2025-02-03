@@ -16,10 +16,6 @@ final class MetTestController extends ControllerBase {
    */
   public function __invoke(): array {
 
-
-
-
-
     $build['content'] = [
       '#type' => 'item',
       '#markup' => $this->t('It works!'),

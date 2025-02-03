@@ -1,30 +1,29 @@
 <?php
 
 namespace Drupal\met_api\Plugin\rest\resource;
-use Drupal\Core\Session\AnonymousUserSession;
-use Drupal\met_api\Controller\UserLoginController;
-use http\Exception\BadHeaderException;
-use Symfony\Component\HttpFoundation\Request;
+
 use Drupal\Core\Config\ImmutableConfig;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\Session\AnonymousUserSession;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
+use Drupal\rest\Plugin\rest\resource\EntityResourceAccessTrait;
+use Drupal\rest\Plugin\rest\resource\EntityResourceValidationTrait;
 use Drupal\rest\ResourceResponse;
+use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use http\Exception\BadHeaderException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-use Drupal\rest\Plugin\rest\resource\EntityResourceAccessTrait;
-use Drupal\rest\Plugin\rest\resource\EntityResourceValidationTrait;
-use Drupal\user\Controller\UserAuthenticationController;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_user_resource",
@@ -35,7 +34,7 @@ use Drupal\user\Controller\UserAuthenticationController;
  *   }
  * )
  */
-class UserResource extends ResourceBase{
+class UserResource extends ResourceBase {
   use StringTranslationTrait;
   use EntityResourceValidationTrait;
   use EntityResourceAccessTrait;
@@ -53,7 +52,6 @@ class UserResource extends ResourceBase{
    * @var \Drupal\Core\Session\AccountProxyInterface
    */
   protected $currentUser;
-
 
   /**
    * Constructs a Drupal\rest\Plugin\ResourceBase object.
@@ -94,21 +92,24 @@ class UserResource extends ResourceBase{
       $container->get('current_user')
     );
   }
+
+  /**
+   *
+   */
   public function patch(Request $request, $uid) {
 
     $this->logger->debug('user id uid: ' . $uid);
 
     $payload = json_decode($request->getContent());
 
-   // $msg = "<pre>" . print_r($payload, true) . "</pre>";
-   // $this->logger->debug($msg);
+    // $msg = "<pre>" . print_r($payload, true) . "</pre>";
+    // $this->logger->debug($msg);
+    [$updateField] = $payload;
+    $account = User::load($uid);
 
-    list($updateField) = $payload;
-    $account = \Drupal\user\Entity\User::load($uid);
-
-    if(isset($updateField->photo)) {
-      $image =  [
-        'uri' =>  $updateField->photo,
+    if (isset($updateField->photo)) {
+      $image = [
+        'uri' => $updateField->photo,
       ];
       $account->set('field_user_picture', $image);
     }
@@ -122,39 +123,46 @@ class UserResource extends ResourceBase{
       'photo' => $photo != '' ? $photo : 'https://macres-media-storage.s3.ap-southeast-2.amazonaws.com/user.png',
     ];
 
-
     $build = ['#cache' => ['max-age' => 0]];
 
-  return (new ResourceResponse($output, 200))->addCacheableDependency($build);
+    return (new ResourceResponse($output, 200))->addCacheableDependency($build);
 
   }
 
-
-  public function post(Request $request, $type = null) {
+  /**
+   *
+   */
+  public function post(Request $request, $type = NULL) {
 
     $payload = json_decode($request->getContent());
 
-    switch($type) {
+    switch ($type) {
       case 'login':
         return $this->login($payload);
+
       case 'register':
         return $this->register($payload);
+
       case 'logout':
         return $this->logout($payload);
+
       case 'forgot':
         return $this->forgot($payload);
     }
     throw new BadRequestHttpException('No type was provided or type is unknown');
   }
 
-
+  /**
+   *
+   */
   public function logout($data) {
 
     $user = \Drupal::currentUser();
 
     if ($user->isAnonymous()) {
       $output = ['message' => 'Anonymous user'];
-    } else {
+    }
+    else {
 
       \Drupal::logger('user')
         ->info('Session closed for %name.', [
@@ -176,42 +184,46 @@ class UserResource extends ResourceBase{
     return (new ResourceResponse($output, 200))->addCacheableDependency($build);
   }
 
+  /**
+   *
+   */
   public function login($data) {
     $data = $data->user;
     if (!isset($data->mail)) {
       throw new BadRequestHttpException('Missing credentials.mail.');
     }
     $user = user_load_by_mail($data->mail);
-    if(!$user){
+    if (!$user) {
       throw new BadRequestHttpException('Invalid username or password');
     }
 
-    if (\Drupal::service('user.auth')->authenticate($user->get('name')->value, $data->pass)){
+    if (\Drupal::service('user.auth')->authenticate($user->get('name')->value, $data->pass)) {
       user_login_finalize($user);
 
       $session_manager = \Drupal::service('session_manager');
       $session_id = $session_manager->getId();
       $session_name = $session_manager->getName();
-    } else {
+    }
+    else {
       throw new BadRequestHttpException('Invalid username or password');
     }
 
-    //Load all impact report and Assistance request belong to this user
+    // Load all impact report and Assistance request belong to this user.
     /*
     $nids = \Drupal::entityQuery('node')
-      ->condition('type','request_assistance')
-      ->condition('author',$user)
-      ->execute();
+    ->condition('type','request_assistance')
+    ->condition('author',$user)
+    ->execute();
     $nodes =  \Drupal\node\Entity\Node::loadMultiple($nids);
     $data = [];
     foreach($nodes as $node) {
-      $data[] = [
-        'id' => $node->id(),
-        'title' => $node->getTitle(),
-        'time' => $node->get('created'),
-      ];
+    $data[] = [
+    'id' => $node->id(),
+    'title' => $node->getTitle(),
+    'time' => $node->get('created'),
+    ];
     }
-    */
+     */
 
     $photo = $user->get('field_user_picture')->getValue()[0]['uri'];
 
@@ -227,10 +239,13 @@ class UserResource extends ResourceBase{
     return (new ResourceResponse($userArr, 200))->addCacheableDependency($build);
   }
 
+  /**
+   *
+   */
   public function forgot($data) {
 
     $account = user_load_by_mail($data->user->mail);
-    if(!$account) {
+    if (!$account) {
       throw new BadRequestHttpException('Unknown email address ' . $data->user->mail);
     }
     $mail = _user_mail_notify('password_reset', $account);
@@ -245,24 +260,24 @@ class UserResource extends ResourceBase{
     return (new ResourceResponse($output, 200))->addCacheableDependency($build);
   }
 
-
+  /**
+   *
+   */
   public function register($data) {
 
-    //@TODO Check email address (load by mail and see if exist then throw error)
+    // @todo Check email address (load by mail and see if exist then throw error)
     if (user_load_by_mail($data->mail)) {
       throw new BadRequestHttpException('Email address already used. Use another email.');
     }
 
-    $account = \Drupal\user\Entity\User::create([
+    $account = User::create([
       "name" => $data->name,
       "mail" => $data->mail,
-      "pass" => $data->pass
+      "pass" => $data->pass,
     ]);
 
-    //$this->ensureAccountCanRegister($account);
-
-    //$this->checkEditFieldAccess($account);
-
+    // $this->ensureAccountCanRegister($account);
+    // $this->checkEditFieldAccess($account);
     // Make sure that the user entity is valid (email and name are valid).
     $this->validate($account);
 
@@ -272,11 +287,13 @@ class UserResource extends ResourceBase{
     // Create the account.
     $account->save();
 
-    //$this->sendEmailNotifications($account);
-
+    // $this->sendEmailNotifications($account);
     return new ModifiedResourceResponse($account, 200);
   }
 
+  /**
+   *
+   */
   public function get($uid = NULL) {
 
     $user = \Drupal::currentUser();
@@ -295,7 +312,7 @@ class UserResource extends ResourceBase{
         ->accessCheck(FALSE)
         ->execute();
 
-      $user =  $storage->loadMultiple($item);
+      $user = $storage->loadMultiple($item);
 
       if (empty($user)) {
         throw new NotFoundHttpException("User with ID '$uid' was not found");
@@ -352,6 +369,9 @@ class UserResource extends ResourceBase{
     }
   }
 
+  /**
+   *
+   */
   public function permissions() {
     return [];
   }

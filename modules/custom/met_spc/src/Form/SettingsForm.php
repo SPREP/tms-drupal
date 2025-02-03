@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Drupal\met_spc\Form;
 
@@ -29,12 +31,14 @@ final class SettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    $form['spc'] = array(
+    $form['spc'] = [
       '#type' => 'fieldset',
       '#title' => t('SPC API Connection'),
-      '#collapsible' => TRUE, // Added
-      '#collapsed' => FALSE,  // Added
-    );
+    // Added.
+      '#collapsible' => TRUE,
+    // Added.
+      '#collapsed' => FALSE,
+    ];
 
     $form['spc']['url'] = [
       '#type' => 'textfield',

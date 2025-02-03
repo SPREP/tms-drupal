@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_api_warning_resource",
@@ -68,6 +68,9 @@ class WarningResource extends ResourceBase {
     );
   }
 
+  /**
+   *
+   */
   public function get($lng = 'en') {
 
     $storage = \Drupal::service('entity_type.manager')->getStorage('met_warning');
@@ -78,18 +81,18 @@ class WarningResource extends ResourceBase {
       ->range(0, 10)
       ->execute();
 
-    $items =  $storage->loadMultiple($items);
+    $items = $storage->loadMultiple($items);
     $new_items = [];
-    foreach($items as $item) {
+    foreach ($items as $item) {
 
       $data = [];
-      foreach($item->field_language as $p) {
+      foreach ($item->field_language as $p) {
         $ent = $p->entity;
-        if($lng == 'en' && $ent->type->target_id == 'warning_english') {
+        if ($lng == 'en' && $ent->type->target_id == 'warning_english') {
           $data['body'] = strip_tags($ent->field_body->value);
           $data['title'] = strip_tags($ent->field_title->value);
         }
-        if($lng == 'to' && $ent->type->target_id == 'warning_tongan') {
+        if ($lng == 'to' && $ent->type->target_id == 'warning_tongan') {
           $data['body'] = strip_tags($ent->field_body->value);
           $data['title'] = strip_tags($ent->field_title->value);
         }
@@ -107,13 +110,16 @@ class WarningResource extends ResourceBase {
 
     $build = [
       '#cache' => [
-        'tags' => ['met_warning_list']
-      ]
+        'tags' => ['met_warning_list'],
+      ],
     ];
 
     return (new ResourceResponse($new_items, 200))->addCacheableDependency(CacheableMetadata::createFromRenderArray($build));
   }
 
+  /**
+   *
+   */
   public function permissions() {
     return [];
   }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Drupal\met_push\Entity;
 
@@ -121,7 +123,7 @@ final class METPushNotification extends ContentEntityBase implements METPushNoti
       ->setDisplayOptions('form', [
         'type' => 'text_textarea',
         'weight' => 10,
-        'required' => true,
+        'required' => TRUE,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [

@@ -1,15 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Drupal\met_niwa\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use \Datetime;
 
 /**
  * Returns responses for Met data converter routes.
  */
-final class MetNiwaController extends ControllerBase
-{
+final class MetNiwaController extends ControllerBase {
 
   private $api_base_url;
   private $token_enpoint;
@@ -19,8 +19,7 @@ final class MetNiwaController extends ControllerBase
 
   private $config;
 
-  public function __construct()
-  {
+  public function __construct() {
 
     $config = \Drupal::configFactory()->getEditable('met_niwa.settings');
     $this->config = $config;
@@ -28,15 +27,17 @@ final class MetNiwaController extends ControllerBase
     $this->token_enpoint = $config->get('endpoint');
   }
 
-
-  private function callApi($url, $header = ['Content-Type: application/json'])
-  {
+  /**
+   *
+   */
+  private function callApi($url, $header = ['Content-Type: application/json']) {
     if (empty(self::$token)) {
 
-      //check for Cookie
+      // Check for Cookie.
       if (isset($_COOKIE['niwa_api_token'])) {
         self::$token = $_COOKIE['niwa_api_token'];
-      } else {
+      }
+      else {
         self::$token = '1';
         $original_url = $url;
         $url = $this->api_base_url . $this->token_enpoint;
@@ -71,21 +72,19 @@ final class MetNiwaController extends ControllerBase
     return json_decode($result);
   }
 
-
   /**
    * Builds the response.
    */
-  public function __invoke(): array
-  {
+  public function __invoke(): array {
 
-    // Map the required item to its IDs
+    // Map the required item to its IDs.
     $channels = [
       'temp' => "Air Temp(AVG)",
       'humidity' => "RH(AVG)",
       'barometer' => "MSL BP(AVG)",
       'wind_direction' => "Gust WD(RAW)",
       'wind_speed' => "Wind Speed Knots",
-      'solar_radiation' => "Solar Radiation(AVG)"
+      'solar_radiation' => "Solar Radiation(AVG)",
     ];
 
     $weather_data = [
@@ -127,39 +126,42 @@ final class MetNiwaController extends ControllerBase
     $sea_info = [
       'tbu' => [
         'node_id' => 12528,
-        'channels' => ['temp' => 273417, 'level' => 273416]
+        'channels' => ['temp' => 273417, 'level' => 273416],
       ],
       'eua' => [
         'node_id' => 12528,
-        'channels' => ['temp' => 273417, 'level' => 273416]
+        'channels' => ['temp' => 273417, 'level' => 273416],
       ],
       'hpp' => [
         'node_id' => 11761,
-        'channels' => ['temp' => 265150, 'level' => 265149]
+        'channels' => ['temp' => 265150, 'level' => 265149],
       ],
       'vv' => [
         'node_id' => 7869,
-        'channels' => ['temp' => 167560, 'level' => 167559]
+        'channels' => ['temp' => 167560, 'level' => 167559],
       ],
       'ntt' => [
         'node_id' => 7614,
-        'channels' => ['temp' => 159545, 'level' => 159544]
+        'channels' => ['temp' => 159545, 'level' => 159544],
       ],
     ];
-
 
     $data = [];
     $selected_stations_id = [
       $this->config->get('tbu'),
       $this->config->get('vv'),
       $this->config->get('hpp'),
-      7548, //ntt
-      7547, //nfo
-      $this->config->get('eua')
+    // Ntt.
+      7548,
+    // Nfo.
+      7547,
+      $this->config->get('eua'),
     ];
     foreach ($weather_data as $location => $stations) {
       foreach ($stations as $info) {
-        if (!in_array($info['node_id'], $selected_stations_id))continue;
+        if (!in_array($info['node_id'], $selected_stations_id)) {
+          continue;
+        }
 
         $url = $this->api_base_url . $this->data_enpoint . $info['node_id'];
         $result = $this->callApi($url);
@@ -178,19 +180,24 @@ final class MetNiwaController extends ControllerBase
             case $info['channels']['temp']:
               $temperature = $channel->LastValue;
               break;
+
             case $info['channels']['humidity']:
               $humidity = $channel->LastValue;
               break;
+
             case $info['channels']['barometer']:
               $barometer = $channel->LastValue;
               break;
+
             case $info['channels']['wind_direction']:
               $wind_direction = $this->degreeToCompass($channel->LastValue);
               $wind_direction_degree = $channel->LastValue;
               break;
+
             case $info['channels']['wind_speed']:
               $wind_speed = $channel->LastValue;
               break;
+
             case $info['channels']['solar_radiation']:
               $solar_radiation = $channel->LastValue;
               break;
@@ -199,14 +206,14 @@ final class MetNiwaController extends ControllerBase
 
         $time = new DateTime($time);
 
-        //Convert knots to k/h
+        // Convert knots to k/h.
         $wind_speed = $wind_speed > 0 ? round($wind_speed * 1.852) : $wind_speed;
 
         $data[$location] = [
           'location' => $location,
           'icon' => "0",
-          'temperature' => $temperature != '' ? round((float)$temperature) : 0,
-          'humidity' => round((float)$humidity),
+          'temperature' => $temperature != '' ? round((float) $temperature) : 0,
+          'humidity' => round((float) $humidity),
           'barometer' => $barometer,
           'wind_direction' => $wind_direction,
           'wind_speed' => $wind_speed,
@@ -223,19 +230,19 @@ final class MetNiwaController extends ControllerBase
 
     }
 
-    //Create new CSV file and put the current weather data there
+    // Create new CSV file and put the current weather data there.
     $csv_file_name = 'live_weather.csv';
     $csv_file_absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
 
-    $fp = fopen($csv_file_absolute_path, 'w'); // open in write only mode (write at the start of the file)
+    // Open in write only mode (write at the start of the file)
+    $fp = fopen($csv_file_absolute_path, 'w');
     fputcsv($fp, ['weather']);
     foreach ($data as $location => $value) {
       fputcsv($fp, $value);
     }
     fclose($fp);
 
-
-    //sea data
+    // Sea data.
     $sea_data = [];
     foreach ($sea_info as $location => $info) {
 
@@ -248,23 +255,25 @@ final class MetNiwaController extends ControllerBase
       foreach ($result->GetChannelListResult as $channel) {
         switch ($channel->ID) {
           case $info['channels']['temp']:
-            $sea_temp = round((float)$channel->LastValue);
+            $sea_temp = round((float) $channel->LastValue);
             $observation_date = $channel->LastTime;
             break;
+
           case $info['channels']['level']:
             $sea_level = $channel->LastValue;
             break;
         }
       }
 
-      $time = new Datetime($observation_time);
-      $sea_data[$location] = [$location, $sea_level, $sea_temp, $time->format("D, j M Y G:i:s") . ' +1300',];
+      $time = new \Datetime($observation_time);
+      $sea_data[$location] = [$location, $sea_level, $sea_temp, $time->format("D, j M Y G:i:s") . ' +1300'];
     }
-    //Create new CSV file and put the current sea level data there
+    // Create new CSV file and put the current sea level data there.
     $csv_file_name = 'live_sea.csv';
     $csv_file_absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
 
-    $fp = fopen($csv_file_absolute_path, 'w'); // open in write only mode (write at the start of the file)
+    // Open in write only mode (write at the start of the file)
+    $fp = fopen($csv_file_absolute_path, 'w');
     fputcsv($fp, ['sea']);
     foreach ($sea_data as $location => $value) {
       fputcsv($fp, $value);
@@ -275,50 +284,65 @@ final class MetNiwaController extends ControllerBase
       '#type' => 'item',
       '#markup' => "Live Weather forecast has been updated",
       '#cache' => [
-        'max-age' => 0
+        'max-age' => 0,
       ],
     ];
 
     return $build;
   }
 
-  function degreeToCompass($degree)
-  {
+  /**
+   *
+   */
+  public function degreeToCompass($degree) {
     $value = floor(($degree / 22.5) + 0.5);
     $compass = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
     return $compass[($value % 16)];
   }
 
-  function getWeatherIcon($data)
-  {
+  /**
+   *
+   */
+  public function getWeatherIcon($data) {
     if (!empty($data['present_weather'])) {
       switch ($data['present_weather']) {
         case 'RA':
           return 7;
+
         case 'DZ':
           return 5;
+
         case 'TS':
           return 9;
+
         case 'SH':
           return 6;
+
         default:
           return 7;
       }
-    } else {
+    }
+    else {
 
-      if (!isset($data['clouds'])) return 0;
+      if (!isset($data['clouds'])) {
+        return 0;
+      }
       $total = is_array($data['clouds']) ? count($data['clouds']) - 1 : 0;
       switch ($data['clouds'][$total]['amount']) {
         case 'FEW':
           return 1;
+
         case 'SCT':
           return 2;
+
         case 'BKN':
         case 'OVC':
           return 3;
+
         default:
           return 0;
       }
     }
   }
+
 }

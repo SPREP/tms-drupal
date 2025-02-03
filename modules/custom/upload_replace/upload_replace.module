@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * A module file for providing functionality to replace files on upload
@@ -12,11 +13,12 @@
  */
 
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\file\FileInterface;
 
 /**
  *
  */
-function upload_replace_file_update(Drupal\file\FileInterface $new_file) {
+function upload_replace_file_update(FileInterface $new_file) {
 
   if (!$new_file->get('fid')->value) {
     // Nothing to do if no fileid.
@@ -29,7 +31,7 @@ function upload_replace_file_update(Drupal\file\FileInterface $new_file) {
   $desired_destination = preg_replace('/_[0-9]+\.(.*)$/', '.$1', $new_file->getFileUri());
 
   $db_path = $database->select('file_managed', 'f')
-    ->fields('f', array('uri', ))
+    ->fields('f', ['uri'])
     ->condition('fid', $new_file->get('fid')->value)
     ->execute()
     ->fetchField();
@@ -37,7 +39,7 @@ function upload_replace_file_update(Drupal\file\FileInterface $new_file) {
     // This happens when a reversion is being reverted.
     $next_good_filepath = $fileSystem->getDestinationFilename($desired_destination, FileSystemInterface::EXISTS_RENAME);
     $database->update('file_managed')
-      ->fields(array('uri' => $next_good_filepath))
+      ->fields(['uri' => $next_good_filepath])
       ->condition('fid', $new_file->get('fid')->value)
       ->execute();
     $new_file->setFileUri($desired_destination);
@@ -45,69 +47,70 @@ function upload_replace_file_update(Drupal\file\FileInterface $new_file) {
   else {
     // If the filename has be modified by adding a _0 value, or
     // on certain situations the filepath will not match the filepath in the db, such as
-    // when reverting a revision.  When reverting a revision change the filename as well
+    // when reverting a revision.  When reverting a revision change the filename as well.
     if (!strpos($desired_destination, $new_file->getFileUri())) {
-      //the filename is not in the filepath, so drupal must have added a "_0" before the extension
-      //find the file that is blocking this file from keeping the correct path
+      // The filename is not in the filepath, so drupal must have added a "_0" before the extension
+      // find the file that is blocking this file from keeping the correct path.
       $result = $database->select('file_managed', 'f')
         ->fields('f')
         ->condition('uri', $desired_destination)
         ->execute();
       // @todo only one result is handled, should allow for multiple results
-      $is_blocked = false;
+      $is_blocked = FALSE;
 
       foreach ($result as $file) {
         $is_blocked = TRUE;
         $blocking_file = $file;
-        $tmp_destination = $fileSystem->getTempDirectory() ."/$blocking_file->filename";
+        $tmp_destination = $fileSystem->getTempDirectory() . "/$blocking_file->filename";
       }
 
       $old_destination = $db_path;
 
-      if ($old_destination == $desired_destination){
+      if ($old_destination == $desired_destination) {
         return;
       }
       // Swap the files.
       if ($is_blocked) {
         // Move the blocking file to a temporary location.
         if (!$fileSystem->move($desired_destination, $tmp_destination)) {
-          \Drupal::messenger()->addMessage(t('The file %old could not be moved to %new', array('%old' => $desired_destination, '%new' => $tmp_destination)), 'error');
+          \Drupal::messenger()->addMessage(t('The file %old could not be moved to %new', ['%old' => $desired_destination, '%new' => $tmp_destination]), 'error');
           return;
         }
         // DRUPAL 8 no longer changes the source filepath during move
-        // move blocking file was successful, update the DB
+        // move blocking file was successful, update the DB.
         $database->update('file_managed')
-          ->fields(array('uri' => $tmp_destination))
+          ->fields(['uri' => $tmp_destination])
           ->condition('fid', $blocking_file->fid)
           ->execute();
       }
 
       // Move the newfile to the prefered location.
       if (!$fileSystem->move($old_destination, $desired_destination)) {
-        \Drupal::messenger()->addMessage(t('The file %old could not be moved to %new', array('%old' => $old_destination, '%new' => $desired_destination)), 'error');
+        \Drupal::messenger()->addMessage(t('The file %old could not be moved to %new', ['%old' => $old_destination, '%new' => $desired_destination]), 'error');
         return;
       }
       // Move newfile was successful, update the DB.
       $desired_data = pathinfo($desired_destination);
       $desired_filename = $desired_data['basename'];
       $database->update('file_managed')
-        ->fields(array('uri' => $desired_destination, 'filename' => $desired_filename))
+        ->fields(['uri' => $desired_destination, 'filename' => $desired_filename])
         ->condition('fid', $new_file->get('fid')->value)
         ->execute();
-      $new_file->setFileUri($desired_destination); //set the newfile's path to the correct path.
+      // Set the newfile's path to the correct path.
+      $new_file->setFileUri($desired_destination);
       $new_file->setFilename($desired_filename);
 
       if ($is_blocked) {
         // Move the older file from temp to the new _0 location.
         if (!$fileSystem->move($tmp_destination, $old_destination)) {
-          \Drupal::messenger()->addMessage(t('The file %old could not be moved to %new', array('%old' => $tmp_destination, '%new' => $old_destination)), 'error');
+          \Drupal::messenger()->addMessage(t('The file %old could not be moved to %new', ['%old' => $tmp_destination, '%new' => $old_destination]), 'error');
           return;
         }
         // Move blocking file was successful, update the DB with the actual location after file copy, so we use tmp_destination as it was updated during the move.
         $old_data = pathinfo($old_destination);
         $old_filename = $old_data['basename'];
         $database->update('file_managed')
-          ->fields(array('uri' =>$old_destination, 'filename' => $old_filename))
+          ->fields(['uri' => $old_destination, 'filename' => $old_filename])
           ->condition('fid', $blocking_file->fid)
           ->execute();
       }

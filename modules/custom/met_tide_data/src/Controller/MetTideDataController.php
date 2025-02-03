@@ -1,9 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Drupal\met_tide_data\Controller;
+
 use Drupal\Core\Controller\ControllerBase;
-use HungCP\PhpSimpleHtmlDom\HtmlDomParser;
 use Drupal\Core\Datetime\DrupalDateTime;
+use HungCP\PhpSimpleHtmlDom\HtmlDomParser;
 
 /**
  * Returns responses for Met tide data routes.
@@ -30,17 +33,16 @@ final class MetTideDataController extends ControllerBase {
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15",
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15",
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0",
     ];
 
     /** @var Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
-    //$date_formatter = \Drupal::service('date.formatter');
-
+    // $date_formatter = \Drupal::service('date.formatter');
     $data = [];
-    foreach($urls as $location => $url) {
+    foreach ($urls as $location => $url) {
 
-      // Get random user agent
-      $user_agent = $user_agents[rand(0,count($user_agents)-1)];
+      // Get random user agent.
+      $user_agent = $user_agents[rand(0, count($user_agents) - 1)];
 
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);
@@ -50,10 +52,10 @@ final class MetTideDataController extends ControllerBase {
 
       $dom = HtmlDomParser::str_get_html($exec);
 
-      foreach($dom->find('.tide-day') as $elm) {
+      foreach ($dom->find('.tide-day') as $elm) {
         $str_day = $elm->find('<h3>', 0)->innertext;
 
-        foreach($elm->find('.low-tide') as $low) {
+        foreach ($elm->find('.low-tide') as $low) {
           $low->getAllAttributes();
           if (isset($low->attr['data-time-local'])) {
             $date = new DrupalDateTime($low->attr['data-time-local']);
@@ -62,7 +64,7 @@ final class MetTideDataController extends ControllerBase {
           }
         }
 
-        foreach($elm->find('.high-tide') as $high) {
+        foreach ($elm->find('.high-tide') as $high) {
           $high->getAllAttributes();
           if (isset($high->attr['data-time-local'])) {
             $date = new DrupalDateTime($high->attr['data-time-local']);
@@ -78,7 +80,6 @@ final class MetTideDataController extends ControllerBase {
     $json_absolute_path = \Drupal::service('file_system')->realpath('public://' . $file_name);
     $data = serialize($data);
     file_put_contents($json_absolute_path, $data);
-
 
     $build['content'] = [
       '#type' => 'item',

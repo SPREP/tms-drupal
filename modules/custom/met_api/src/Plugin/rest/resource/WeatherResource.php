@@ -2,17 +2,15 @@
 
 namespace Drupal\met_api\Plugin\rest\resource;
 
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Datetime\DateFormatter;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_api_weather_resource",
@@ -68,52 +66,52 @@ class WeatherResource extends ResourceBase {
     );
   }
 
+  /**
+   *
+   */
   public function compassToDegree($value) {
 
   }
 
-
+  /**
+   *
+   */
   public function get() {
 
-    //This is the weather forecast that upload by TMS in CSV file format.
-
+    // This is the weather forecast that upload by TMS in CSV file format.
     $csv_file_name = 'weather.csv';
     $absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
     $file = fopen($absolute_path, "r");
 
     $data = [];
     $type = '';
-    while(! feof($file))
-    {
+    while (!feof($file)) {
       while (($lines = fgetcsv($file, 1000, ",")) !== FALSE) {
         if (!is_null($lines[0])) {
 
-          if(count($lines) == 1) {
+          if (count($lines) == 1) {
             $type = $lines[0];
             continue;
           }
-          $data[$type][] = array_map('trim',$lines);
+          $data[$type][] = array_map('trim', $lines);
         }
       }
     }
 
     fclose($file);
 
-
-    //Because NIWA API doesn't provide visibility and weather condition,
-    //we can get that from the METAR file on MET service website.
-
+    // Because NIWA API doesn't provide visibility and weather condition,
+    // we can get that from the METAR file on MET service website.
     $metar = [];
 
     $csv_file_name = 'weather_metar.csv';
     $absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
     $file = fopen($absolute_path, "r");
-    while(! feof($file))
-    {
+    while (!feof($file)) {
       while (($lines = fgetcsv($file, 1000, ",")) !== FALSE) {
         if (!is_null($lines[0])) {
 
-          if(count($lines) == 1) {
+          if (count($lines) == 1) {
             $type = $lines[0];
             continue;
           }
@@ -125,76 +123,73 @@ class WeatherResource extends ResourceBase {
 
     fclose($file);
 
-
-    //Get the live weather data from CSV
+    // Get the live weather data from CSV.
     $csv_file_name = 'live_weather.csv';
     $absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
     $file = fopen($absolute_path, "r");
 
     $type = '';
-    while(! feof($file))
-    {
+    while (!feof($file)) {
       while (($lines = fgetcsv($file, 1000, ",")) !== FALSE) {
         if (!is_null($lines[0])) {
 
-          if(count($lines) == 1) {
+          if (count($lines) == 1) {
             $type = $lines[0];
             continue;
           }
 
-          if ($metar[$lines[0]]['icon'] != '')
+          if ($metar[$lines[0]]['icon'] != '') {
             $lines[1] = $metar[$lines[0]]['icon'];
+          }
 
-          if ( $metar[$lines[0]]['visibility'] != '')
+          if ($metar[$lines[0]]['visibility'] != '') {
             $lines[7] = $metar[$lines[0]]['visibility'];
+          }
 
-          $data[$type][] = array_map('trim',$lines);
+          $data[$type][] = array_map('trim', $lines);
         }
       }
     }
 
     fclose($file);
 
-
-    //Read the sea information
+    // Read the sea information.
     $csv_file_name = 'live_sea.csv';
     $absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
     $file = fopen($absolute_path, "r");
 
     $type = '';
-    while(! feof($file))
-    {
+    while (!feof($file)) {
       while (($lines = fgetcsv($file, 1000, ",")) !== FALSE) {
         if (!is_null($lines[0])) {
 
-          if(count($lines) == 1) {
+          if (count($lines) == 1) {
             $type = $lines[0];
             continue;
           }
 
-          $data[$type][] = array_map('trim',$lines);
+          $data[$type][] = array_map('trim', $lines);
         }
       }
     }
     fclose($file);
 
-    //Read tide information
+    // Read tide information.
     $csv_file_name = 'tide.csv';
     $absolute_path = \Drupal::service('file_system')->realpath('private://' . $csv_file_name);
     $file = fopen($absolute_path, "r");
 
     $type = '';
-    while(! feof($file))
-    {
+    while (!feof($file)) {
       while (($lines = fgetcsv($file, 1000, ",")) !== FALSE) {
         if (!is_null($lines[0])) {
 
-          if(count($lines) == 1) {
+          if (count($lines) == 1) {
             $type = $lines[0];
             continue;
           }
 
-          $data[$type][] = array_map('trim',$lines);
+          $data[$type][] = array_map('trim', $lines);
         }
       }
     }
@@ -205,6 +200,9 @@ class WeatherResource extends ResourceBase {
     return (new ResourceResponse($data, 200))->addCacheableDependency($build);
   }
 
+  /**
+   *
+   */
   public function permissions() {
     return [];
   }

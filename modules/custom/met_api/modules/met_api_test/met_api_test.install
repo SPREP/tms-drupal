@@ -1,78 +1,75 @@
 <?php
 
-use Drupal\met_warning\METWARNING;
-
-
+/**
+ * @file
+ */
 
 /**
- * Implement hook install
+ * Implement hook install.
  */
 function met_api_test_install($is_sync) {
-  
-  //create warning data  
-  //english    
+
+  // Create warning data
+  // english.
   $paraEng = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(
     [
       'type' => 'warning_english',
       'field_body' => 'English version warning body',
-      'field_title' => 'Title english warning'
+      'field_title' => 'Title english warning',
     ]);
-    $paraEng->isNew();
-    $paraEng->save();
+  $paraEng->isNew();
+  $paraEng->save();
 
-    //tongan
-    $paraTo = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(
+  // Tongan.
+  $paraTo = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(
       [
         'type' => 'warning_tongan',
         'field_body' => 'Faka tokanga afa faka iki iki heni',
-        'field_title' => 'Koe faka tokanga afa ki he otu tonga'
+        'field_title' => 'Koe faka tokanga afa ki he otu tonga',
       ]);
-    $paraTo->isNew();
-    $paraTo->save();
+  $paraTo->isNew();
+  $paraTo->save();
 
-    //create warning data      
-    $warning = \Drupal::service('entity_type.manager')->getStorage('met_warning')->create(
+  // Create warning data.
+  $warning = \Drupal::service('entity_type.manager')->getStorage('met_warning')->create(
       [
-          'title' => 'Warning title 5456',
-          'field_level' => '2',
-          'field_language' => [
-            ['target_id' => $paraEng->id(), 'target_revision_id' => $paraEng->getRevisionId()], 
-            ['target_id' => $paraTo->id(), 'target_revision_id' => $paraTo->getRevisionId()]
+        'title' => 'Warning title 5456',
+        'field_level' => '2',
+        'field_language' => [
+            ['target_id' => $paraEng->id(), 'target_revision_id' => $paraEng->getRevisionId()],
+            ['target_id' => $paraTo->id(), 'target_revision_id' => $paraTo->getRevisionId()],
+        ],
+        'field_time' => date('Y-m-d H:i:s', time()),
+        'status' => 1,
+      ]
+      );
+  $warning->enforceIsNew();
+  $warning->save();
+
+  // Create tk data.
+  $tk = \Drupal::service('entity_type.manager')->getStorage('met_tk')->create(
+        [
+          'field_photo' => 'https://unsplash.com/photos/aerial-photography-of-red-personal-watercraft-circling-on-water-at-daytime-A0xBsjb1ddo',
+          'label' => 'Test tk report',
+          'description' => [
+            'summary' => '',
+            'value' => 'Test description body data here',
+            'format' => 'full_html',
+          ],
+          'field_indicator' => ['target_id' => 5],
+          'field_geo_location' => [
+            'lat' => '-21.20443',
+            'lng' => '-175.2018',
           ],
           'field_time' => date('Y-m-d H:i:s', time()),
           'status' => 1,
         ]
-      );
-      $warning->enforceIsNew();
-    $warning->save();
-
-
-
-    //create tk data 
-    $tk = \Drupal::service('entity_type.manager')->getStorage('met_tk')->create(
-        [
-            'field_photo' => 'https://unsplash.com/photos/aerial-photography-of-red-personal-watercraft-circling-on-water-at-daytime-A0xBsjb1ddo',
-            'label' => 'Test tk report',
-            'description' => [
-              'summary' => '',
-              'value' => 'Test description body data here',
-              'format' => 'full_html',
-            ],
-            'field_indicator' => ['target_id' => 5],
-            'field_geo_location' => [
-              'lat' => '-21.20443',
-              'lng' => '-175.2018',
-            ],
-            'field_time' => date('Y-m-d H:i:s', time()),
-          'status' => 1,
-          ]
         );
-    $tk->enforceIsNew();
-    $tk->save();
+  $tk->enforceIsNew();
+  $tk->save();
 
-
-    //Create event data
-    $paraEvent = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(
+  // Create event data.
+  $paraEvent = \Drupal::service('entity_type.manager')->getStorage('paragraph')->create(
         [
           'type' => 'earthquake',
           'field_date' => date('Y-m-d H:i:s', time()),
@@ -81,104 +78,99 @@ function met_api_test_install($is_sync) {
             'lat' => '-21.20443',
             'lng' => '-175.2018',
           ],
-          'field_magnitude' => 6.5
+          'field_magnitude' => 6.5,
         ]);
-        $paraEvent->isNew();
-        $paraEvent->save();
-    
+  $paraEvent->isNew();
+  $paraEvent->save();
 
-    $event = \Drupal::service('entity_type.manager')->getStorage('node')->create(
-  
+  $event = \Drupal::service('entity_type.manager')->getStorage('node')->create(
         [
-            'type' => 'event',
-            'title' => 'Earthquake 123 title',
-            'body' => [
-              'summary' => '',
-              'value' => 'Earthquake 123 body content',
-              'format' => 'full_html',
-              ],
-            'field_event_type' => [
-                ['target_id' => $paraEvent->id(), 'target_revision_id' => $paraEvent->getRevisionId()], 
-            ],
-          ]
+          'type' => 'event',
+          'title' => 'Earthquake 123 title',
+          'body' => [
+            'summary' => '',
+            'value' => 'Earthquake 123 body content',
+            'format' => 'full_html',
+          ],
+          'field_event_type' => [
+                ['target_id' => $paraEvent->id(), 'target_revision_id' => $paraEvent->getRevisionId()],
+          ],
+        ]
     );
-  
-    $event->isNew();
-    $event->save();
 
+  $event->isNew();
+  $event->save();
 
-    //add  tk indicators
-    $image_target_path = 'private://newphoto.jpg';
-    $image_data = file_get_contents('private://photo.jpg');
-    $image_object = \Drupal::service('file.repository')->writeData($image_data, $image_target_path);
-    
-    //create evacuation data
-    $safezone = \Drupal::service('entity_type.manager')->getStorage('node')->create([
-      'title' => 'Evacuation point Fasi',
-      'type' => 'evacuation',
-      'field_geo_location' => [
-        'lat' => '-21.20443',
-        'lng' => '-175.2018',
-      ],
-      'body' => [
-        'summary' => '',
-        'value' => 'Evacuation body content here',
-        'format' => 'full_html',
-        ],
-      'field_safe_zone_image' => [
-        'target_id' => $image_object->id(),
-        'alt' => 'test',
-      ],
-    ]);
-    $safezone->isNew();
-    $safezone->save();
+  // Add  tk indicators.
+  $image_target_path = 'private://newphoto.jpg';
+  $image_data = file_get_contents('private://photo.jpg');
+  $image_object = \Drupal::service('file.repository')->writeData($image_data, $image_target_path);
 
+  // Create evacuation data.
+  $safezone = \Drupal::service('entity_type.manager')->getStorage('node')->create([
+    'title' => 'Evacuation point Fasi',
+    'type' => 'evacuation',
+    'field_geo_location' => [
+      'lat' => '-21.20443',
+      'lng' => '-175.2018',
+    ],
+    'body' => [
+      'summary' => '',
+      'value' => 'Evacuation body content here',
+      'format' => 'full_html',
+    ],
+    'field_safe_zone_image' => [
+      'target_id' => $image_object->id(),
+      'alt' => 'test',
+    ],
+  ]);
+  $safezone->isNew();
+  $safezone->save();
 
+  // Add  tk indicators.
+  $terms[] = [
+    'name'     => "Fruit",
+    'vid'      => 'tk_indicators',
+    'field_photo' => [
+      'target_id' => $image_object->id(),
+      'alt' => 'test',
+    ],
+    'description' => [
+      'summary' => '',
+      'value' => 'Test description body data here',
+      'format' => 'full_html',
+    ],
+  ];
+  $terms[] = [
+    'name'     => "Banana",
+    'vid'      => 'tk_indicators',
+    'field_photo' => [
+      'target_id' => $image_object->id(),
+      'alt' => 'test',
+    ],
+    'description' => [
+      'summary' => '',
+      'value' => 'Test description body data here',
+      'format' => 'full_html',
+    ],
+  ];
+  $terms[] = [
+    'name'     => "Mango",
+    'vid'      => 'tk_indicators',
+    'field_photo' => [
+      'target_id' => $image_object->id(),
+      'alt' => 'test',
+    ],
+    'description' => [
+      'summary' => '',
+      'value' => 'Test description body data here',
+      'format' => 'full_html',
+    ],
+  ];
 
-    //add  tk indicators
-    $terms[] = [
-      'name'     => "Fruit",
-      'vid'      => 'tk_indicators',
-      'field_photo' =>  [
-        'target_id' => $image_object->id(),
-        'alt' => 'test',
-      ],
-      'description' => [
-        'summary' => '',
-        'value' => 'Test description body data here',
-        'format' => 'full_html',
-      ],
-    ];
-    $terms[] = [
-      'name'     => "Banana",
-      'vid'      => 'tk_indicators',
-      'field_photo' =>  [
-        'target_id' => $image_object->id(),
-        'alt' => 'test',
-      ],
-      'description' => [
-        'summary' => '',
-        'value' => 'Test description body data here',
-        'format' => 'full_html',
-      ],
-    ];
-    $terms[] = [
-      'name'     => "Mango",
-      'vid'      => 'tk_indicators',
-      'field_photo' => [
-        'target_id' => $image_object->id(),
-        'alt' => 'test',
-      ],
-      'description' => [
-        'summary' => '',
-        'value' => 'Test description body data here',
-        'format' => 'full_html',
-      ],
-    ];
-
-    foreach($terms as $term) {
-      $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create($term);
-      $term->save();
-    }
+  foreach ($terms as $term) {
+    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->create($term);
+    $term->save();
+  }
 
 }

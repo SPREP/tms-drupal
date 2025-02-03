@@ -4,15 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\met_niwa\Unit;
 
-
-
-use Drupal\Core\Config\ConfigFactory;
-use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\met_niwa\Controller\MetNiwaController;
 use Drupal\Tests\UnitTestCase;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Test description.
@@ -33,7 +26,8 @@ final class MetNiwaControllerTest extends UnitTestCase {
   }
 
   /**
-   * Test conversion function degree to compass
+   * Test conversion function degree to compass.
+   *
    * @return void
    */
   public function testDegreeToCompass(): void {

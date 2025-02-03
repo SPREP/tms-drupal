@@ -8,6 +8,8 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
+use Drupal\rest\Plugin\rest\resource\EntityResourceAccessTrait;
+use Drupal\rest\Plugin\rest\resource\EntityResourceValidationTrait;
 use Drupal\rest\ResourceResponse;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
@@ -16,12 +18,9 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
-use Drupal\rest\Plugin\rest\resource\EntityResourceAccessTrait;
-use Drupal\rest\Plugin\rest\resource\EntityResourceValidationTrait;
-use Drupal\user\Entity\User;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_account_resource",
@@ -92,12 +91,18 @@ class AccountResource extends ResourceBase {
     );
   }
 
+  /**
+   *
+   */
   public function patch(AccountInterface $account) {
     // Create the account.
     $account->save();
     return new ModifiedResourceResponse($account, 200);
   }
 
+  /**
+   *
+   */
   public function post(AccountInterface $account) {
 
     $this->ensureAccountCanRegister($account);
@@ -113,11 +118,13 @@ class AccountResource extends ResourceBase {
     // Create the account.
     $account->save();
 
-    //$this->sendEmailNotifications($account);
-
+    // $this->sendEmailNotifications($account);
     return new ModifiedResourceResponse($account, 200);
   }
 
+  /**
+   *
+   */
   public function get($uid = NULL) {
     if (!is_null($uid)) {
       $rids = ['authenticated'];
@@ -129,7 +136,7 @@ class AccountResource extends ResourceBase {
         ->accessCheck(FALSE)
         ->execute();
 
-      $user =  $storage->loadMultiple($item);
+      $user = $storage->loadMultiple($item);
 
       if (empty($user)) {
         throw new NotFoundHttpException("User with ID '$uid' was not found");
@@ -186,6 +193,9 @@ class AccountResource extends ResourceBase {
     }
   }
 
+  /**
+   *
+   */
   public function permissions() {
     return [];
   }

@@ -3,8 +3,6 @@
 namespace Drupal\met_api\Plugin\rest\resource;
 
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\image\Entity\ImageStyle;
@@ -12,10 +10,9 @@ use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Datetime\DateFormatter;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_api_evacuation_resource",
@@ -51,7 +48,6 @@ class EvacuationResource extends ResourceBase {
    *   A logger instance.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   A current user instance.
-   *
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, array $serializer_formats, LoggerInterface $logger, AccountProxyInterface $current_user) {
 
@@ -74,53 +70,59 @@ class EvacuationResource extends ResourceBase {
     );
   }
 
+  /**
+   *
+   */
   public function get() {
 
     $storage = \Drupal::service('entity_type.manager')->getStorage('node');
     $nids = $storage->getQuery()
-      ->condition('type','evacuation')
+      ->condition('type', 'evacuation')
       ->condition('status', 1)
       ->sort('created', 'DESC')
       ->accessCheck(FALSE)
       ->execute();
 
-    $nodes =  $storage->loadMultiple($nids);
+    $nodes = $storage->loadMultiple($nids);
     $new_nodes = [];
-   foreach($nodes as $node) {
+    foreach ($nodes as $node) {
 
-     //process location
-     $lat = '';
-     $lon = '';
-     if ($node->field_geo_location->value != "") {
-       list($lat, $lon) = explode(", ", $node->field_geo_location->value);
-     }
+      // Process location.
+      $lat = '';
+      $lon = '';
+      if ($node->field_geo_location->value != "") {
+        [$lat, $lon] = explode(", ", $node->field_geo_location->value);
+      }
 
-     //process photo
-     //$large_image = ImageStyle::load('large')->buildUrl($node->field_safe_zone_image->entity->getFileUri());
-     $large_image = \Drupal::service('file_url_generator')->generateAbsoluteString($node->field_safe_zone_image->entity->getFileUri());
-     $thumb_image = ImageStyle::load('thumbnail')->buildUrl($node->field_safe_zone_image->entity->getFileUri());
+      // Process photo
+      // $large_image = ImageStyle::load('large')->buildUrl($node->field_safe_zone_image->entity->getFileUri());
+      $large_image = \Drupal::service('file_url_generator')->generateAbsoluteString($node->field_safe_zone_image->entity->getFileUri());
+      $thumb_image = ImageStyle::load('thumbnail')->buildUrl($node->field_safe_zone_image->entity->getFileUri());
 
       $data = [];
-      $data['id'] = (int)$node->id();
+      $data['id'] = (int) $node->id();
       $data['title'] = $node->title->value;
       $data['body'] = $node->body->value != '' ? strip_tags($node->body->value) : $node->body->value;
       $data['image_large'] = $large_image;
       $data['image_small'] = $thumb_image;
-      $data['lat'] = (Double)$lat;
-      $data['lon'] = (Double)$lon;
+      $data['lat'] = (Double) $lat;
+      $data['lon'] = (Double) $lon;
 
       $new_nodes[] = $data;
     }
 
     $build = [
       '#cache' => [
-         'tags' => ['node_list:evacuation']
-      ]
+        'tags' => ['node_list:evacuation'],
+      ],
     ];
 
     return (new ResourceResponse($new_nodes, 200))->addCacheableDependency(CacheableMetadata::createFromRenderArray($build));
   }
 
+  /**
+   *
+   */
   public function permissions() {
     return [];
   }

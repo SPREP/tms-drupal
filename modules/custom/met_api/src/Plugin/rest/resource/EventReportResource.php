@@ -2,16 +2,16 @@
 
 namespace Drupal\met_api\Plugin\rest\resource;
 
+use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\node\Entity\Node;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Session\AccountProxyInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_event_report_api_resource",
@@ -70,22 +70,28 @@ class EventReportResource extends ResourceBase {
     );
   }
 
+  /**
+   *
+   */
   public function jsonFormat($value) {
     return ['uri' => $value];
   }
 
-  public function  post($data) {
+  /**
+   *
+   */
+  public function post($data) {
 
     $response_code = 201;
     $response_msg = 'Event Report API endpoint';
 
     /*
     if (!$this->currentUser->hasPermission('administer site content')) {
-      $response_msg = 'Access Denied.';
-      $response_code = 403;
-      return $this->response($response_msg, $response_code);
+    $response_msg = 'Access Denied.';
+    $response_code = 403;
+    return $this->response($response_msg, $response_code);
     }
-    */
+     */
 
     $nodes = [];
     foreach ($data as $key => $value) {
@@ -94,22 +100,22 @@ class EventReportResource extends ResourceBase {
 
       $node = Node::create(
         [
-        'type' => 'event_report',
-        'title' => $value['title'],
-        'body' => [
-          'summary' => '',
-          'value' => $value['body'],
-          'format' => 'full_html',
+          'type' => 'event_report',
+          'title' => $value['title'],
+          'body' => [
+            'summary' => '',
+            'value' => $value['body'],
+            'format' => 'full_html',
           ],
-        'field_images' => $images,
-        'field_geo_location' => [
-          'lat' => $value['lat'],
-          'lng' => $value['lng'],
-        ],
-      ]
+          'field_images' => $images,
+          'field_geo_location' => [
+            'lat' => $value['lat'],
+            'lng' => $value['lng'],
+          ],
+        ]
       );
 
-      //check permission
+      // Check permission.
       $check = $node->access('create', $this->currentUser);
 
       if (!$check) {
@@ -128,8 +134,8 @@ class EventReportResource extends ResourceBase {
 
     $response_msg = $this->t("New Nodes creates with nids : @message", ['@message' => implode(",", $nodes)]);
 
-    //Pass data to websocket server to deliver
-    //---------------------------------------------
+    // Pass data to websocket server to deliver
+    // ---------------------------------------------.
     $current_time = \Drupal::time()->getCurrentTime();
 
     $p = [
@@ -155,11 +161,11 @@ class EventReportResource extends ResourceBase {
     $tms_socket_service = \Drupal::service('met_service.tms_socket');
     $tms_socket_service->send($payload);
 
-    //Close the websocket connection
+    // Close the websocket connection.
     $payload = [
       'action' => 'left',
       'username' => 'drupal',
-      'message' => 'left'
+      'message' => 'left',
     ];
 
     $tms_socket_service->send($payload);
@@ -167,17 +173,24 @@ class EventReportResource extends ResourceBase {
     return $this->response($response_msg, $response_code);
   }
 
+  /**
+   *
+   */
   public function response($msg, $code) {
     $response = ['message' => $msg];
     return new ResourceResponse($response, $code);
   }
 
+  /**
+   *
+   */
   public function permissions() {
-    return ['MET API permission for event report' => [
-      'title' => $this->t('MET API permission for Event Report'),
-      'description' => $this->t('This is a permission to allow access to MET API event report'),
-      'restrict access' => true,
-    ],
+    return [
+      'MET API permission for event report' => [
+        'title' => $this->t('MET API permission for Event Report'),
+        'description' => $this->t('This is a permission to allow access to MET API event report'),
+        'restrict access' => TRUE,
+      ],
     ];
   }
 

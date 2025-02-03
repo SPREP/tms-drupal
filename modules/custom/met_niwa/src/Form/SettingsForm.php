@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Drupal\met_niwa\Form;
 
@@ -31,28 +33,31 @@ final class SettingsForm extends ConfigFormBase {
     $form['niwa'] = [
       '#type' => 'fieldset',
       '#title' => t('NIWA API Connection'),
-      '#collapsible' => TRUE, // Added
-      '#collapsed' => FALSE,  // Added
+    // Added.
+      '#collapsible' => TRUE,
+    // Added.
+      '#collapsed' => FALSE,
     ];
 
     $form['niwa']['url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('URL'),
       '#default_value' => $this->config('met_niwa.settings')->get('url'),
-      ];
-
-      $form['niwa']['endpoint'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('Endpoint'),
-        '#default_value' => $this->config('met_niwa.settings')->get('endpoint'),
     ];
 
+    $form['niwa']['endpoint'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Endpoint'),
+      '#default_value' => $this->config('met_niwa.settings')->get('endpoint'),
+    ];
 
     $form['stations'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('AWS Stations'),
-      '#collapsible' => TRUE, // Added
-      '#collapsed' => FALSE,  // Added
+    // Added.
+      '#collapsible' => TRUE,
+    // Added.
+      '#collapsed' => FALSE,
     ];
 
     $form['stations']['info'] = [
@@ -71,7 +76,7 @@ final class SettingsForm extends ConfigFormBase {
         9589 => 'Kolovai',
         7683 => 'Lapaha',
         13802 => 'Atele',
-        7632 => 'Fatai'
+        7632 => 'Fatai',
       ],
       '#default_value' => $this->config('met_niwa.settings')->get('tbu'),
     ];
@@ -94,7 +99,7 @@ final class SettingsForm extends ConfigFormBase {
         7624 => 'Pilolevu Airport',
         7621 => 'Haano',
         7623 => 'Lifuka',
-        9577 => 'Tofua'
+        9577 => 'Tofua',
       ],
       '#default_value' => $this->config('met_niwa.settings')->get('hpp'),
     ];
@@ -106,7 +111,7 @@ final class SettingsForm extends ConfigFormBase {
         7633 => 'Lupepauu Airport',
         7631 => 'Fangatongo',
         7659 => 'Koloa',
-        7630 => 'Longomapu'
+        7630 => 'Longomapu',
       ],
       '#default_value' => $this->config('met_niwa.settings')->get('vv'),
     ];

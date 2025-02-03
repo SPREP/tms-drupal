@@ -3,17 +3,15 @@
 namespace Drupal\met_api\Plugin\rest\resource;
 
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Datetime\DateFormatter;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_api_village_resource",
@@ -23,8 +21,7 @@ use Drupal\Core\Datetime\DateFormatter;
  *   }
  * )
  */
-class VillageResource extends ResourceBase
-{
+class VillageResource extends ResourceBase {
 
   use StringTranslationTrait;
 
@@ -51,8 +48,7 @@ class VillageResource extends ResourceBase
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   A current user instance.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, array $serializer_formats, LoggerInterface $logger, AccountProxyInterface $current_user)
-  {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, array $serializer_formats, LoggerInterface $logger, AccountProxyInterface $current_user) {
 
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
 
@@ -62,8 +58,7 @@ class VillageResource extends ResourceBase
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
-  {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
       $configuration,
       $plugin_id,
@@ -74,8 +69,10 @@ class VillageResource extends ResourceBase
     );
   }
 
-  public function get($rid)
-  {
+  /**
+   *
+   */
+  public function get($rid) {
     $vocabulary = "cities";
     $child_terms = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadTree(
       $vocabulary,
@@ -93,17 +90,18 @@ class VillageResource extends ResourceBase
 
     $build = [
       '#cache' => [
-        'tags' => ['term_list:cities']
-      ]
+        'tags' => ['term_list:cities'],
+      ],
     ];
 
     return (new ResourceResponse($data, 200))->addCacheableDependency(CacheableMetadata::createFromRenderArray($build));
   }
 
-  public function permissions()
-  {
+  /**
+   *
+   */
+  public function permissions() {
     return [];
   }
 
 }
-

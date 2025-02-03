@@ -18,7 +18,6 @@ class BundleAccessTest extends MetTestBase {
       // ['anonymous', 'met-feel-earthquake', ''],
       // ['anonymous', 'met-tk', ''],
       // ['anonymous', 'met-warning', ''],
-
       // Anonymous cannot access content.
       ['anonymous', 'article', ''],
       ['anonymous', 'page', 'R'],
@@ -35,12 +34,10 @@ class BundleAccessTest extends MetTestBase {
       // ['authenticated', 'evacuation', ''],
       // ['authenticated', 'event', ''],
       // ['authenticated', 'push_notification', ''],
-
       // // Authenticated users can create and read.
       // ['authenticated', 'event_report', ''],
       // ['authenticated', 'impact_report', ''],
       // ['authenticated', 'request_assistance', ''],
-
       // @todo add roles for tms, ndrmo, geology.
       // Admin user
       ['administrator', 'article', 'CRUD'],

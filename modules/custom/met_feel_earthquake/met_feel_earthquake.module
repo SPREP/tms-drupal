@@ -6,9 +6,8 @@
  */
 
 use Drupal\Core\Render\Element;
-use Drupal\user\UserInterface;
 use Drupal\met_feel_earthquake\METFeelEarthquakeInterface;
-
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_theme().
@@ -84,13 +83,9 @@ function met_feel_earthquake_user_predelete(UserInterface $account): void {
   );
 }
 
-
 /**
  * Implements hook_ENTITY_TYPE_insert() for node.
  */
 function met_feel_earthquake_insert(METFeelEarthquakeInterface $fe): void {
-
-
-
 
 }

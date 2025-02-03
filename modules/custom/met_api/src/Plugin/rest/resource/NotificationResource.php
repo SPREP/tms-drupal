@@ -10,7 +10,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides the API resource for the mobile App
+ * Provides the API resource for the mobile App.
  *
  * @RestResource(
  *   id = "met_api_notification_resource",
@@ -67,6 +67,9 @@ class NotificationResource extends ResourceBase {
     );
   }
 
+  /**
+   *
+   */
   public function get($lng = 'en') {
 
     $storage = \Drupal::service('entity_type.manager')->getStorage('met_notification');
@@ -77,18 +80,18 @@ class NotificationResource extends ResourceBase {
       ->range(0, 10)
       ->execute();
 
-    $items =  $storage->loadMultiple($items);
+    $items = $storage->loadMultiple($items);
     $new_items = [];
-    foreach($items as $item) {
+    foreach ($items as $item) {
 
       $data = [];
-      foreach($item->field_language as $p) {
+      foreach ($item->field_language as $p) {
         $ent = $p->entity;
-        if($lng == 'en' && $ent->type->target_id == 'notification_english') {
+        if ($lng == 'en' && $ent->type->target_id == 'notification_english') {
           $data['body'] = strip_tags($ent->field_body->value);
           $data['title'] = strip_tags($ent->field_title->value);
         }
-        if($lng == 'to' && $ent->type->target_id == 'notification_tongan') {
+        if ($lng == 'to' && $ent->type->target_id == 'notification_tongan') {
           $data['body'] = strip_tags($ent->field_body->value);
           $data['title'] = strip_tags($ent->field_title->value);
         }
@@ -108,6 +111,9 @@ class NotificationResource extends ResourceBase {
     return (new ResourceResponse($new_items, 200))->addCacheableDependency($build);
   }
 
+  /**
+   *
+   */
   public function permissions() {
     return [];
   }
