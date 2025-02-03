@@ -18,7 +18,7 @@
 /vendor/
 
 # Ignore configuration files that may contain sensitive information.
-sites/*/settings*.php
+# sites/*/settings*.php
 sites/*/services*.yml
 sites/*/files
 
@@ -65,3 +65,6 @@ config/site/met_spc.settings.yml
 
 # ignore some machine files
 *.DS_Store
+
+# ignore gitpod .env
+.env.gitpod
