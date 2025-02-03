@@ -1,22 +1,19 @@
 <?php
 
-namespace Drupal\met_api\Plugin\rest\resource;
+namespace Drupal\met_api\Plugin\rest\ApiResource;
 
 use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AccountProxyInterface;
-use Drupal\Core\Session\AnonymousUserSession;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\Plugin\rest\resource\EntityResourceAccessTrait;
 use Drupal\rest\Plugin\rest\resource\EntityResourceValidationTrait;
 use Drupal\rest\ResourceResponse;
-use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
-use http\Exception\BadHeaderException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,15 +23,16 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  * Provides the API resource for the mobile App.
  *
  * @RestResource(
- *   id = "met_user_resource",
+ *   id = "met_account_resource",
  *   label = @Translation("MET User Account Resouce"),
+ *   serialization_class = "Drupal\user\Entity\User",
  *   uri_paths = {
- *     "create" = "/api/v1/user/{type}",
+ *     "create" = "/api/v1/user",
  *     "canonical" = "/api/v1/user/{uid}"
  *   }
  * )
  */
-class UserResource extends ResourceBase {
+class AccountResource extends ResourceBase {
   use StringTranslationTrait;
   use EntityResourceValidationTrait;
   use EntityResourceAccessTrait;
@@ -96,188 +94,21 @@ class UserResource extends ResourceBase {
   /**
    *
    */
-  public function patch(Request $request, $uid) {
-
-    $this->logger->debug('user id uid: ' . $uid);
-
-    $payload = json_decode($request->getContent());
-
-    // $msg = "<pre>" . print_r($payload, true) . "</pre>";
-    // $this->logger->debug($msg);
-    [$updateField] = $payload;
-    $account = User::load($uid);
-
-    if (isset($updateField->photo)) {
-      $image = [
-        'uri' => $updateField->photo,
-      ];
-      $account->set('field_user_picture', $image);
-    }
+  public function patch(AccountInterface $account) {
+    // Create the account.
     $account->save();
-    $photo = $account->get('field_user_picture')->getValue()[0]['uri'];
-
-    $output = [
-      'name' => $account->get('name')->value,
-      'id' => $account->id(),
-      'mail' => $account->get('mail')->value,
-      'photo' => $photo != '' ? $photo : 'https://macres-media-storage.s3.ap-southeast-2.amazonaws.com/user.png',
-    ];
-
-    $build = ['#cache' => ['max-age' => 0]];
-
-    return (new ResourceResponse($output, 200))->addCacheableDependency($build);
-
+    return new ModifiedResourceResponse($account, 200);
   }
 
   /**
    *
    */
-  public function post(Request $request, $type = NULL) {
+  public function post(AccountInterface $account) {
 
-    $payload = json_decode($request->getContent());
+    $this->ensureAccountCanRegister($account);
 
-    switch ($type) {
-      case 'login':
-        return $this->login($payload);
+    $this->checkEditFieldAccess($account);
 
-      case 'register':
-        return $this->register($payload);
-
-      case 'logout':
-        return $this->logout($payload);
-
-      case 'forgot':
-        return $this->forgot($payload);
-    }
-    throw new BadRequestHttpException('No type was provided or type is unknown');
-  }
-
-  /**
-   *
-   */
-  public function logout($data) {
-
-    $user = \Drupal::currentUser();
-
-    if ($user->isAnonymous()) {
-      $output = ['message' => 'Anonymous user'];
-    }
-    else {
-
-      \Drupal::logger('user')
-        ->info('Session closed for %name.', [
-          '%name' => $user
-            ->getAccountName(),
-        ]);
-      \Drupal::moduleHandler()
-        ->invokeAll('user_logout', [
-          $user,
-        ]);
-
-      \Drupal::service('session_manager')->destroy();
-      $user->setAccount(new AnonymousUserSession());
-      $output = ['message' => 'Logout success'];
-    }
-
-    $build = ['#cache' => ['max-age' => 0]];
-
-    return (new ResourceResponse($output, 200))->addCacheableDependency($build);
-  }
-
-  /**
-   *
-   */
-  public function login($data) {
-    $data = $data->user;
-    if (!isset($data->mail)) {
-      throw new BadRequestHttpException('Missing credentials.mail.');
-    }
-    $user = user_load_by_mail($data->mail);
-    if (!$user) {
-      throw new BadRequestHttpException('Invalid username or password');
-    }
-
-    if (\Drupal::service('user.auth')->authenticate($user->get('name')->value, $data->pass)) {
-      user_login_finalize($user);
-
-      $session_manager = \Drupal::service('session_manager');
-      $session_id = $session_manager->getId();
-      $session_name = $session_manager->getName();
-    }
-    else {
-      throw new BadRequestHttpException('Invalid username or password');
-    }
-
-    // Load all impact report and Assistance request belong to this user.
-    /*
-    $nids = \Drupal::entityQuery('node')
-    ->condition('type','request_assistance')
-    ->condition('author',$user)
-    ->execute();
-    $nodes =  \Drupal\node\Entity\Node::loadMultiple($nids);
-    $data = [];
-    foreach($nodes as $node) {
-    $data[] = [
-    'id' => $node->id(),
-    'title' => $node->getTitle(),
-    'time' => $node->get('created'),
-    ];
-    }
-     */
-
-    $photo = $user->get('field_user_picture')->getValue()[0]['uri'];
-
-    $userArr = [
-      'name' => $user->get('name')->value,
-      'id' => $user->id(),
-      'mail' => $user->get('mail')->value,
-      'photo' => $photo != '' ? $photo : 'https://macres-media-storage.s3.ap-southeast-2.amazonaws.com/user.png',
-    ];
-
-    $build = ['#cache' => ['max-age' => 0]];
-
-    return (new ResourceResponse($userArr, 200))->addCacheableDependency($build);
-  }
-
-  /**
-   *
-   */
-  public function forgot($data) {
-
-    $account = user_load_by_mail($data->user->mail);
-    if (!$account) {
-      throw new BadRequestHttpException('Unknown email address ' . $data->user->mail);
-    }
-    $mail = _user_mail_notify('password_reset', $account);
-
-    if (!$mail) {
-      throw new BadHeaderException('Unable to send email, please try again later.');
-    }
-
-    $msg = 'Please check your email for more information.';
-    $build = ['#cache' => ['max-age' => 0]];
-    $output = ['message' => $msg];
-    return (new ResourceResponse($output, 200))->addCacheableDependency($build);
-  }
-
-  /**
-   *
-   */
-  public function register($data) {
-
-    // @todo Check email address (load by mail and see if exist then throw error)
-    if (user_load_by_mail($data->mail)) {
-      throw new BadRequestHttpException('Email address already used. Use another email.');
-    }
-
-    $account = User::create([
-      "name" => $data->name,
-      "mail" => $data->mail,
-      "pass" => $data->pass,
-    ]);
-
-    // $this->ensureAccountCanRegister($account);
-    // $this->checkEditFieldAccess($account);
     // Make sure that the user entity is valid (email and name are valid).
     $this->validate($account);
 
@@ -295,13 +126,6 @@ class UserResource extends ResourceBase {
    *
    */
   public function get($uid = NULL) {
-
-    $user = \Drupal::currentUser();
-
-    if ($user->isAnonymous() || $user->id() !== $uid) {
-      throw new AccessDeniedHttpException('Access denied');
-    }
-
     if (!is_null($uid)) {
       $rids = ['authenticated'];
       $storage = \Drupal::service('entity_type.manager')->getStorage('user');

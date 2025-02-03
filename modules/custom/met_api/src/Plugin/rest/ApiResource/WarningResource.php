@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\met_api\Plugin\rest\resource;
+namespace Drupal\met_api\Plugin\rest\ApiResource;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Session\AccountProxyInterface;
@@ -14,15 +14,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides the API resource for the mobile App.
  *
  * @RestResource(
- *   id = "met_api_village_resource",
- *   label = @Translation("MET API Village Resouce"),
+ *   id = "met_api_warning_resource",
+ *   label = @Translation("MET API Warning Resouce"),
  *   uri_paths = {
- *      "canonical" = "/api/v1/village/{rid}"
+ *      "canonical" = "/api/v1/warning/{lng}"
  *   }
  * )
  */
-class VillageResource extends ResourceBase {
-
+class WarningResource extends ResourceBase {
   use StringTranslationTrait;
 
   /**
@@ -72,29 +71,50 @@ class VillageResource extends ResourceBase {
   /**
    *
    */
-  public function get($rid) {
-    $vocabulary = "cities";
-    $child_terms = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadTree(
-      $vocabulary,
-      $rid,
-      NULL,
-      FALSE);
+  public function get($lng = 'en') {
 
-    $data = [];
-    foreach ($child_terms as $term) {
-      $output = [];
-      $output['id'] = $term->tid;
-      $output['name'] = $term->name;
-      $data[] = $output;
+    $storage = \Drupal::service('entity_type.manager')->getStorage('met_warning');
+    $items = $storage->getQuery()
+      ->condition('status', 1)
+      ->accessCheck(FALSE)
+      ->sort('created', 'DESC')
+      ->range(0, 10)
+      ->execute();
+
+    $items = $storage->loadMultiple($items);
+    $new_items = [];
+    foreach ($items as $item) {
+
+      $data = [];
+      foreach ($item->field_language as $p) {
+        $ent = $p->entity;
+        if ($lng == 'en' && $ent->type->target_id == 'warning_english') {
+          $data['body'] = strip_tags($ent->field_body->value);
+          $data['title'] = strip_tags($ent->field_title->value);
+        }
+        if ($lng == 'to' && $ent->type->target_id == 'warning_tongan') {
+          $data['body'] = strip_tags($ent->field_body->value);
+          $data['title'] = strip_tags($ent->field_title->value);
+        }
+      }
+
+      $data['id'] = $item->id();
+      $data['level'] = $item->field_level->value;
+      $data['target_location'] = $item->field_location;
+      $data['time'] = \Drupal::service('date.formatter')->format($item->created->value, 'custom', 'h:i a');
+      $data['date'] = \Drupal::service('date.formatter')->format($item->created->value, 'custom', 'd/m/Y');
+      $data['timestamp'] = $item->created->value;
+
+      $new_items[$item->id()] = $data;
     }
 
     $build = [
       '#cache' => [
-        'tags' => ['term_list:cities'],
+        'tags' => ['met_warning_list'],
       ],
     ];
 
-    return (new ResourceResponse($data, 200))->addCacheableDependency(CacheableMetadata::createFromRenderArray($build));
+    return (new ResourceResponse($new_items, 200))->addCacheableDependency(CacheableMetadata::createFromRenderArray($build));
   }
 
   /**

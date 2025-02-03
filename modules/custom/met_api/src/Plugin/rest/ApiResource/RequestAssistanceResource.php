@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\met_api\Plugin\rest\resource;
+namespace Drupal\met_api\Plugin\rest\ApiResource;
 
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -14,14 +14,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides the API resource for the mobile App.
  *
  * @RestResource(
- *   id = "met_event_report_api_resource",
- *   label = @Translation("MET API Event Report Resouce"),
+ *   id = "met_api_request_assistance_resource",
+ *   label = @Translation("MET API Request Assistance Resouce"),
  *   uri_paths = {
- *      "create" = "/api/v1/event-report"
+ *      "create" = "/api/v1/request-assistance"
  *   }
  * )
  */
-class EventReportResource extends ResourceBase {
+class RequestAssistanceResource extends ResourceBase {
 
 
   use StringTranslationTrait;
@@ -83,7 +83,7 @@ class EventReportResource extends ResourceBase {
   public function post($data) {
 
     $response_code = 201;
-    $response_msg = 'Event Report API endpoint';
+    $response_msg = 'Request assistance API endpoint';
 
     /*
     if (!$this->currentUser->hasPermission('administer site content')) {
@@ -100,26 +100,37 @@ class EventReportResource extends ResourceBase {
 
       $node = Node::create(
         [
-          'type' => 'event_report',
-          'title' => $value['title'],
+          'type' => 'request_assistance',
+          'title' => 'Request Assistance',
+          'field_full_name' => $value['full_name'],
+          'field_phone_number' => $value['phone'],
+          'field_location' => strtolower($value['location']),
           'body' => [
             'summary' => '',
             'value' => $value['body'],
             'format' => 'full_html',
           ],
+
+          'field_assistance_with' => $value['assistance_with'],
+          'field_needed_now' => $value['needed_now'],
           'field_images' => $images,
+          'field_event' => $value['event_id'],
+          'field_have_water' => $value['have_water'],
+          'field_have_house_shelter' => $value['have_house'],
+          'field_have_food' => $value['have_food'],
           'field_geo_location' => [
             'lat' => $value['lat'],
-            'lng' => $value['lng'],
+            'lng' => $value['lon'],
           ],
+          'field_village' => $value['village'],
         ]
       );
 
-      // Check permission.
+      // Check access permission.
       $check = $node->access('create', $this->currentUser);
 
       if (!$check) {
-        \Drupal::logger('MET API')->notice('Access denied, trying to create Event Report');
+        \Drupal::logger('MET API')->notice('Access denied, trying to create Assistance Report');
         $response_msg = 'Access Denied.';
         $response_code = 403;
         return $this->response($response_msg, $response_code);
@@ -138,22 +149,40 @@ class EventReportResource extends ResourceBase {
     // ---------------------------------------------.
     $current_time = \Drupal::time()->getCurrentTime();
 
+    // Get village name from term id.
+    $term = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->load($data[0]['village']);
+    $village = $term->getName();
+
+    // Get event name from event id.
+    $event = \Drupal::service('entity_type.manager')->getStorage('node')->load($data[0]['event_id']);
+    $event_name = $event->getTitle();
+
     $p = [
-      'title' => $data[0]['title'],
+      'name' => $data[0]['full_name'],
+      'phone' => $data[0]['phone'],
+      'location' => $data[0]['location'],
+      'have_shelter' => $data[0]['have_house'],
+      'assistance_with' => $data[0]['assistance_with'],
       'body' => $data[0]['body'],
-      'lat' => "{$data[0]['lat']}",
-      'lon' => "{$data[0]['lng']}",
+      'needed_now' => $data[0]['needed_now'],
+      'have_water' => $data[0]['have_water'],
+      'have_food' => $data[0]['have_food'],
+      'photo' => $data[0]['images'],
+      'event_id' => $event_name,
+      'lat' => $data[0]['lat'],
+      'lon' => $data[0]['lon'],
+      'village' => $village,
       'date' => date('d/m/Y', $current_time),
       'time' => date('h:i a', $current_time),
-      'photo' => $data[0]['images'],
-      'type' => 'Event Report',
-      'id' => $nodes[0],
+      'type' => 'Request Assistance',
+    // <-- unique id
+      'id' => $nodes[0] . 'ra',
     ];
 
     $payload = [
       'action' => 'message',
       'username' => 'drupal',
-      'etype' => 'met_event_report',
+      'etype' => 'request_assistance',
       'userrole' => 'tms',
       'payload' => $p,
     ];
@@ -185,13 +214,7 @@ class EventReportResource extends ResourceBase {
    *
    */
   public function permissions() {
-    return [
-      'MET API permission for event report' => [
-        'title' => $this->t('MET API permission for Event Report'),
-        'description' => $this->t('This is a permission to allow access to MET API event report'),
-        'restrict access' => TRUE,
-      ],
-    ];
+    return [];
   }
 
 }

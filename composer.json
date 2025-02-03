@@ -96,8 +96,7 @@
             "drush site:install minimal --existing-config -y"
         ],
         "php_compatibility": [
-            "phpcs -p --standard=PHPCompatibility --extensions=php,inc,module,install --runtime-set testVersion 8.3 modules/custom",
-            "phpcs -p --standard=PHPCompatibility --extensions=php,inc,theme,install --runtime-set testVersion 8.3 themes/custom"
+            "phpcs -p --standard=PHPCompatibility --extensions=php,inc,module,install --runtime-set testVersion 8.3 modules/custom"
         ],
         "coding_standards": [
             "phpcs --standard=Drupal --extensions=php,module,inc,install modules/custom",

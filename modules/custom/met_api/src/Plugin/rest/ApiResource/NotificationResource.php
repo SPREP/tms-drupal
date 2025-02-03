@@ -1,8 +1,7 @@
 <?php
 
-namespace Drupal\met_api\Plugin\rest\resource;
+namespace Drupal\met_api\Plugin\rest\ApiResource;
 
-use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\rest\Plugin\ResourceBase;
@@ -14,14 +13,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides the API resource for the mobile App.
  *
  * @RestResource(
- *   id = "met_api_warning_resource",
- *   label = @Translation("MET API Warning Resouce"),
+ *   id = "met_api_notification_resource",
+ *   label = @Translation("MET API Notification Resouce"),
  *   uri_paths = {
- *      "canonical" = "/api/v1/warning/{lng}"
+ *      "canonical" = "/api/v1/notification/{lng}"
  *   }
  * )
  */
-class WarningResource extends ResourceBase {
+class NotificationResource extends ResourceBase {
   use StringTranslationTrait;
 
   /**
@@ -73,7 +72,7 @@ class WarningResource extends ResourceBase {
    */
   public function get($lng = 'en') {
 
-    $storage = \Drupal::service('entity_type.manager')->getStorage('met_warning');
+    $storage = \Drupal::service('entity_type.manager')->getStorage('met_notification');
     $items = $storage->getQuery()
       ->condition('status', 1)
       ->accessCheck(FALSE)
@@ -88,11 +87,11 @@ class WarningResource extends ResourceBase {
       $data = [];
       foreach ($item->field_language as $p) {
         $ent = $p->entity;
-        if ($lng == 'en' && $ent->type->target_id == 'warning_english') {
+        if ($lng == 'en' && $ent->type->target_id == 'notification_english') {
           $data['body'] = strip_tags($ent->field_body->value);
           $data['title'] = strip_tags($ent->field_title->value);
         }
-        if ($lng == 'to' && $ent->type->target_id == 'warning_tongan') {
+        if ($lng == 'to' && $ent->type->target_id == 'notification_tongan') {
           $data['body'] = strip_tags($ent->field_body->value);
           $data['title'] = strip_tags($ent->field_title->value);
         }
@@ -101,20 +100,15 @@ class WarningResource extends ResourceBase {
       $data['id'] = $item->id();
       $data['level'] = $item->field_level->value;
       $data['target_location'] = $item->field_location;
-      $data['time'] = \Drupal::service('date.formatter')->format($item->created->value, 'custom', 'h:i a');
-      $data['date'] = \Drupal::service('date.formatter')->format($item->created->value, 'custom', 'd/m/Y');
+      $data['time'] = \Drupal::service('date.formatter')->format($item->created->value, 'custom', 'd/m/Y');
+      $data['date'] = \Drupal::service('date.formatter')->format($item->created->value, 'custom', 'h:i a');
       $data['timestamp'] = $item->created->value;
 
       $new_items[$item->id()] = $data;
     }
+    $build = ['#cache' => ['max-age' => 0]];
 
-    $build = [
-      '#cache' => [
-        'tags' => ['met_warning_list'],
-      ],
-    ];
-
-    return (new ResourceResponse($new_items, 200))->addCacheableDependency(CacheableMetadata::createFromRenderArray($build));
+    return (new ResourceResponse($new_items, 200))->addCacheableDependency($build);
   }
 
   /**

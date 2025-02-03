@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\met_api\Plugin\rest\resource;
+namespace Drupal\met_api\Plugin\rest\ApiResource;
 
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Session\AccountInterface;
@@ -23,7 +23,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  * Provides the API resource for the mobile App.
  *
  * @RestResource(
- *   id = "met_account_resource",
+ *   id = "met_account_register_resource",
  *   label = @Translation("MET User Account Resouce"),
  *   serialization_class = "Drupal\user\Entity\User",
  *   uri_paths = {
@@ -32,7 +32,7 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  *   }
  * )
  */
-class AccountResource extends ResourceBase {
+class AccountRegisterResource extends ResourceBase {
   use StringTranslationTrait;
   use EntityResourceValidationTrait;
   use EntityResourceAccessTrait;
@@ -89,15 +89,6 @@ class AccountResource extends ResourceBase {
       $container->get('config.factory')->get('user.settings'),
       $container->get('current_user')
     );
-  }
-
-  /**
-   *
-   */
-  public function patch(AccountInterface $account) {
-    // Create the account.
-    $account->save();
-    return new ModifiedResourceResponse($account, 200);
   }
 
   /**
