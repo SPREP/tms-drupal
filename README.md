@@ -1,106 +1,75 @@
-# Tonga Met App Backend
+<img alt="Drupal Logo" src="https://www.drupal.org/files/Wordmark_blue_RGB.png" height="60px">
 
-Tonga Met Mobile App Backend using Drupal. The dev environment has been
-setup to work with docker4drupal and lando.
+Drupal is an open source content management platform supporting a variety of
+websites ranging from personal weblogs to large community-driven websites. For
+more information, visit the Drupal website, [Drupal.org][Drupal.org], and join
+the [Drupal community][Drupal community].
 
-## Docker4drupal instructions
+## Contributing
 
-### Prerequisites
-1. Install docker with docker compose
+Drupal is developed on [Drupal.org][Drupal.org], the home of the international
+Drupal community since 2001!
 
-### Setup
-1. Clone the repository
-2. Copy docker-compose.override-sample.yml
+[Drupal.org][Drupal.org] hosts Drupal's [GitLab repository][GitLab repository],
+its [issue queue][issue queue], and its [documentation][documentation]. Before
+you start working on code, be sure to search the [issue queue][issue queue] and
+create an issue if your aren't able to find an existing issue.
 
-`cp docker-compose.override-sample.yml docker-compose.override.yml`
+Every issue on Drupal.org automatically creates a new community-accessible fork
+that you can contribute to. Learn more about the code contribution process on
+the [Issue forks & merge requests page][issue forks].
 
-3. Modify docker-compose.override.yml as needed e.g. Add the API tokens
-4. Start docker compose
+## Usage
 
-`docker compose up -d`
+For a brief introduction, see [USAGE.txt](/core/USAGE.txt). You can also find
+guides, API references, and more by visiting Drupal's [documentation
+page][documentation].
 
-5. Log into the PHP container to get access to composer and drush
+You can quickly extend Drupal's core feature set by installing any of its
+[thousands of free and open source modules][modules]. With Drupal and its
+module ecosystem, you can often build most or all of what your project needs
+before writing a single line of code.
 
-`docker compose exec php sh`
+## Changelog
 
-6. Run drush uli to access the site
-
-`drush uli`
-
-### Optional
-
-**Load a backup of the db.**
-
-1. Copy the backup into mariadb-init/
-2. Restart mariadb container
-
-```
-docker composer stop mariadb
-docker composer rm -f mariadb
-docker compose up -d
-
-# check mariadb logs
-docker compose logs mariadb
-```
-
-**Configure env specific variables.**
-
-The settings.docker.php file will map into the docker environment for
-environment specific configs. On production you can create a settings.local.php
-and override the configs.
-
-Once installed you can access the dev site on port 8000. e.g. tms.docker.localhost:8000
-
-## Tests
-
-```
-# To run tests locally log into the php container
-
-docker compose exec php sh
-
-# then run
-
-composer test
-```
+Drupal keeps detailed [change records][changelog]. You can search Drupal's
+changes for a record of every notable breaking change and new feature since
+2011.
 
 ## Security
 
-```
-# start up dev environment
-docker compose up -d
+For a list of security announcements, see the [Security advisories
+page][Security advisories] (available as [an RSS feed][security RSS]). This
+page also describes how to subscribe to these announcements via email.
 
-# stop environment
-docker compose stop
+For information about the Drupal security process, or to find out how to report
+a potential security issue to the Drupal security team, see the [Security team
+page][security team].
 
-# delete everything and start in a clean environment
-docker compose down -v
+## Need a helping hand?
 
-# check logs
-docker compose logs -f
+Visit the [Support page][support] or browse [over a thousand Drupal
+providers][service providers] offering design, strategy, development, and
+hosting services.
 
-# check logs for specific container
-docker compose logs -f php
+## Legal matters
 
-# log into php container (this will allow use of drush and composer)
-docker compose exec php sh
-```
+Know your rights when using Drupal by reading Drupal core's
+[license](/core/LICENSE.txt).
 
 Learn about the [Drupal trademark and logo policy here][trademark].
 
-## Bash aliases
-
-You can use these bash alias to speed up use of commands in your local dev.
-
-```
-# docker aliases
-alias dup='docker compose up -d'
-alias dstop='docker compose stop'
-alias drm='docker compose rm'
-
-alias dphp='docker compose exec php bash'
-
-alias dl="docker compose logs -f"
-alias dlphp='docker compose logs -f php'
-
-alias dc='docker compose'
-```
+[Drupal.org]: https://www.drupal.org
+[Drupal community]: https://www.drupal.org/community
+[GitLab repository]: https://git.drupalcode.org/project/drupal
+[issue queue]: https://www.drupal.org/project/issues/drupal
+[issue forks]: https://www.drupal.org/drupalorg/docs/gitlab-integration/issue-forks-merge-requests
+[documentation]: https://www.drupal.org/documentation
+[changelog]: https://www.drupal.org/list-changes/drupal
+[modules]: https://www.drupal.org/project/project_module
+[security advisories]: https://www.drupal.org/security
+[security RSS]: https://www.drupal.org/security/rss.xml
+[security team]: https://www.drupal.org/drupal-security-team
+[service providers]: https://www.drupal.org/drupal-services
+[support]: https://www.drupal.org/support
+[trademark]: https://www.drupal.com/trademark

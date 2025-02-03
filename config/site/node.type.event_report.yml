@@ -11,7 +11,7 @@ third_party_settings:
 name: 'Event Report'
 type: event_report
 description: 'Events is reported by community through the mobile app.'
-help: ''
+help: null
 new_revision: false
 preview_mode: 0
 display_submitted: true
