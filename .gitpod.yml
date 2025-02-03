@@ -1,0 +1,67 @@
+# Learn more about this file at https://www.gitpod.io/docs/references/gitpod-yml
+image: devwithlando/gitpod:1
+
+tasks:
+  - name: Setup Drupal Dev Env
+    init: |
+      # Boot Lando and set up Drupal
+      lando start
+      lando composer install
+      lando composer require --dev drupal/core-dev
+      lando ssh --command "cp modules/custom/met_api/modules/met_api_test/assets/phpunit.xml core/phpunit.xml"
+      lando ssh --command "cp core/.env.example .env"
+
+      # Install Drupal
+      lando drush si -y --db-url=mysql://drupal10:drupal10@database:3306/drupal10
+      lando drush cset system.site uuid "5bb79423-cfb5-4dd1-98fc-1efb2a54c645" -y
+      lando drush entity:delete shortcut_set
+      lando drush en paragraphs met_warning met_tk -y
+      lando drush cim --source=config/site -y
+
+      # Set private file path
+      lando ssh --command 'mkdir /var/www/private'
+      lando ssh --command 'chmod 744 /app/sites/default/settings.php'
+      lando ssh --command 'ls -la /app/sites/default/'
+      lando ssh --command 'echo \$settings[\"file_private_path\"] = \"/var/www/private\"\; >> /app/sites/default/settings.php'
+      lando drush cr
+
+      # Enable the test module
+      lando drush en met_api_test -y
+
+      # Copy test file to private directory
+      lando ssh --command 'cp -R modules/custom/met_api/modules/met_api_test/assets/. /var/www/private/'
+
+    command: |
+      # start a rebuild  with actual networking service (prebuild uses different)
+      lando rebuild -y
+      gp preview $(gp url $(lando info --format=json | jq -r ".[0].urls[0]" | sed -e 's#http://localhost:\(\)#\1#'))
+ports:
+  - port: 3306
+    onOpen: ignore
+  - port: 80
+    onOpen: ignore
+  - port: 443
+    onOpen: ignore
+
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: true
+    addCheck: true
+    addComment: false
+    addBadge: true
+
+vscode:
+  extensions:
+    - felixfbecker.php-debug
+    - dbaeumer.vscode-eslint
+    - eamodio.gitlens
+    - EditorConfig.EditorConfig
+    - esbenp.prettier-vscode
+    - stylelint.vscode-stylelint
+    - tombonnike.vscode-status-bar-format-toggle
+    - usernamehw.errorlens
+    - mblode.twig-language
+    - skippednote.VS-code-drupal
