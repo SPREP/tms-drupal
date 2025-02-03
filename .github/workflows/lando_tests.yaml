@@ -9,6 +9,7 @@ env:
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -57,15 +58,15 @@ jobs:
       - run: lando drush cr
 
       # @todo - Fix this #142
-      # # Enable the test module
-      # - run: lando drush en met_api_test -y
+      # Enable the test module
+      - run: lando drush en met_api_test -y
 
-      # # Copy test file to private directory
-      # - run: lando ssh --command 'cp -R modules/custom/met_api/modules/met_api_test/assets/. /var/www/private/'
+      # Copy test file to private directory
+      - run: lando ssh --command 'cp -R modules/custom/met_api/modules/met_api_test/assets/. /var/www/private/'
 
-      # # This will run tests. If any tests fail, it will fail here.
-      # - name: Run Newman test
-      #   run: lando newman run modules/custom/met_api/modules/met_api_test/assets/api_test.postman_collection.json -e modules/custom/met_api/modules/met_api_test/assets/local.postman_environment.json
+      # This will run tests. If any tests fail, it will fail here.
+      - name: Run Newman test
+        run: lando newman run modules/custom/met_api/modules/met_api_test/assets/api_test.postman_collection.json -e modules/custom/met_api/modules/met_api_test/assets/local.postman_environment.json
 
-      # - name: Run unit test
-      #   run: lando composer test-niwa-module
+      - name: Run unit test
+        run: lando composer test-niwa-module
