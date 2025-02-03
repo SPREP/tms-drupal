@@ -3,3 +3,5 @@ type: module
 description: 'Provide the content type for Traditional Knowledge (TK)'
 package: 'MET'
 core_version_requirement: ^10
+dependencies:
+  - options

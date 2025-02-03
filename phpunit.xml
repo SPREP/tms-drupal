@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!--Copy code below into your own phpunit.xml file-->
+
+  <!-- Using this project's bootstrap file allows tests in `ExistingSite`, `ExistingSiteSelenium2` and `ExistingSiteWebDriver
+       to run alongside core's 4 test types. -->
+<phpunit bootstrap="vendor/weitzman/drupal-test-traits/src/bootstrap.php" printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter" cacheResult="false" colors="true">
+<php>
+  <env name="DTT_BASE_URL" value="http://apache"/>
+  <env name="DTT_API_URL" value="http://chrome:9222"/>
+  <!-- <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", null, "http://selenium:4444/wd/hub"]'/> -->
+  <env name="DTT_MINK_DRIVER_ARGS" value='["chrome", {"browserName":"chrome","goog:chromeOptions":{"w3c":false,"args":["--disable-gpu","--headless", "--no-sandbox", "--disable-dev-shm-usage"]}}, "http://selenium-chrome:4444/wd/hub"]'/>
+  <!-- Example BROWSERTEST_OUTPUT_DIRECTORY value: /tmp/b2b
+       Specify a temporary directory for storing debug images and html documents.
+       These artifacts get copied to /sites/simpletest/browser_output by BrowserTestBase -->
+  <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="/tmp/b2b"/>
+  <env name="SIMPLETEST_BASE_URL" value="http://apache"/>
+  <env name="SIMPLETEST_DB" value="mysql://drupal:drupal@mariadb/drupal"/>
+
+  <!-- turn of deprecation warnings -->
+  <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
+
+</php>
+<!-- Automatically run all ExistingSite tests alongside unit, and kernel
+     tests in custom code. -->
+<testsuites>
+  <testsuite name="unit">
+    <directory>./modules/custom/*/tests/src/Unit</directory>
+  </testsuite>
+  <testsuite name="kernel">
+    <directory>./modules/custom/*/tests/src/Kernel</directory>
+  </testsuite>
+  <testsuite name="functional">
+    <directory>./modules/custom/*/tests/src/Functional</directory>
+  </testsuite>
+</testsuites>
+</phpunit>

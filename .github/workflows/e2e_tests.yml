@@ -1,0 +1,55 @@
+name: E2E Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    environment: test
+
+    services:
+      docker:
+        image: docker:19.03.12-dind
+        options: --privileged
+        ports:
+          - 2375:2375
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: 📁 Init
+      run: |
+        # Set permissions for checkout.
+        sudo chown -R 1000:1000 $(pwd)
+
+        # Create performance testing results directory.
+        sudo mkdir -p vendor
+        sudo mkdir -p core
+        sudo mkdir -p modules/contrib
+        sudo chmod 777 vendor
+        sudo chmod 777 core
+        sudo chmod 777 modules/contrib
+
+    - name: 📦 Setup
+      env:
+        FB_SERVER_KEY: ${{ secrets.FB_SERVER_KEY }}
+        FB_SENDER_ID: ${{ secrets.FB_SENDER_ID }}
+      run: |
+        docker compose -f docker-compose.yml -f docker-compose.test.yml up -d --wait
+        docker compose exec -T --user wodby php /bin/sh -c "cd /var/www/html/ && composer install --prefer-dist --no-progress"
+        docker compose exec -T --user wodby php /bin/sh -c "cd /var/www/html/ && composer build"
+
+    - name: Execute tests
+      run: |
+        docker compose exec -T --user wodby php /bin/sh -c "cd /var/www/html/ && composer test_single"
+
+    - name: Cleanup
+      run: |
+        docker compose down
