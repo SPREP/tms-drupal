@@ -24,7 +24,8 @@ function met_push_theme(): array {
  *
  * @param array $variables
  *   An associative array containing:
- *   - elements: An associative array containing the push notification information and any
+ *   - elements: An associative array containing the push notification
+ *      information and any
  *     fields attached to the entity.
  *   - attributes: HTML attributes for the containing element.
  */

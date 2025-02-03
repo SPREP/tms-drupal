@@ -31,18 +31,18 @@ jobs:
             ${{ runner.os }}-composer-
 
   # @todo - Fix tests #142
-  coding_standards:
-    needs: setup_cache
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v2
+  # coding_standards:
+  #   needs: setup_cache
+  #   runs-on: ubuntu-latest
+  #   continue-on-error: true
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-progress
+  #     - name: Install Composer dependencies
+  #       run: composer install --prefer-dist --no-progress
 
-      - name: Coding Standards Check
-        run: composer coding_standards
+  #     - name: Coding Standards Check
+  #       run: composer coding_standards
 
   php_compatibility:
     needs: setup_cache

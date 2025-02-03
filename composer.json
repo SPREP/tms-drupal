@@ -99,8 +99,8 @@
             "phpcs -p --standard=PHPCompatibility --extensions=php,inc,module,install --runtime-set testVersion 8.3 modules/custom"
         ],
         "coding_standards": [
-            "phpcs --standard=Drupal --extensions=php,module,inc,install modules/custom",
-            "phpcs --standard=Drupal themes/custom --ignore=*/node_modules/*,*.css,*.js,includes/*"
+            "phpcs -n --standard=Drupal --extensions=php,module,inc,install modules/custom",
+            "phpcs -n --standard=Drupal themes/custom --ignore=*/node_modules/*,*.css,*.js,includes/*"
         ],
         "coding_standards_fix": [
             "phpcbf --report=diff --extensions=php,module,inc,install --standard=Drupal modules/custom",

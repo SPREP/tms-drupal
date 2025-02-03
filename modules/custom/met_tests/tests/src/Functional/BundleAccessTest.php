@@ -5,7 +5,7 @@ namespace Drupal\Tests\met_tests\Functional;
 use Drupal\node\NodeInterface;
 
 /**
- *
+ * Class BundleAccessTest.
  */
 class BundleAccessTest extends MetTestBase {
 
@@ -64,7 +64,7 @@ class BundleAccessTest extends MetTestBase {
    *
    * @dataProvider crudTestProvider
    */
-  public function testCRUD($role, $bundle, $permissions) {
+  public function testCrud($role, $bundle, $permissions) {
     if ($role !== 'anonymous') {
       $account = $this->createUser([], 'test-' . $role, FALSE);
       $account->set('roles', $role);

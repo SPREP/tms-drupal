@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Contains met_tk.module.
  */
 
 declare(strict_types=1);

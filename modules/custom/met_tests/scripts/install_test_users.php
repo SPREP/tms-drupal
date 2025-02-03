@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * Creates test users.
  */
 
 use Drupal\user\Entity\Role;
