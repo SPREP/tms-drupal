@@ -70,11 +70,15 @@
         "test": "phpunit",
         "test-niwa-module": "vendor/bin/phpunit -c core modules/custom/met_niwa",
         "build": [
+            "@generate_salt",
             "drush si -y",
             "drush cset system.site uuid \"5bb79423-cfb5-4dd1-98fc-1efb2a54c645\" -y",
             "drush entity:delete shortcut_set",
             "drush en paragraphs met_warning met_tk -y",
             "drush cim --source=config/site -y"
+        ],
+        "generate_salt": [
+            "drush php-eval 'echo \\Drupal\\Component\\Utility\\Crypt::randomBytesBase64(55)' > salt.txt"
         ]
     },
     "extra": {

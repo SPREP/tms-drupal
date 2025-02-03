@@ -286,7 +286,7 @@ $databases = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+$settings['hash_salt'] = file_get_contents('../salt.txt');
 
 /**
  * Deployment identifier.
@@ -897,3 +897,16 @@ if (file_exists('/var/www/conf/settings.docker.php')) {
 }
 
 $settings['config_sync_directory'] = 'config/site';
+$databases['default']['default'] = array (
+  'database' => 'drupal',
+  'username' => 'drupal',
+  'password' => 'drupal',
+  'prefix' => '',
+  'host' => 'mariadb',
+  'port' => '3306',
+  'isolation_level' => 'READ COMMITTED',
+  'driver' => 'mysql',
+  'namespace' => 'Drupal\\mysql\\Driver\\Database\\mysql',
+  'autoload' => 'core/modules/mysql/src/Driver/Database/mysql/',
+);
+$settings['hash_salt'] = 'r9ZbvLqgjRyPAqQAEqWTjf8hu1z1K7KAJW_6LB37ar_cygkPpt6GQRC5Ekje6ZwyOxEeadRjdQ';

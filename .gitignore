@@ -68,3 +68,6 @@ config/site/met_spc.settings.yml
 
 # ignore gitpod .env
 .env.gitpod
+
+# ignore salt
+salt.txt
