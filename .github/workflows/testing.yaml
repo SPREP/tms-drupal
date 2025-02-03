@@ -1,7 +1,12 @@
 name: Automated Tests
 
 on:
-  - pull_request
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
 
 env:
   LANDO_VERSION: v3.21.0
