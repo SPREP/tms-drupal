@@ -14,7 +14,7 @@ $databases['default']['default'] = [
 
 // DRUPAL 8.
 $settings['trusted_host_patterns'] = [
-  '\.localhost$', '\.local$', '\.loc$', 'localhost', 'nginx', 'apache',
+  '\.localhost$', '\.local$', '\.loc$', 'localhost', 'nginx', 'apache', '\.gitpod.io$',
 ];
 
 // For Redis
