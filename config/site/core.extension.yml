@@ -74,7 +74,6 @@ module:
   text: 0
   textfield_counter: 0
   toolbar: 0
-  tour: 0
   update: 0
   upload_replace: 0
   user: 0
