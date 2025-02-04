@@ -42,11 +42,11 @@
         "drupal/textfield_counter": "^2.3",
         "drupal/views_autocomplete_filters": "^2.0",
         "drupal/views_data_export": "^1.4",
+        "drush/drush": "^12.1",
         "google/cloud-firestore": "^0.1.0",
         "mglaman/composer-drupal-lenient": "^1.0",
         "paragi/php-websocket-client": "^1.0",
-        "textalk/websocket": "1.0.*",
-        "drush/drush": "^12.1"
+        "textalk/websocket": "1.6.3"
     },
     "require-dev": {
         "drupal/core-dev": "^10.0",
