@@ -3147,20 +3147,20 @@
         },
         {
             "name": "drupal/sendgrid_mailer",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/sendgrid_mailer.git",
-                "reference": "1.1.0"
+                "reference": "1.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/sendgrid_mailer-1.1.0.zip",
-                "reference": "1.1.0",
-                "shasum": "a09a3c470f513420f7689f2e68865b21ae8da36a"
+                "url": "https://ftp.drupal.org/files/projects/sendgrid_mailer-1.1.2.zip",
+                "reference": "1.1.2",
+                "shasum": "54b5fa4773e0efff5435bc6b3fbb6766d95b098d"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9 || ^10",
+                "drupal/core": "^10",
                 "drupal/mailsystem": "^4.3",
                 "drupal/sendgrid_api": "^2.0",
                 "php": "^7.3|^8.0"
@@ -3168,8 +3168,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.1.0",
-                    "datestamp": "1666059126",
+                    "version": "1.1.2",
+                    "datestamp": "1732904562",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -15122,10 +15122,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
