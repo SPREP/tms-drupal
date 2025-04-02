@@ -1925,7 +1925,7 @@
         },
         {
             "name": "drupal/core-vendor-hardening",
-            "version": "10.4.1",
+            "version": "10.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-vendor-hardening.git",
@@ -1960,7 +1960,7 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-vendor-hardening/tree/10.4.1"
+                "source": "https://github.com/drupal/core-vendor-hardening/tree/10.4.6"
             },
             "time": "2024-11-11T20:22:36+00:00"
         },
@@ -15122,10 +15122,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
