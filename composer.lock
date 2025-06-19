@@ -1749,7 +1749,7 @@
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "10.4.1",
+            "version": "10.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -1793,7 +1793,7 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.4.1"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.5.0"
             },
             "time": "2024-08-22T14:31:30+00:00"
         },
@@ -15122,10 +15122,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
