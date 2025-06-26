@@ -1925,16 +1925,16 @@
         },
         {
             "name": "drupal/core-vendor-hardening",
-            "version": "10.4.1",
+            "version": "10.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-vendor-hardening.git",
-                "reference": "82bb33f8da23130afa412e239c72ce70a8dba690"
+                "reference": "0ded64f65ef468e19823ed1917852fed8b2f0895"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-vendor-hardening/zipball/82bb33f8da23130afa412e239c72ce70a8dba690",
-                "reference": "82bb33f8da23130afa412e239c72ce70a8dba690",
+                "url": "https://api.github.com/repos/drupal/core-vendor-hardening/zipball/0ded64f65ef468e19823ed1917852fed8b2f0895",
+                "reference": "0ded64f65ef468e19823ed1917852fed8b2f0895",
                 "shasum": ""
             },
             "require": {
@@ -1960,9 +1960,9 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-vendor-hardening/tree/10.4.1"
+                "source": "https://github.com/drupal/core-vendor-hardening/tree/10.5.1"
             },
-            "time": "2024-11-11T20:22:36+00:00"
+            "time": "2024-11-11T20:19:58+00:00"
         },
         {
             "name": "drupal/csv_serialization",
@@ -15122,10 +15122,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
