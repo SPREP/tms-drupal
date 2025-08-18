@@ -4772,16 +4772,16 @@
         },
         {
             "name": "mglaman/composer-drupal-lenient",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mglaman/composer-drupal-lenient.git",
-                "reference": "6f9e03f238403b53c04f26a24dd8777f62135213"
+                "reference": "37ee92d480eb3bb870a4c7003854978f184e5aa9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mglaman/composer-drupal-lenient/zipball/6f9e03f238403b53c04f26a24dd8777f62135213",
-                "reference": "6f9e03f238403b53c04f26a24dd8777f62135213",
+                "url": "https://api.github.com/repos/mglaman/composer-drupal-lenient/zipball/37ee92d480eb3bb870a4c7003854978f184e5aa9",
+                "reference": "37ee92d480eb3bb870a4c7003854978f184e5aa9",
                 "shasum": ""
             },
             "require": {
@@ -4818,7 +4818,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mglaman/composer-drupal-lenient/issues",
-                "source": "https://github.com/mglaman/composer-drupal-lenient/tree/1.0.4"
+                "source": "https://github.com/mglaman/composer-drupal-lenient/tree/1.0.5"
             },
             "funding": [
                 {
@@ -4826,7 +4826,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-12-07T17:56:20+00:00"
+            "time": "2024-10-18T15:36:34+00:00"
         },
         {
             "name": "monolog/monolog",
